@@ -43,7 +43,7 @@ namespace SeguimientoEgresados.Controllers
                 //Session["User"] = oUser;
                 HttpContext.Session.Set<Usuario>("User", oUser);
 
-                return RedirectToAction("Index", "Inicio");
+                return RedirectToAction("Index", "Usuario");
             }
             catch (Exception ex)
             {

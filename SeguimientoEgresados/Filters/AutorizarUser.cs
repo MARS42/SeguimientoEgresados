@@ -38,7 +38,7 @@ public class AutorizarUser : Attribute, IAuthorizationFilter
                 int? idModulo =oOperacion.IdModulo;
                 nombreOperacion = getNombreDeOperacion(idOperacion);
                 nombreModulo = getNombreDelModulo(idModulo);
-                context.Result = new RedirectResult("~/Error/UnauthorizedOperation?operacion=" + nombreOperacion + "&modulo=" + nombreModulo + "&msjeErrorExcepcion=");
+                context.Result = new RedirectResult("~/Error/UnauthorizedOperation?operacion=" + nombreOperacion + "&modulo=" + nombreModulo);
                 Console.Write("Sinpermiso");
             }
             Console.Write("Con permiso");

@@ -19,7 +19,9 @@ public class VerificarSesion : ActionFilterAttribute
             oUsuario = filterContext.HttpContext.Session.Get<Usuario>("User");
             if (oUsuario == null)
             {
-                if (filterContext.Controller is AccesoController == false)
+                //if (filterContext.Controller is AccesoController == false)
+                bool condition = filterContext.Controller is AccesoController == false && filterContext.Controller is InicioController == false;
+                if (condition)
                 {
                     filterContext.HttpContext.Response.Redirect("/Acceso/Login");
                 }
