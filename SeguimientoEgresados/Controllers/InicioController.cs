@@ -14,16 +14,21 @@ public class HomeController : Controller
         _logger = logger;
     }
 
-    [AutorizarUser(idOperacion:1)]
+    //[AutorizarUser(idOperacion:1)]
     public IActionResult Index()
     {
         return View();
     }
 
-    [AutorizarUser(idOperacion:3)]
+    //[AutorizarUser(idOperacion:3)]
     public IActionResult Privacy()
     {
         return View();
+    }
+
+    public IActionResult Ingresar()
+    {
+        return RedirectToAction("Login", "Acceso");
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
