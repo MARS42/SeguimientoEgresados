@@ -8,7 +8,7 @@
     <div class="danger">
         @ViewBag.Error
     </div>
-    <form action="@Url.Content("~/Acceso/Login")" method="post">
+    <form asp-action="Login" method="post">
         <div class="form-group">
             <label>Usuario</label>
             <input type="email" name="User" />
