@@ -41,7 +41,7 @@ namespace SeguimientoEgresados.Models
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Nombre)
-                    .HasMaxLength(1)
+                    .HasMaxLength(64)
                     .IsUnicode(false)
                     .HasColumnName("nombre");
             });
@@ -56,7 +56,7 @@ namespace SeguimientoEgresados.Models
                 entity.Property(e => e.IdModulo).HasColumnName("idModulo");
 
                 entity.Property(e => e.Nombe)
-                    .HasMaxLength(1)
+                    .HasMaxLength(64)
                     .IsUnicode(false)
                     .HasColumnName("nombe");
 
@@ -101,7 +101,7 @@ namespace SeguimientoEgresados.Models
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Nombre)
-                    .HasMaxLength(1)
+                    .HasMaxLength(64)
                     .IsUnicode(false)
                     .HasColumnName("nombre");
             });
@@ -114,7 +114,7 @@ namespace SeguimientoEgresados.Models
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Email)
-                    .HasMaxLength(1)
+                    .HasMaxLength(512)
                     .IsUnicode(false)
                     .HasColumnName("email");
 
@@ -125,12 +125,12 @@ namespace SeguimientoEgresados.Models
                 entity.Property(e => e.IdRol).HasColumnName("idRol");
 
                 entity.Property(e => e.Nombre)
-                    .HasMaxLength(1)
+                    .HasMaxLength(64)
                     .IsUnicode(false)
                     .HasColumnName("nombre");
 
                 entity.Property(e => e.Password)
-                    .HasMaxLength(1)
+                    .HasMaxLength(1024)
                     .IsUnicode(false)
                     .HasColumnName("password");
 

@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using SeguimientoEgresados.Filters;
 using SeguimientoEgresados.Models;
 
 namespace SeguimientoEgresados.Controllers;
@@ -13,11 +14,13 @@ public class HomeController : Controller
         _logger = logger;
     }
 
+    [AutorizarUser(idOperacion:1)]
     public IActionResult Index()
     {
         return View();
     }
 
+    [AutorizarUser(idOperacion:3)]
     public IActionResult Privacy()
     {
         return View();
