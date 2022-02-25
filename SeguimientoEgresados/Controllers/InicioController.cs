@@ -28,7 +28,8 @@ public class InicioController : Controller
 
     public IActionResult Ingresar()
     {
-        return RedirectToAction("Login", "Acceso");
+        //return RedirectToAction("Login", "Acceso");
+        return View();
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
