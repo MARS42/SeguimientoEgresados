@@ -16,7 +16,8 @@ namespace SeguimientoEgresados.Controllers
 
         public IActionResult CerrarSesion()
         {
-            return Ok();
+            HttpContext.Session.Remove("User");
+            return RedirectToAction("Index", "Inicio");
         }
     }
 }
