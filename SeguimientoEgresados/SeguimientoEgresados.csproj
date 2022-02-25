@@ -16,6 +16,11 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Areas\Egresados\Controllers" />
+      <Folder Include="Areas\Egresados\Data" />
+      <Folder Include="Areas\Egresados\Models" />
+      <Folder Include="Areas\Empleadores\Data" />
+      <Folder Include="Areas\Empleadores\Models" />
       <Folder Include="Pages" />
     </ItemGroup>
 

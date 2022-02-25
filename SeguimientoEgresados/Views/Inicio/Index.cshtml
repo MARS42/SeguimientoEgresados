@@ -6,3 +6,20 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
+@* <!--Enlace Area Egresados--> *@
+@* @Html.ActionLink("Egresados", "Index", new { area = "Egresados", controller = "Inicio" }, new { @class = "btn btn-primary text-light" }) *@
+@* *@
+@* <!--Enlace Area Empleadores--> *@
+@* @Html.ActionLink("Empleadores", "Index", new { area = "Empleadores", controller = "Inicio" }, new { @class = "btn btn-success text-light" }) *@
+@* *@
+
+<a class="nav-link" asp-area="" asp-controller="Inicio" asp-action="Index">
+    <div class="btn btn-info">Inicio</div>
+</a>
+<a class="nav-link" asp-area="Egresados" asp-controller="Inicio" asp-action="Index">
+    <div class="btn btn-info">Egresados</div>
+</a>
+<a class="nav-link" asp-area="Empleadores" asp-controller="Inicio" asp-action="Index">
+    <div class="btn btn-info">Empleadores</div>
+</a>

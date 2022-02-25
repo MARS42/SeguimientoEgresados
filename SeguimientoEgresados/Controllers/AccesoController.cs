@@ -28,10 +28,6 @@ namespace SeguimientoEgresados.Controllers
         {
             try
             {
-                // var oUser = (from d in _context.Usuarios
-                //     where d.Email == User.Trim() && d.Password == Pass.Trim()
-                //     select d).FirstOrDefault();
-
                 var oUser = await _context.Usuarios
                     .FirstOrDefaultAsync(u => u.Email.Equals(User.Trim()) && u.Password.Equals(Pass.Trim()));
                 if (oUser == null)

@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews(services =>
 {
-    services.Filters.Add(new VerificarSesion());
+    //services.Filters.Add(new VerificarSesion());
 });
 
 builder.Services.AddDbContext<SeguimientoEgresadosContext>(options =>
@@ -18,7 +18,8 @@ builder.Services.AddDbContext<SeguimientoEgresadosContext>(options =>
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromSeconds(10);
+    //options.IdleTimeout = TimeSpan.FromSeconds(10);
+    options.IdleTimeout = TimeSpan.FromHours(1);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
@@ -45,5 +46,13 @@ app.UseSession();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Inicio}/{action=Index}/{id?}");
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name : "areas",
+        pattern : "{area:exists}/{controller=Inicio}/{action=Index}/{id?}"
+    );
+});
 
 app.Run();
