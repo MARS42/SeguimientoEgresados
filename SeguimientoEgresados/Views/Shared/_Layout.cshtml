@@ -23,12 +23,6 @@
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="Egresados" asp-controller="Inicio" asp-action="Index">Egresados</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="Empleadores" asp-controller="Inicio" asp-action="Privacy">Empleadores</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" asp-area="" asp-controller="Acceso" asp-action="Index">
                             <div class="btn btn-info">Ingresar</div>
                         </a>
@@ -37,6 +31,7 @@
             </div>
         </div>
     </nav>
+    @await Html.PartialAsync("_Secciones");
 </header>
 <div class="container">
     <main role="main" class="pb-3">
