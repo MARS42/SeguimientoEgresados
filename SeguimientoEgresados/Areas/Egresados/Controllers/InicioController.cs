@@ -16,11 +16,11 @@ namespace SeguimientoEgresados.Areas.Egresados.Controllers
         [HttpGet, Route("~/Egresados/")]
         public IActionResult Index()
         {
-            _usuario = HttpContext.Session.Get<Usuario>("User");
+            /*_usuario = HttpContext.Session.Get<Usuario>("User");
 
             if (_usuario == null)
                 return RedirectToAction("Index", "Acceso",new {area = "Egresados" });
-
+*/
             return View();
         }
 

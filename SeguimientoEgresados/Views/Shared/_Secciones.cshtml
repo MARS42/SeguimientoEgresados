@@ -1,11 +1,13 @@
+@model int;
+
 <div class="container">
     <header class="d-flex justify-content-center py-3">
       <ul class="nav nav-pills">
-        <li class="nav-item"><a class="nav-link active" aria-current="page" asp-area="Egresados" asp-controller="Inicio" asp-action="Index">Egresados</a></li>
-        <li class="nav-item"><a class="nav-link" asp-area="Empleadores" asp-controller="Inicio" asp-action="Index">Empleadores</a></li>
-        <li class="nav-item"><a class="nav-link">Bolsa de trabajo</a></li>
-        <li class="nav-item"><a class="nav-link">Galería</a></li>
-        <li class="nav-item"><a class="nav-link">Acerca de</a></li>
+        <li class="nav-item"><a class='nav-link @(Model == 1 ? "active" : "" )' aria-current="page" asp-area="Egresados" asp-controller="Inicio" asp-action="Index">Egresados</a></li>
+        <li class="nav-item"><a class='nav-link @(Model == 2 ? "active" : "" )' asp-area="Empleadores" asp-controller="Inicio" asp-action="Index">Empleadores</a></li>
+        <li class="nav-item"><a class='nav-link @(Model == 3 ? "active" : "" )'>Bolsa de trabajo</a></li>
+        <li class="nav-item"><a class='nav-link @(Model == 4 ? "active" : "" )'>Galería</a></li>
+        <li class="nav-item"><a class='nav-link @(Model == 5 ? "active" : "" )'>Acerca de</a></li>
       </ul>
     </header>
 </div>
