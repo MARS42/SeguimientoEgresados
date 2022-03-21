@@ -17,14 +17,14 @@ namespace SeguimientoEgresados.Controllers
         {
             _context = context;
         }
-    
-        public IActionResult Login()
+
+        public IActionResult Index()
         {
             return View();
         }
-        
+
         [HttpPost]
-        public async Task<IActionResult> Login(string User, string Pass)
+        public async Task<IActionResult> Index(string User, string Pass)
         {
             try
             {
