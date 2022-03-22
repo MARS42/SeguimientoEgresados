@@ -1,8 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using SeguimientoEgresados.Utils
+<!DOCTYPE html>
 <html lang="en">
-@{
-    var usuario = (Usuario)ViewBag.Usuario;
-}
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -13,23 +11,34 @@
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-        <div class="container-fluid">
-            <a class="navbar-brand" asp-area="" asp-controller="Inicio" asp-action="Index">SeguimientoEgresados</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between align-content-center">
-                <ul class="navbar-nav flex-grow-1 align-content-center">
-                    <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Inicio" asp-action="Index">Inicio</a></li>
-                </ul>
-              <form class="form-inline">
-                <button class="btn btn-outline-success" type="button" asp-area="" asp-controller="Acceso" asp-action="Index">Main button</button>
-              </form>
-            </div>
-        </div>
-    </nav>
+    @* <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"> *@
+    @*     <div class="container-fluid"> *@
+    @*         <a class="navbar-brand" asp-area="" asp-controller="Inicio" asp-action="Index">SeguimientoEgresados</a> *@
+    @*         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent" *@
+    @*                 aria-expanded="false" aria-label="Toggle navigation"> *@
+    @*             <span class="navbar-toggler-icon"></span> *@
+    @*         </button> *@
+    @*         <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between align-content-center"> *@
+    @*             <ul class="navbar-nav flex-grow-1 align-content-center"> *@
+    @*                 <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Inicio" asp-action="Index">Inicio</a></li> *@
+    @*             </ul> *@
+    @*           <form class="form-inline"> *@
+    @*             <button class="btn btn-outline-success" type="button" asp-area="" asp-controller="Acceso" asp-action="Index">Ingresar</button> *@
+    @*           </form> *@
+    @*         </div> *@
+    @*     </div> *@
+    @* </nav> *@
+    @{
+        Usuario? usuario = ViewContext.HttpContext.Session.Get<Usuario>("Usuario");
+        if (usuario == null)
+        {
+            @(await Html.PartialAsync("_NavbarVisitante"))
+        }
+        else
+        {
+            @(await Html.PartialAsync("_NavbarVisitante"))
+        }
+    }
     @await Html.PartialAsync("_Secciones", 0);
 </header>
 <div class="container">
