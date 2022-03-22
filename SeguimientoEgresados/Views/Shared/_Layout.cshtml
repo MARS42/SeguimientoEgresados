@@ -22,13 +22,11 @@
             </button>
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between align-content-center">
                 <ul class="navbar-nav flex-grow-1 align-content-center">
-                    <li class="nav-item"><a asp-area="" asp-controller="Inicio" asp-action="Index">Inicio</a></li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Acceso" asp-action="Index">
-                            <div class="btn btn-info">Ingresar</div>
-                        </a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Inicio" asp-action="Index">Inicio</a></li>
                 </ul>
+              <form class="form-inline">
+                <button class="btn btn-outline-success" type="button" asp-area="" asp-controller="Acceso" asp-action="Index">Main button</button>
+              </form>
             </div>
         </div>
     </nav>
