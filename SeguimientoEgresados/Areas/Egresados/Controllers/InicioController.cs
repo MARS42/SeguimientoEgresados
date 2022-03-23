@@ -11,7 +11,7 @@ namespace SeguimientoEgresados.Areas.Egresados.Controllers
     [Area("Egresados")]
     public class InicioController : Controller
     {
-        private Usuario _usuario;
+        private Models.Usuario _usuario;
         
         [HttpGet, Route("~/Egresados/")]
         public IActionResult Index()

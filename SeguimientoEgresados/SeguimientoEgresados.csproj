@@ -23,6 +23,9 @@
       <Folder Include="Areas\Empleadores\Data" />
       <Folder Include="Areas\Empleadores\Models" />
       <Folder Include="Areas\Empleadores\Views\Shared" />
+      <Folder Include="Areas\Usuario\Data" />
+      <Folder Include="Areas\Usuario\Models" />
+      <Folder Include="Areas\Usuario\Views" />
       <Folder Include="Pages" />
       <Folder Include="wwwroot\images" />
     </ItemGroup>

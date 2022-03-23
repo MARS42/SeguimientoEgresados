@@ -20,10 +20,7 @@ namespace SeguimientoEgresados.Controllers
 
         public IActionResult Index()
         {
-            if (HttpContext.Session.Get<Usuario>("User") != null)
-                return RedirectToAction("Index", "Perfil");
-            
-            return View();
+            return RedirigirPerfil(View());
         }
 
         [HttpPost]
@@ -42,7 +39,16 @@ namespace SeguimientoEgresados.Controllers
                 //Session["User"] = oUser;
                 HttpContext.Session.Set<Usuario>("User", oUser);
 
-                return RedirectToAction("Index", "Inicio");
+                // var rol = _context.Roles
+                //     .FirstOrDefault(r => r.Id == oUser.IdRol);
+
+                
+                // if (rol != null)
+                // {
+                //     return RedirectToAction("Index", "Perfil", new { area="Usuario" });
+                // }
+                
+                return RedirigirPerfil(View());
             }
             catch (Exception ex)
             {
@@ -50,6 +56,23 @@ namespace SeguimientoEgresados.Controllers
                 return View();
             }
 
+        }
+
+        private IActionResult RedirigirPerfil(IActionResult defaultView)
+        {
+            Usuario? user = HttpContext.Session.Get<Usuario>("User"); 
+            if (user != null)
+            {
+                switch (user.IdRol)
+                {
+                    case 4:         //Egresado
+                        return RedirectToAction("Index", "Egresado", new {area = "Usuario"});
+                    case 5:         //Empleador
+                        return RedirectToAction("Index", "Empleador", new {area = "Usuario"});
+                }
+            }
+
+            return defaultView;
         }
     }
 }

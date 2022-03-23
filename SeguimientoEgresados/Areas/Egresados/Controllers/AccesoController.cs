@@ -12,7 +12,7 @@ namespace SeguimientoEgresados.Areas.Egresados.Controllers
     [Area("Egresados")]
     public class AccesoController : Controller
     {
-        private Usuario _usuario;
+        private Models.Usuario _usuario;
         private readonly SeguimientoEgresadosContext _context;
 
         public AccesoController(SeguimientoEgresadosContext context)
@@ -39,9 +39,9 @@ namespace SeguimientoEgresados.Areas.Egresados.Controllers
                 }
 
                 //Session["User"] = oUser;
-                HttpContext.Session.Set<Usuario>("User", oUser);
+                HttpContext.Session.Set<Models.Usuario>("User", oUser);
 
-                return RedirectToAction("Index", "Inicio", new { area= "Egresados" });
+                return RedirectToAction("Index", "Inicio", new { area= "Usuario" });
             }
             catch (Exception ex)
             {
