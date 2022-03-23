@@ -5,9 +5,9 @@
       <ul class="nav nav-pills">
         <li class="nav-item"><a class='nav-link @(Model == "Egresados" ? "active" : "" )' aria-current="page" asp-area="Egresados" asp-controller="Inicio" asp-action="Index">Egresados</a></li>
         <li class="nav-item"><a class='nav-link @(Model == "Empleadores" ? "active" : "" )' asp-area="Empleadores" asp-controller="Inicio" asp-action="Index">Empleadores</a></li>
-        <li class="nav-item"><a class='nav-link @(Model == "BolsaTrabajo" ? "active" : "" )'>Bolsa de trabajo</a></li>
-        <li class="nav-item"><a class='nav-link @(Model == "Galeria" ? "active" : "" )'>Galería</a></li>
-        <li class="nav-item"><a class='nav-link @(Model == "About" ? "active" : "" )'>Acerca de</a></li>
+        <li class="nav-item"><a class='nav-link @(Model == "BolsaDeTrabajo" ? "active" : "" )' asp-area="BolsaDeTrabajo" asp-controller="Inicio" asp-action="Index">Bolsa de trabajo</a></li>
+        <li class="nav-item"><a class='nav-link @(Model == "Galeria" ? "active" : "" )' asp-area="Galeria" asp-controller="Inicio" asp-action="Index">Galería</a></li>
+        <li class="nav-item"><a class='nav-link @(Model == "About" ? "active" : "" )' asp-area="About" asp-controller="Inicio" asp-action="Index">Acerca de</a></li>
       </ul>
     </header>
 </div>

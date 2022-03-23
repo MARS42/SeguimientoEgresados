@@ -16,6 +16,10 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Areas\About\Controllers" />
+      <Folder Include="Areas\BolsaDeTrabajo\Controllers" />
+      <Folder Include="Areas\BolsaDeTrabajo\Data" />
+      <Folder Include="Areas\BolsaDeTrabajo\Models" />
       <Folder Include="Areas\Egresados\Controllers" />
       <Folder Include="Areas\Egresados\Data" />
       <Folder Include="Areas\Egresados\Models" />
@@ -23,6 +27,7 @@
       <Folder Include="Areas\Empleadores\Data" />
       <Folder Include="Areas\Empleadores\Models" />
       <Folder Include="Areas\Empleadores\Views\Shared" />
+      <Folder Include="Areas\Galeria\Controllers" />
       <Folder Include="Areas\Usuario\Data" />
       <Folder Include="Areas\Usuario\Models" />
       <Folder Include="Areas\Usuario\Views" />
