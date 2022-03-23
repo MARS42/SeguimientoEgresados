@@ -39,13 +39,14 @@
             <!-- Left links -->
 
             <div class="d-flex align-items-center justify-content-around">
-                <button type="button" class="btn btn-link px-3 me-2">
-                    Inicio
-                </button>
+                @* <button type="button" class="btn btn-link px-3 me-2"> *@
+                @*     Inicio *@
+                @* </button> *@
                 @* <button type="button" class="btn btn-primary me-3"> *@
                 @*      *@
                 @* </button> *@
-                <a class="nav-link" asp-area="" asp-controller="Acceso" asp-action="Index">Ingresar</a>
+                <a class="btn btn-toolbar px-3 me-3" asp-area="" asp-controller="Inicio" asp-action="Index">Inicio</a>
+                <a class="btn btn-primary px-3 me-3" asp-area="" asp-controller="Acceso" asp-action="Index">Ingresar</a>
                 @* <a *@
                 @*     class="btn btn-dark px-3" *@
                 @*     href="https://github.com/mdbootstrap/mdb-ui-kit" *@
