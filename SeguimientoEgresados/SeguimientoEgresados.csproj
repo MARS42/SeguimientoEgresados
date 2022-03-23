@@ -19,10 +19,16 @@
       <Folder Include="Areas\Egresados\Controllers" />
       <Folder Include="Areas\Egresados\Data" />
       <Folder Include="Areas\Egresados\Models" />
+      <Folder Include="Areas\Egresados\Views\Shared" />
       <Folder Include="Areas\Empleadores\Data" />
       <Folder Include="Areas\Empleadores\Models" />
+      <Folder Include="Areas\Empleadores\Views\Shared" />
       <Folder Include="Pages" />
       <Folder Include="wwwroot\images" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Views\Usuario\Index.cshtml" />
     </ItemGroup>
 
 </Project>

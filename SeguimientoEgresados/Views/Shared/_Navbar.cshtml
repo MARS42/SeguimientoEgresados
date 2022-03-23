@@ -41,7 +41,7 @@
                         Usuario? usuario = ViewContext.HttpContext.Session.Get<Usuario>("User");
                         if (usuario == null)
                         {
-                            @await Html.PartialAsync("_OpcionesVisitante")
+                            @await Html.PartialAsync("NavbarParts/_OpcionesVisitante")
                         }
                         else
                         {
@@ -49,10 +49,10 @@
                             switch (usuario.IdRol)
                             {
                                 case 4: //Egresado
-                                    @await Html.PartialAsync("_OpcionesEgresado")
+                                    @await Html.PartialAsync("NavbarParts/_OpcionesEgresado")
                                     break;
                                 case 5: //Empleador
-                                    @await Html.PartialAsync("_OpcionesEmpleador")
+                                    @await Html.PartialAsync("NavbarParts/_OpcionesEmpleador")
                                     break;
                             }
                         }
