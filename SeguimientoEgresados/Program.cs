@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews(services =>
 {
-    //services.Filters.Add(new VerificarSesion());
+    services.Filters.Add(new VerificarSesion());
 });
 
 builder.Services.AddDbContext<SeguimientoEgresadosContext>(options =>

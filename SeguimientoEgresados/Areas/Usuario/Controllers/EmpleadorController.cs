@@ -14,7 +14,7 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             return View();
         }
         
-        public async Task<IActionResult> MisDatos()
+        public async Task<IActionResult> MisEmpresa()
         {
             return View();
         }

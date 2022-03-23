@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using SeguimientoEgresados.Areas.Usuario.Controllers;
 using SeguimientoEgresados.Controllers;
 using SeguimientoEgresados.Models;
 using SeguimientoEgresados.Utils;
@@ -20,17 +21,18 @@ public class VerificarSesion : ActionFilterAttribute
             if (oUsuario == null)
             {
                 //if (filterContext.Controller is AccesoController == false)
-                bool condition = filterContext.Controller is AccesoController == false && filterContext.Controller is InicioController == false;
+                //bool condition = filterContext.Controller is AccesoController == false && filterContext.Controller is InicioController == false;
+                bool condition = filterContext.Controller is EmpleadorController or EgresadoController;
                 if (condition)
                 {
-                    filterContext.HttpContext.Response.Redirect("/Acceso/Login");
+                    filterContext.HttpContext.Response.Redirect("/Acceso/");
                 }
             }
 
         }
         catch (Exception)
         {
-            filterContext.Result = new RedirectResult("~/Acceso/Login");
+            filterContext.Result = new RedirectResult("~/Acceso/");
         }
 
     }
