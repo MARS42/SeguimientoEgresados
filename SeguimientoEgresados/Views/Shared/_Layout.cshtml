@@ -28,17 +28,21 @@
     @*         </div> *@
     @*     </div> *@
     @* </nav> *@
-    @{
-        Usuario? usuario = ViewContext.HttpContext.Session.Get<Usuario>("Usuario");
-        if (usuario == null)
-        {
-            @(await Html.PartialAsync("_NavbarVisitante"))
-        }
-        else
-        {
-            @(await Html.PartialAsync("_NavbarVisitante"))
-        }
-    }
+    
+    
+    @* @{ *@
+    @*     Usuario? usuario = ViewContext.HttpContext.Session.Get<Usuario>("Usuario"); *@
+    @*     if (usuario == null) *@
+    @*     { *@
+    @*         @(await Html.PartialAsync("_NavbarVisitante")) *@
+    @*     } *@
+    @*     else *@
+    @*     { *@
+    @*         @(await Html.PartialAsync("_NavbarVisitante")) *@
+    @*     } *@
+    @* } *@
+    
+    @await Html.PartialAsync("_Navbar");
     @await Html.PartialAsync("_Secciones", 0);
 </header>
 <div class="container">

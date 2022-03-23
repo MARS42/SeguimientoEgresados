@@ -1,0 +1,64 @@
+@using SeguimientoEgresados.Utils
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <a class="navbar-brand me-2"
+           asp-area="" asp-controller="Inicio" asp-action="Index">
+            <img
+                src="~/images/logo_itc.png"
+                height="16"
+                alt="ITC Logo"
+                loading="lazy"
+                style="margin-top: -1px;"
+            />
+            <a class="navbar-brand" asp-area="" asp-controller="Inicio" asp-action="Index">Seguimiento de Egresados</a>
+        </a>
+        
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarButtonsExample"
+            aria-controls="navbarButtonsExample"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarButtonsExample">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link"></a>
+                </li>
+            </ul>
+
+            <div class="d-flex align-items-center justify-content-around">
+                <a class="btn btn-toolbar px-3 me-3" asp-area="" asp-controller="Inicio" asp-action="Index">Inicio</a>
+                @{
+                    string? controller = Convert.ToString(ViewContext.HttpContext.Request.RouteValues["Controller"]);
+                    if (!controller!.Equals("Acceso"))
+                    {
+                        Usuario? usuario = ViewContext.HttpContext.Session.Get<Usuario>("User");
+                        if (usuario == null)
+                        {
+                            @await Html.PartialAsync("_OpcionesVisitante")
+                        }
+                        else
+                        {
+                            Console.WriteLine(usuario.Nombre);
+                            switch (usuario.IdRol)
+                            {
+                                case 4: //Egresado
+                                    @await Html.PartialAsync("_OpcionesEgresado")
+                                    break;
+                                case 5: //Empleador
+                                    @await Html.PartialAsync("_OpcionesEmpleador")
+                                    break;
+                            }
+                        }
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</nav>

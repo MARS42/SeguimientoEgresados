@@ -22,6 +22,7 @@
       <Folder Include="Areas\Empleadores\Data" />
       <Folder Include="Areas\Empleadores\Models" />
       <Folder Include="Pages" />
+      <Folder Include="wwwroot\images" />
     </ItemGroup>
 
 </Project>

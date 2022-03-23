@@ -20,6 +20,9 @@ namespace SeguimientoEgresados.Controllers
 
         public IActionResult Index()
         {
+            if (HttpContext.Session.Get<Usuario>("User") != null)
+                return RedirectToAction("Index", "Perfil");
+            
             return View();
         }
 
@@ -39,7 +42,7 @@ namespace SeguimientoEgresados.Controllers
                 //Session["User"] = oUser;
                 HttpContext.Session.Set<Usuario>("User", oUser);
 
-                return RedirectToAction("Index", "Usuario");
+                return RedirectToAction("Index", "Inicio");
             }
             catch (Exception ex)
             {
