@@ -23,3 +23,22 @@
     </form>
 </div>
 <a class="btn btn-outline-secondary">Registrarse</a>
+
+<form asp-action="Index" method="POST">
+    <div class="row">
+        <h2>Ingresar</h2>
+        <p>Ingresa a tu cuenta</p>
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">
+            <i class="fa-solid fa-user"></i>
+        </span>
+        <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon2">
+            <i class="fa-solid fa-key" style="color: aqua"></i>
+        </span>
+      <input type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
+    </div>
+</form>
