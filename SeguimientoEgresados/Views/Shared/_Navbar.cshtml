@@ -1,64 +1,118 @@
 @using SeguimientoEgresados.Utils
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container">
-        <a class="navbar-brand me-2"
-           asp-area="" asp-controller="Inicio" asp-action="Index">
-            <img
-                src="~/images/logo_itc.png"
-                height="48"
-                alt="ITC Logo"
-                loading="lazy"
-                style="margin-top: -1px;"
-            />
-            <a class="navbar-brand" asp-area="" asp-controller="Inicio" asp-action="Index">Seguimiento de Egresados</a>
-        </a>
-        
-        <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarButtonsExample"
-            aria-controls="navbarButtonsExample"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-        >
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        
-        <div class="collapse navbar-collapse" id="navbarButtonsExample">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link"></a>
-                </li>
-            </ul>
-
-            <div class="d-flex align-items-center justify-content-around">
-                <a class="btn btn-toolbar px-3 me-3" asp-area="" asp-controller="Inicio" asp-action="Index">Inicio</a>
-                @{
-                    string? controller = Convert.ToString(ViewContext.HttpContext.Request.RouteValues["Controller"]);
-                    if (!controller!.Equals("Acceso"))
-                    {
-                        Usuario? usuario = ViewContext.HttpContext.Session.Get<Usuario>("User");
-                        if (usuario == null)
+<div class="container text-center" id="bannerLogos">
+    <img src="~/images/logo_gobmex.png" alt="Gobierno de México" class="bannersLogos">
+    <img src="~/images/logo_sep.png" alt="Secretaría de Educación Pública" class="bannersLogos">
+    <img src="~/images/logo_tecnm.jpg" alt="Tecnológico Nacional de México" class="bannersLogos">
+</div>
+<div class="col" id="globalNavbar">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white;">
+        <div class="container">
+            <a class="navbar-brand"
+               asp-area="" asp-controller="Inicio" asp-action="Index">
+                <img
+                    src="~/images/logo_itc.png"
+                    height="64"
+                    alt="ITC Logo"
+                    loading="lazy"
+                    style="margin-top: -1px;"
+                />
+                <a class="navbar-brand" asp-area="" asp-controller="Inicio" asp-action="Index">Seguimiento de Egresados</a>
+            </a>
+            
+            <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarButtonsExample"
+                aria-controls="navbarButtonsExample"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarButtonsExample">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link"></a>
+                    </li>
+                </ul>
+    
+                <div class="d-flex align-items-center justify-content-around">
+                    <a class="btn btn-toolbar px-3 me-3" asp-area="" asp-controller="Inicio" asp-action="Index">Inicio</a>
+                    @{
+                        string? controller = Convert.ToString(ViewContext.HttpContext.Request.RouteValues["Controller"]);
+                        if (!controller!.Equals("Acceso"))
                         {
-                            @await Html.PartialAsync("NavbarParts/_OpcionesVisitante")
-                        }
-                        else
-                        {
-                            Console.WriteLine(usuario.Nombre);
-                            switch (usuario.IdRol)
+                            Usuario? usuario = ViewContext.HttpContext.Session.Get<Usuario>("User");
+                            if (usuario == null)
                             {
-                                case 4: //Egresado
-                                    @await Html.PartialAsync("NavbarParts/_OpcionesEgresado")
-                                    break;
-                                case 5: //Empleador
-                                    @await Html.PartialAsync("NavbarParts/_OpcionesEmpleador")
-                                    break;
+                                @await Html.PartialAsync("NavbarParts/_OpcionesVisitante")
+                            }
+                            else
+                            {
+                                Console.WriteLine(usuario.Nombre);
+                                switch (usuario.IdRol)
+                                {
+                                    case 4: //Egresado
+                                        @await Html.PartialAsync("NavbarParts/_OpcionesEgresado")
+                                        break;
+                                    case 5: //Empleador
+                                        @await Html.PartialAsync("NavbarParts/_OpcionesEmpleador")
+                                        break;
+                                }
                             }
                         }
                     }
-                }
+                </div>
             </div>
         </div>
-    </div>
-</nav>
+    </nav>
+    
+    @{
+        string? seccionNombre = Convert.ToString(ViewContext.HttpContext.Request.RouteValues["Area"]);
+        Console.WriteLine(seccionNombre);
+    }
+    @await Html.PartialAsync("NavbarParts/_Secciones", seccionNombre)
+</div>
+
+
+@* <nav class="navbar navbar-expand-lg navbar-light bg-light"> *@
+@*     <div class="container-fluid"> *@
+@*         <a class="navbar-brand" href="#"> *@
+@*           <img src="~/images/logo_itc.png" alt="" width="30" height="24" class="d-inline-block align-text-top"> *@
+@*           Seguimiento de egresados *@
+@*         </a> *@
+@*         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> *@
+@*             <span class="navbar-toggler-icon"></span> *@
+@*         </button> *@
+@*         <div class="collapse navbar-collapse" id="navbarSupportedContent"> *@
+@*             <ul class="navbar-nav me-auto mb-2 mb-lg-0"> *@
+@*                 <li class="nav-item"> *@
+@*                     <a class="nav-link active" aria-current="page" href="#">Home</a> *@
+@*                 </li> *@
+@*                 <li class="nav-item"> *@
+@*                     <a class="nav-link" href="#">Link</a> *@
+@*                 </li> *@
+@*                 <li class="nav-item dropdown"> *@
+@*                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> *@
+@*                         Dropdown *@
+@*                     </a> *@
+@*                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown"> *@
+@*                         <li><a class="dropdown-item" href="#">Action</a></li> *@
+@*                         <li><a class="dropdown-item" href="#">Another action</a></li> *@
+@*                         <li><hr class="dropdown-divider"></li> *@
+@*                         <li><a class="dropdown-item" href="#">Something else here</a></li> *@
+@*                     </ul> *@
+@*                 </li> *@
+@*                 <li class="nav-item"> *@
+@*                     <a class="nav-link disabled">Disabled</a> *@
+@*                 </li> *@
+@*             </ul> *@
+@*             <form class="d-flex"> *@
+@*                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"> *@
+@*                 <button class="btn btn-outline-success" type="submit">Search</button> *@
+@*             </form> *@
+@*         </div> *@
+@*     </div> *@
+@* </nav> *@

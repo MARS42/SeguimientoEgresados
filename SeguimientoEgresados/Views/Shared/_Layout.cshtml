@@ -11,12 +11,7 @@
 </head>
 <body>
 <header>
-    @await Html.PartialAsync("_Navbar");
-    @{
-        string? seccionNombre = Convert.ToString(ViewContext.HttpContext.Request.RouteValues["Area"]);
-        Console.WriteLine(seccionNombre);
-    }
-    @await Html.PartialAsync("NavbarParts/_Secciones", seccionNombre);
+    @await Html.PartialAsync("_Navbar")
 </header>
 <div class="container">
     <main role="main" class="pb-3">

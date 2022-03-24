@@ -16,3 +16,77 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+
+/*!* not active *!*/
+/*.nav-pills .pill-1 .nav-link:not(.active) {*/
+/*  background-color: rgba(255, 0, 0, 0.5);*/
+/*}*/
+
+/*.nav-pills .pill-2 .nav-link:not(.active) {*/
+/*  background-color: rgba(0, 250, 0, 0.5);*/
+/*}*/
+
+/*.nav-pills .pill-3 .nav-link:not(.active) {*/
+/*  background-color: rgba(0, 0, 250, 0.5);*/
+/*  color: white;*/
+/*}*/
+
+
+/*!* active (faded) *!*/
+/*.nav-pills .pill-1 .nav-link {*/
+/*  background-color: rgba(255, 0, 0, 0.2);*/
+/*  color: white;*/
+/*}*/
+
+/*.nav-pills .pill-2 .nav-link {*/
+/*  background-color: rgba(0, 250, 0, 0.2);*/
+/*}*/
+
+/*.nav-pills .pill-3 .nav-link {*/
+/*  background-color: rgba(0, 0, 250, 0.2);*/
+/*  color: white;*/
+/*}*/
+
+/*.nav-pills .nav-link:not(.active) {*/
+/*  !*background-color: #fff;*!*/
+/*  !*background-color: rgba(255, 255, 255, 0.25);*!*/
+/*  !*border-radius: 0;*!*/
+/*  border-radius: 0;*/
+/*  color: white;*/
+/*}*/
+
+.bannersLogos{
+  width: 15%;
+}
+
+#bannerLogos{
+  transition: opacity .3s;
+}
+
+.nav-pills .nav-link {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 0;
+  color: white;
+}
+
+/* Not active*/
+.nav-pills .nav-link:not(.activeSec) {
+  background-color: transparent;
+  border-radius: 0;
+  color: white;
+}
+
+.nav-pills .nav-link:hover {
+  /*background-color: rgba(0, 255, 0, 0.5);*/
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 0;
+  color: white;
+}
+
+.fixed-top {
+  top: -5px;
+  transform: translateY(5px);
+  transition: transform .3s;
+}
+

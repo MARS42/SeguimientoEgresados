@@ -2,3 +2,23 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+
+document.addEventListener("DOMContentLoaded", function(){
+
+    window.addEventListener('scroll', function() {
+
+        const bannerLogosHeight = document.getElementById('bannerLogos').offsetHeight;
+        if (window.scrollY > bannerLogosHeight) {
+            // add padding top to show content behind navbar
+            navbar_height = document.getElementById('globalNavbar').offsetHeight;
+            bannerLogos.style.opacity = "0";
+            document.body.style.paddingTop = navbar_height + 'px';
+            document.getElementById('globalNavbar').classList.add('fixed-top');
+        } else {
+            // remove padding top from body
+            document.body.style.paddingTop = '0';
+            bannerLogos.style.opacity = "1";
+            document.getElementById('globalNavbar').classList.remove('fixed-top');
+        }
+    });
+}); 
