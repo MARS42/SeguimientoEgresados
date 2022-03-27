@@ -1,0 +1,29 @@
+@{
+    ViewBag.Title = "Registro";
+    Layout = "_Layout";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-10 col-md-6 col-lg-4 card m-auto">
+            <div class="card-body">
+                <form action="">
+                    <div class="container">
+                        <div class="row justify-content-end">
+                            <h3 class="mb-3">Selecciona tu ocupación</h3>
+                            <div class="form-check form-check-inline mb-2">
+                                <input class="form-check-input" type="radio" name="rol" id="opcEgresado" value="Egresado">
+                                <label class="form-check-label" for="opcEgresado">Egresado</label>
+                            </div>
+                            <div class="form-check form-check-inline mb-3">
+                                <input class="form-check-input" type="radio" name="rol" id="opcEmpleador" value="Empleador">
+                                <label class="form-check-label" for="opcEmpleador">Empleador</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-50">Siguiente</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

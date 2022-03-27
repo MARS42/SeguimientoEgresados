@@ -1,5 +1,6 @@
 @model string;
 <ul class="nav nav-pills justify-content-center" style="background-color: #1A386A">
+    <li class="nav-item"><a class='nav-link @(Model == "" ? "activeSec" : "" )' aria-current="page" asp-area="" asp-controller="Inicio" asp-action="Index">Inicio</a></li>
     <li class="nav-item"><a class='nav-link @(Model == "Egresados" ? "activeSec" : "" )' aria-current="page" asp-area="Egresados" asp-controller="Inicio" asp-action="Index">Egresados</a></li>
     <li class="nav-item"><a class='nav-link @(Model == "Empleadores" ? "activeSec" : "" )' asp-area="Empleadores" asp-controller="Inicio" asp-action="Index">Empleadores</a></li>
     <li class="nav-item"><a class='nav-link @(Model == "BolsaDeTrabajo" ? "activeSec" : "" )' asp-area="BolsaDeTrabajo" asp-controller="Inicio" asp-action="Index">Bolsa de trabajo</a></li>

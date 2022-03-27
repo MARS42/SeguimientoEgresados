@@ -1,0 +1,103 @@
+@model dynamic
+
+@{
+    ViewBag.Title = "Registro de empleador";
+    Layout = "_Layout";
+}
+
+<div class="container p-3">
+    <!-- Datos empresa -->
+        <div class="row justify-content-center">
+            <div class="col-10 col-md-9 col-lg-6 card m-auto">
+                <div class="card-body">
+                    <form action="">
+                        <div class="container">
+                            <div class="row justify-content-end">
+                                <div class="col-12">
+                                    <h3 class="mb-3">Registro de empresa</h3>
+                                    <h5>Datos de la empresa</h5>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control display-3" id="floatingInput" name="NombreEmpresa" placeholder="Nombre de la empresa">
+                                        <label for="floatingInput"><i class="fa-solid fa-building mx-2"></i>Nombre de la empresa</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="floatingInput" name="RFC" placeholder="RFC">
+                                        <label for="floatingInput"><i class="fa-solid fa-id-card mx-2"></i>RFC</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="floatingInput" name="RazonSocial" placeholder="Razón social">
+                                        <label for="floatingInput"><i class="fa-solid fa-comment mx-2"></i>Razón social</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="floatingInput" name="Domicilio" placeholder="Domicilio">
+                                        <label for="floatingInput"><i class="fa-solid fa-location-crosshairs mx-2"></i>Domicilio</label>
+                                    </div>
+                                </div>
+                                <div class="col-12 row m-0 p-0">
+                                    <div class="col-12 col-lg-6">
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="floatingInput" name="Colonia" placeholder="Colonia">
+                                            <label for="floatingInput"><i class="fa-solid fa-road mx-2"></i>Colonia</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-lg-6">
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="floatingInput" name="codigoPostal" placeholder="Código postal">
+                                            <label for="floatingInput"><i class="fa-solid fa-envelopes-bulk mx-2"></i>Código postal</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 row m-0 p-0">
+                                    <div class="col-12 col-lg-4">
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="floatingInput" name="Pais" placeholder="Código País">
+                                            <label for="floatingInput"><i class="fa-solid fa-earth-africa mx-2"></i>País</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-lg-4">
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="floatingInput" name="Estado" placeholder="Estado">
+                                            <label for="floatingInput">Estado</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-lg-4">
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="floatingInput" name="Municipio" placeholder="Municipio">
+                                            <label for="floatingInput">Municipio</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="floatingInput" name="correoEmpresarial" placeholder="Correo empresarial">
+                                        <label for="floatingInput"><i class="fa-solid fa-envelopes-bulk mx-2"></i>Correo empresarial</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="floatingInput" name="Telefono" placeholder="Teléfono">
+                                        <label for="floatingInput"><i class="fa-solid fa-phone mx-2"></i>Teléfono</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="floatingInput" name="paginaWeb" placeholder="P+agina web">
+                                        <label for="floatingInput"><i class="fa-solid fa-globe mx-2"></i>Página web</label>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-50">Siguiente</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

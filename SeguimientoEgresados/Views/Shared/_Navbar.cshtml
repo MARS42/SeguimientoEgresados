@@ -71,7 +71,9 @@
     
     @{
         string? seccionNombre = Convert.ToString(ViewContext.HttpContext.Request.RouteValues["Area"]);
-        Console.WriteLine(seccionNombre);
+        string? controllerName = Convert.ToString(ViewContext.HttpContext.Request.RouteValues["Controller"]);
+        string? actionName = Convert.ToString(ViewContext.HttpContext.Request.RouteValues["Action"]);
+        Console.WriteLine("Controller: " + controllerName + " Área: " + seccionNombre + "Action: " + actionName);
     }
     @await Html.PartialAsync("NavbarParts/_Secciones", seccionNombre)
 </div>
