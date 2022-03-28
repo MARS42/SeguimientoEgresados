@@ -21,4 +21,8 @@ document.addEventListener("DOMContentLoaded", function(){
             document.getElementById('globalNavbar').classList.remove('fixed-top');
         }
     });
-}); 
+});
+
+function resizeIframe(obj) {
+    obj.style.height = obj.contentWindow.document.documentElement.scrollHeight + 'px';
+}
