@@ -3,42 +3,73 @@
     Layout = "_Layout";
 }
 
-<h2>Ingresar</h2>
-<div class="row">
-    <div class="danger">
-        @ViewBag.Error
-    </div>
-    <form asp-action="Index" method="post">
-        <div class="form-group">
-            <label>Usuario</label>
-            <input type="email" name="User" />
-        </div>
-        <div class="form-group">
-            <label>Contraseña</label>
-            <input type="password" name="Pass" />
-        </div>
-        <div class="form-group">
-            <input type="submit" value="Entrar" class="btn btn-success" />
-        </div>
-    </form>
-</div>
-<a class="btn btn-outline-secondary">Registrarse</a>
+@* <h2>Ingresar</h2> *@
+@* <div class="row"> *@
+@*     <div class="danger"> *@
+@*         @ViewBag.Error *@
+@*     </div> *@
+@*     <form asp-action="Index" method="post"> *@
+@*         <div class="form-group"> *@
+@*             <label>Usuario</label> *@
+@*             <input type="email" name="User" /> *@
+@*         </div> *@
+@*         <div class="form-group"> *@
+@*             <label>Contraseña</label> *@
+@*             <input type="password" name="Pass" /> *@
+@*         </div> *@
+@*         <div class="form-group"> *@
+@*             <input type="submit" value="Entrar" class="btn btn-success" /> *@
+@*         </div> *@
+@*     </form> *@
+@* </div> *@
+@* <a class="btn btn-outline-secondary">Registrarse</a> *@
 
-<form asp-action="Index" method="POST">
-    <div class="row">
-        <h2>Ingresar</h2>
-        <p>Ingresa a tu cuenta</p>
+<div class="container-fluid vh-100">
+        <div class="row justify-content-center h-100">
+            <div class="col-12 col-lg-6" style="background-color: blue;">
+
+            </div>
+            <div class="col row m-auto">
+                <div class="col-12">
+                    <div class="danger">
+                        @ViewBag.Error
+                    </div>
+                </div>
+                <div class="container card col-12 col-md-8 col-lg-8 col-xl-6">
+                    <div class="card-body">
+                        <h3>Ingresa</h3>
+                        <p>Ingresa a tu cuenta</p>
+                        <form asp-action="Index" method="post" class="container">
+                            <div class="input-group mb-3">
+                                <div class="input-group-text"><i class="fa-solid fa-at"></i></div>
+                                <input class="form-control" type="email" name="User" id="Email">
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-text"><i class="fa-solid fa-lock"></i></div>
+                                <input class="form-control" type="password" name="Pass" id="Password">
+                            </div>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">Recordar</label>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-10 col-lg-10 mb-3"><input type="submit" class="btn btn-primary w-100" value="Iniciar sesión"/></div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <!-- <div class="col-10 col-lg-10"><button type="button" class="btn btn-outline-secondary btn-md w-100">Registrarse</button></div> -->
+                                <div class="col-10 col-lg-10 row justify-content-center">
+                                    <button class="btn btn-outline-secondary dropdown-toggle w-100" type="button" id="registrarComo" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Registrarse
+                                    </button>
+                                    <ul class="dropdown-menu col-7" aria-labelledby="registrarComo">
+                                        <li><a class="dropdown-item" href="#">Egresado</a></li>
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="Registro" asp-action="Empleador">Empleador</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="input-group mb-3">
-        <span class="input-group-text" id="basic-addon1">
-            <i class="fa-solid fa-user"></i>
-        </span>
-        <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-    </div>
-    <div class="input-group mb-3">
-        <span class="input-group-text" id="basic-addon2">
-            <i class="fa-solid fa-key" style="color: aqua"></i>
-        </span>
-      <input type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
-    </div>
-</form>

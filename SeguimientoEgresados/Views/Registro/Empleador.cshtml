@@ -5,18 +5,50 @@
     Layout = "_Layout";
 }
 
-<div class="container p-3">
-    <!-- Datos empresa -->
-        <div class="row justify-content-center">
-            <div class="col-10 col-md-9 col-lg-6 card m-auto">
-                <div class="card-body">
-                    <form action="">
-                        <div class="container">
-                            <div class="row justify-content-end">
+<div class="container p-4">
+    <div class="card">
+        <div class="card-body">
+            <div class="row position-relative">
+                <h3>Registro de empleador</h3>
+                <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">1. Datos de acceso</a></li>
+                    <li class="breadcrumb-item active" aria-current="page"><a href="#">2. Datos de la empresa</a></li>
+                </ol>
+                </nav>
+                <div class="container-fluid">
+                    <div class="row justify-content-center">
+                        <div class="col-12 col-md-8 col-lg-7 col-xl-6">
+                            <form action="" class="row justify-content-end">
+                                <h5>Datos de acceso</h5>
                                 <div class="col-12">
-                                    <h3 class="mb-3">Registro de empresa</h3>
-                                    <h5>Datos de la empresa</h5>
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control display-3" id="floatingInput" name="User" placeholder="Correo electrónico">
+                                        <label for="floatingInput"><i class="fa-solid fa-at mx-2"></i>Correo electrónico</label>
+                                    </div>
                                 </div>
+                                <div class="col-12">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control display-3" id="floatingInput" name="Pass" placeholder="Contraseña">
+                                        <label for="floatingInput"><i class="fa-solid fa-lock mx-2"></i>Contraseña</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control display-3" id="floatingInput" name="Pass2" placeholder="Confirmar contraseña">
+                                        <label for="floatingInput"><i class="fa-solid fa-lock mx-2"></i>Confirmar contraseña</label>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <button type="submit" class="btn btn-primary w-100" name="xd" value="Paso2">Siguiente<i class="fa-solid fa-angle-right mx-2"></i></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center" hidden>
+                        <div class="col-12 col-md-8 col-lg-7 col-xl-6">
+                            <div class="row justify-content-end">
+                                <h5>Datos de la empresa</h5>
                                 <div class="col-12">
                                     <div class="form-floating mb-3">
                                         <input type="text" class="form-control display-3" id="floatingInput" name="NombreEmpresa" placeholder="Nombre de la empresa">
@@ -93,11 +125,14 @@
                                         <label for="floatingInput"><i class="fa-solid fa-globe mx-2"></i>Página web</label>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary w-50">Siguiente</button>
+                                <div class="col-4">
+                                    <button type="submit" class="btn btn-primary w-100">Siguiente<i class="fa-solid fa-angle-right mx-2"></i></button>
+                                </div>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
