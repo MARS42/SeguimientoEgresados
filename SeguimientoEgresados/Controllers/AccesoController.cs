@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using SeguimientoEgresados.Models;
 using SeguimientoEgresados.Utils;
@@ -28,8 +30,23 @@ namespace SeguimientoEgresados.Controllers
         {
             try
             {
+                //FromSqlRaw = queries SELECT
+                //ExecuteSqlRaw = INSERT, DELETE, UPDATE
+                // -2 = Correo malo, -1 =
+                var email = new SqlParameter("@email", User);
+                var password = new SqlParameter("@password", Pass);
+                var idUsuario = new SqlParameter("@id_usuario", SqlDbType.Int)
+                {
+                    Direction = ParameterDirection.Output
+                };
+
+                var users = await _context.Database.ExecuteSqlRawAsync("exec AccesoUsuario @email, @password, @id_usuario out", email, password, idUsuario);
+                
+                Console.WriteLine("Id fount: " + idUsuario.Value);
+                
                 var oUser = await _context.Usuarios
-                    .FirstOrDefaultAsync(u => u.Email.Equals(User.Trim()) && u.Password.Equals(Pass.Trim()));
+                    .FirstOrDefaultAsync(u => u.Id.Equals(Convert.ToInt32(idUsuario.Value)));
+                
                 if (oUser == null)
                 {
                     ViewBag.Error = "Usuario o contraseña invalida";
