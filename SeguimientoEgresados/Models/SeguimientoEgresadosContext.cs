@@ -16,6 +16,7 @@ namespace SeguimientoEgresados.Models
         {
         }
 
+        public virtual DbSet<Empresa> Empresas { get; set; } = null!;
         public virtual DbSet<Modulo> Modulos { get; set; } = null!;
         public virtual DbSet<Operacione> Operaciones { get; set; } = null!;
         public virtual DbSet<RolOperacion> RolOperacions { get; set; } = null!;
@@ -33,6 +34,81 @@ namespace SeguimientoEgresados.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Empresa>(entity =>
+            {
+                entity.HasIndex(e => e.Id, "Empresas_id_uindex")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.Rfc, "Empresas_rfc_uindex")
+                    .IsUnique();
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Colonia)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("colonia");
+
+                entity.Property(e => e.CorreoEmpresa)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("correo_empresa");
+
+                entity.Property(e => e.Cp).HasColumnName("cp");
+
+                entity.Property(e => e.Domicilio)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("domicilio");
+
+                entity.Property(e => e.Estado)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("estado");
+
+                entity.Property(e => e.IdUsuario).HasColumnName("id_usuario");
+
+                entity.Property(e => e.Municipio)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("municipio");
+
+                entity.Property(e => e.Nombre)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("nombre");
+
+                entity.Property(e => e.Pais)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("pais");
+
+                entity.Property(e => e.RazonSocial)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("razon_social");
+
+                entity.Property(e => e.Rfc)
+                    .HasMaxLength(15)
+                    .IsUnicode(false)
+                    .HasColumnName("rfc");
+
+                entity.Property(e => e.Telefono)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("telefono");
+
+                entity.Property(e => e.Website)
+                    .HasMaxLength(512)
+                    .IsUnicode(false)
+                    .HasColumnName("website");
+
+                entity.HasOne(d => d.IdUsuarioNavigation)
+                    .WithMany(p => p.Empresas)
+                    .HasForeignKey(d => d.IdUsuario)
+                    .HasConstraintName("Empresas_Usuarios_id_fk");
+            });
+
             modelBuilder.Entity<Modulo>(entity =>
             {
                 entity.HasIndex(e => e.Id, "Modulos_id_uindex")
@@ -108,10 +184,23 @@ namespace SeguimientoEgresados.Models
 
             modelBuilder.Entity<Usuario>(entity =>
             {
+                entity.HasIndex(e => e.Email, "Usuarios_email_uindex")
+                    .IsUnique();
+
                 entity.HasIndex(e => e.Id, "Usuarios_id_uindex")
                     .IsUnique();
 
                 entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.ApellidoMaterno)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("apellido_materno");
+
+                entity.Property(e => e.ApellidoPaterno)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("apellido_paterno");
 
                 entity.Property(e => e.Email)
                     .HasMaxLength(512)
@@ -133,6 +222,13 @@ namespace SeguimientoEgresados.Models
                     .HasMaxLength(1024)
                     .IsUnicode(false)
                     .HasColumnName("password");
+
+                entity.Property(e => e.Password512)
+                    .HasMaxLength(64)
+                    .HasColumnName("password512")
+                    .IsFixedLength();
+
+                entity.Property(e => e.Salt).HasColumnName("salt");
 
                 entity.HasOne(d => d.IdRolNavigation)
                     .WithMany(p => p.Usuarios)
