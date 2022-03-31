@@ -12,6 +12,20 @@ namespace SeguimientoEgresados.Controllers
         {
             return View();
         }
+        
+        [HttpPost]
+        public IActionResult Index(string Tipo){
+            
+            if(Tipo.Equals("Empleador") || Tipo.Equals("Egresado"))
+                return RedirectToAction(Tipo.Equals("Egresado") ? "Egresado" : "Empleador");
+
+            return NotFound();
+        }
+        
+        public IActionResult Egresado()
+        {
+            return View();
+        }
 
         public IActionResult Empleador()
         {

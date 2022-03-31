@@ -44,7 +44,7 @@
                                 <input class="form-control" type="password" name="Pass" id="Password">
                             </div>
                             <div class="form-check mb-3">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                <input class="form-check-input" type="checkbox" value="" name="recordar" id="flexCheckDefault">
                                 <label class="form-check-label" for="flexCheckDefault">Recordar</label>
                             </div>
                             <div class="row justify-content-center">
@@ -62,7 +62,7 @@
                                         Registrarse
                                     </button>
                                     <ul class="dropdown-menu col-7" aria-labelledby="registrarComo">
-                                        <li><a class="dropdown-item" href="#">Egresado</a></li>
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="Registro" asp-action="Egresado">Egresado</a></li>
                                         <li><a class="dropdown-item" asp-area="" asp-controller="Registro" asp-action="Empleador">Empleador</a></li>
                                     </ul>
                                 </div>

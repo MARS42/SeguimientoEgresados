@@ -4,22 +4,22 @@
 }
 
 <div class="container">
-    <div class="row justify-content-center">
+    <div id="contenido-form" class="row justify-content-center">
         <div class="col-10 col-md-6 col-lg-4 card m-auto">
             <div class="card-body">
-                <form action="">
+                <form asp-action="Index" method="POST">
                     <div class="container">
                         <div class="row justify-content-end">
                             <h3 class="mb-3">Selecciona tu ocupación</h3>
                             <div class="form-check form-check-inline mb-2">
-                                <input class="form-check-input" type="radio" name="rol" id="opcEgresado" value="Egresado">
+                                <input class="form-check-input" type="radio" name="tipo" id="opcEgresado" value="Egresado">
                                 <label class="form-check-label" for="opcEgresado">Egresado</label>
                             </div>
                             <div class="form-check form-check-inline mb-3">
-                                <input class="form-check-input" type="radio" name="rol" id="opcEmpleador" value="Empleador">
+                                <input class="form-check-input" type="radio" name="tipo" id="opcEmpleador" value="Empleador">
                                 <label class="form-check-label" for="opcEmpleador">Empleador</label>
                             </div>
-                            <button type="submit" class="btn btn-primary w-50">Siguiente</button>
+                            <button id="btn-elegir-tipo" type="submit" class="btn btn-primary w-50">Siguiente</button>
                         </div>
                     </div>
                 </form>
@@ -27,3 +27,10 @@
         </div>
     </div>
 </div>
+
+<script>
+    const btn = document.getElementById("btn-elegir-tipo");
+    btn.addEventListener("click", () => {
+        document.getElementById("contenido-form").classList.add("animate__animated", "animate__faster", "animate__fadeOut");
+    });
+</script>
