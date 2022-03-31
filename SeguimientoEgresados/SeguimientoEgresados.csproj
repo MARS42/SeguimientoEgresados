@@ -30,7 +30,6 @@
       <Folder Include="Areas\Galeria\Controllers" />
       <Folder Include="Areas\Usuario\Data" />
       <Folder Include="Areas\Usuario\Models" />
-      <Folder Include="Areas\Usuario\Views" />
       <Folder Include="Pages" />
       <Folder Include="wwwroot\images" />
     </ItemGroup>

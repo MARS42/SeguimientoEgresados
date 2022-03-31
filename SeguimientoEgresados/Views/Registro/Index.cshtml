@@ -1,10 +1,10 @@
 @{
     ViewBag.Title = "Registro";
-    Layout = "_Layout";
+    //Layout = "_Layout";
 }
 
 <div class="container">
-    <div id="contenido-form" class="row justify-content-center">
+    <div id="contenido-form" class="row justify-content-center p-4">
         <div class="col-10 col-md-6 col-lg-4 card m-auto">
             <div class="card-body">
                 <form asp-action="Index" method="POST">
@@ -31,6 +31,6 @@
 <script>
     const btn = document.getElementById("btn-elegir-tipo");
     btn.addEventListener("click", () => {
-        document.getElementById("contenido-form").classList.add("animate__animated", "animate__faster", "animate__fadeOut");
+        document.getElementById("contenido-form").classList.add("animate__animated", "animate__faster", "animate__zoomOut");
     });
 </script>
