@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using SeguimientoEgresados.Filters;
 using SeguimientoEgresados.Models;
 
+const string policy = "MyPolicy";
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -15,6 +17,16 @@ builder.Services.AddDbContext<SeguimientoEgresadosContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("SegegContext"));
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: policy, poliBuilder =>
+    {
+        //poliBuilder.SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost").
+        poliBuilder.SetIsOriginAllowed(origin => new Uri(origin).Host == "*").
+            AllowAnyHeader().AllowAnyMethod();
+    });
+});
+
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
@@ -25,6 +37,8 @@ builder.Services.AddSession(options =>
 });
 
 var app = builder.Build();
+
+app.UseCors(policy);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

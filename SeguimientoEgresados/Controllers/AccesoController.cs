@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using SeguimientoEgresados.Models;
+using SeguimientoEgresados.Models.ViewModels;
 using SeguimientoEgresados.Utils;
 
 namespace SeguimientoEgresados.Controllers
@@ -26,15 +27,15 @@ namespace SeguimientoEgresados.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(string User, string Pass)
+        public async Task<IActionResult> Index(AccesoViewModel model)
         {
             try
             {
                 //FromSqlRaw = queries SELECT
                 //ExecuteSqlRaw = INSERT, DELETE, UPDATE
                 // -2 = Correo malo, -1 =
-                var email = new SqlParameter("@email", User);
-                var password = new SqlParameter("@password", Pass);
+                var email = new SqlParameter("@email", model.Email);
+                var password = new SqlParameter("@password", model.Password);
                 var idUsuario = new SqlParameter("@id_usuario", SqlDbType.Int)
                 {
                     Direction = ParameterDirection.Output
@@ -50,20 +51,11 @@ namespace SeguimientoEgresados.Controllers
                 if (oUser == null)
                 {
                     ViewBag.Error = "Usuario o contraseña invalida";
-                    return View();
+                    return View(model);
                 }
 
                 //Session["User"] = oUser;
                 HttpContext.Session.Set<Usuario>("User", oUser);
-
-                // var rol = _context.Roles
-                //     .FirstOrDefault(r => r.Id == oUser.IdRol);
-
-                
-                // if (rol != null)
-                // {
-                //     return RedirectToAction("Index", "Perfil", new { area="Usuario" });
-                // }
                 
                 return RedirigirPerfil(View());
             }

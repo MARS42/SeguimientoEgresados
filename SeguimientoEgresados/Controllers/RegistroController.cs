@@ -8,6 +8,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using SeguimientoEgresados.Models;
 using SeguimientoEgresados.Models.ViewModels;
+using SeguimientoEgresados.Utils;
 
 namespace SeguimientoEgresados.Controllers
 {
@@ -25,7 +26,11 @@ namespace SeguimientoEgresados.Controllers
         }
         
         [HttpPost]
-        public IActionResult Index(string Tipo){
+        public IActionResult Index(string Tipo)
+        {
+
+            if (string.IsNullOrEmpty(Tipo))
+                return View();
             
             if(Tipo.Equals("Empleador") || Tipo.Equals("Egresado"))
                 return RedirectToAction(Tipo.Equals("Egresado") ? "Egresado" : "Empleador");
@@ -66,9 +71,11 @@ namespace SeguimientoEgresados.Controllers
             
             Console.WriteLine("Usuario agregado id: " + id_generado.Value);
 
+            int userID = Convert.ToInt32(id_generado.Value);
+            
             var empresa = new Empresa()
             {
-                IdUsuario = Convert.ToInt32(id_generado.Value),
+                IdUsuario = userID,
                 Colonia = model.Colonia,
                 Cp = Convert.ToInt32(model.CodigoPostal),
                 Domicilio = model.Domicilio,
@@ -85,6 +92,10 @@ namespace SeguimientoEgresados.Controllers
 
             _context.Empresas.Add(empresa);
             await _context.SaveChangesAsync();
+            
+            var oUser = await _context.Usuarios
+                .FirstOrDefaultAsync(u => u.Id.Equals(userID));
+            HttpContext.Session.Set<Usuario>("User", oUser!);
 
             return RedirectToAction("Index", "Acceso");
         }
