@@ -25,6 +25,36 @@ namespace SeguimientoEgresados.Controllers
         {
             return RedirigirPerfil(View());
         }
+        
+        [HttpGet]
+        public async Task<IActionResult> Index(string Email, string Password)
+        {
+            var email = new SqlParameter("@email", Email);
+            var password = new SqlParameter("@password", Password);
+            var idUsuario = new SqlParameter("@id_usuario", SqlDbType.Int)
+            {
+                Direction = ParameterDirection.Output
+            };
+
+            var users = await _context.Database.ExecuteSqlRawAsync("exec AccesoUsuario @email, @password, @id_usuario out", email, password, idUsuario);
+                
+            Console.WriteLine("Id fount: " + idUsuario.Value);
+                
+            var oUser = await _context.Usuarios
+                .FirstOrDefaultAsync(u => u.Id.Equals(Convert.ToInt32(idUsuario.Value)));
+                
+            if (oUser == null)
+            {
+                ViewBag.Error = "Usuario o contraseña invalida";
+                return View();
+            }
+
+            //Session["User"] = oUser;
+            HttpContext.Session.Set<Usuario>("User", oUser);
+                
+            return RedirigirPerfil(View());
+        }
+
 
         [HttpPost]
         public async Task<IActionResult> Index(AccesoViewModel model)
