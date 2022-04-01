@@ -26,3 +26,9 @@ document.addEventListener("DOMContentLoaded", function(){
 function resizeIframe(obj) {
     obj.style.height = obj.contentWindow.document.documentElement.scrollHeight + 'px';
 }
+
+function clickActionBtn(btn) {
+    console.log("click " + btn)
+    //btn.disabled = true;
+    btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
+}

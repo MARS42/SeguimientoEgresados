@@ -93,12 +93,7 @@ namespace SeguimientoEgresados.Controllers
             _context.Empresas.Add(empresa);
             await _context.SaveChangesAsync();
             
-            var idUsuario = new SqlParameter("@id_usuario", SqlDbType.Int)
-            {
-                Direction = ParameterDirection.Output
-            };
-            
-            return RedirectToAction("Index", "Acceso", new AccesoViewModel(){ Email = model.Email, Password = model.Password });
+            return RedirectToAction("Index", "Acceso", new { Email = model.Email, Password = model.Password });
         }
     }
 }

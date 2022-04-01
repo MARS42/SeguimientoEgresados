@@ -20,15 +20,19 @@ namespace SeguimientoEgresados.Controllers
         {
             _context = context;
         }
-
-        public IActionResult Index()
-        {
-            return RedirigirPerfil(View());
-        }
+        
+        // [HttpGet]
+        // public IActionResult Index()
+        // {
+        //     return RedirigirPerfil(View());
+        // }
         
         [HttpGet]
         public async Task<IActionResult> Index(string Email, string Password)
         {
+            if(string.IsNullOrEmpty(Email) || string.IsNullOrEmpty(Password))
+                return RedirigirPerfil(View());
+        
             var email = new SqlParameter("@email", Email);
             var password = new SqlParameter("@password", Password);
             var idUsuario = new SqlParameter("@id_usuario", SqlDbType.Int)
