@@ -39,7 +39,7 @@
                 </ul>
     
                 <div class="d-flex align-items-center justify-content-around">
-                    <a class="btn btn-toolbar px-3 me-3" asp-area="" asp-controller="Inicio" asp-action="Index">Inicio</a>
+                    @* <a class="btn btn-toolbar px-3 me-3" asp-area="" asp-controller="Inicio" asp-action="Index">Inicio</a> *@
                     @{
                         string? controller = Convert.ToString(ViewContext.HttpContext.Request.RouteValues["Controller"]);
                         if (!controller!.Equals("Acceso"))
