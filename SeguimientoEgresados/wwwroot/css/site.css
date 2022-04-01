@@ -16,11 +16,24 @@ html {
 
 body {
   margin-bottom: 60px;
+  
   /*overflow-y: scroll;*/
   /*overflow-x: hidden;*/
   /*overflow: hidden;*/
 }
 
+.stackpane{
+  margin: auto;
+  position: relative;
+  transition: height 0.5s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+  /*overflow-y: scroll;*/
+  /*overflow-x: hidden;*/
+  overflow: hidden;
+}
+
+.stack-item{
+  position: absolute;
+}
 
 /*!* not active *!*/
 /*.nav-pills .pill-1 .nav-link:not(.active) {*/

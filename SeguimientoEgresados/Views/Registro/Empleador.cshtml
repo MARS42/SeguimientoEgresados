@@ -16,8 +16,8 @@
                         <li class="breadcrumb-item active" aria-current="page"><a href="#">2. Datos de la empresa</a></li>
                     </ol>
                 </nav> -->
-                <div class="container-fluid position position-relative">
-                    <div class="form-step invisible row justify-content-center position-absolute mt-4 animate__animated animate__faster">
+                <div class="stackpane container-fluid">
+                    <div class="stack-item form-step invisible row justify-content-center animate__animated animate__faster">
                         <div class="col-12 col-md-8 col-lg-7 col-xl-6">
                             <div class="row justify-content-end">
                                 <h5>Datos de acceso</h5>
@@ -55,13 +55,13 @@
                                         <label><i class="fa-solid fa-lock mx-2"></i>Confirmar contraseña</label>
                                     </div>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-12 col-md-6 col-lg-5 col-xl-4">
                                     <button type="button" data-step="0" data-stepmode="next" class="stepBtn btn btn-primary w-100">Siguiente<i class="fa-solid fa-angle-right mx-2"></i></button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="form-step invisible row justify-content-center position-absolute mt-4 animate__animated animate__faster">
+                    <div class="stack-item form-step invisible row justify-content-center animate__animated animate__faster">
                         <div class="col-12 col-md-8 col-lg-7 col-xl-6">
                             <div class="row justify-content-end">
                                 <h5>Datos de la empresa</h5>
@@ -153,10 +153,10 @@
                                     </div>
                                     <span asp-validation-for="Website"></span>
                                 </div>
-                                <div class="col-6 col-md-4">
+                                <div class="col-6 col-md-5 col-lg-5 col-xl-4">
                                     <button type="button" data-step="1" data-stepmode="prev" class="stepBtn btn btn-secondary w-100">Volver<i class="fa-solid fa-angle-right mx-2"></i></button>
                                 </div>
-                                <div class="col-6 col-md-4">
+                                <div class="col-6 col-md-5 col-lg-5 col-xl-4">
                                     <button type="submit" class="btn btn-success w-100" onclick="clickActionBtn(this)">Registrarse<i class="fa-solid fa-angle-right mx-2"></i></button>
                                 </div>
                             </div>
@@ -173,6 +173,7 @@
     </form>
 </div>
 <script src="~/js/registroEmpleador.js"></script>
+<script src="~/js/redimensionarStacks.js"></script>
 @section Scripts
 {
     @{
