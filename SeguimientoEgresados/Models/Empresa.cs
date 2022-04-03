@@ -19,7 +19,9 @@ namespace SeguimientoEgresados.Models
         public string Telefono { get; set; } = null!;
         public string? Website { get; set; }
         public int IdUsuario { get; set; }
+        public int? IdCuestionario { get; set; }
 
+        public virtual Cuestionario? IdCuestionarioNavigation { get; set; }
         public virtual Usuario IdUsuarioNavigation { get; set; } = null!;
     }
 }

@@ -39,9 +39,13 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             return View();
         }
         
-        public IActionResult Cuestionario()
+        public async Task<IActionResult> Cuestionario()
         {
-            return View();
+            Models.Usuario? user = HttpContext.Session.Get<Models.Usuario>("User");
+            var empresa = await _context.Empresas.FirstOrDefaultAsync(e => e.IdUsuario.Equals(user!.Id));
+            var cuestionario = await _context.Cuestionarios.FirstOrDefaultAsync(c => c.Id.Equals(empresa!.IdCuestionario));
+
+            return View(cuestionario);
         }
         
         public IActionResult CerrarSesion()

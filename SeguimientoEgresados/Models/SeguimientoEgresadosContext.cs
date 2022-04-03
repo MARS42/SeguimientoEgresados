@@ -16,6 +16,7 @@ namespace SeguimientoEgresados.Models
         {
         }
 
+        public virtual DbSet<Cuestionario> Cuestionarios { get; set; } = null!;
         public virtual DbSet<Empresa> Empresas { get; set; } = null!;
         public virtual DbSet<Modulo> Modulos { get; set; } = null!;
         public virtual DbSet<Operacione> Operaciones { get; set; } = null!;
@@ -28,12 +29,24 @@ namespace SeguimientoEgresados.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=localhost;Database=SeguimientoEgresados;Trusted_Connection=False;User Id=SA;Password=3549355sql!;");
+                optionsBuilder.UseSqlServer("Server=localhost;Database=SeguimientoEgresados;User=SA;Password=3549355sql!");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Cuestionario>(entity =>
+            {
+                entity.HasIndex(e => e.Id, "Cuestionarios_id_uindex")
+                    .IsUnique();
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.ProximaAplicacion).HasColumnName("proxima_aplicacion");
+
+                entity.Property(e => e.UltimaAplicacion).HasColumnName("ultima_aplicacion");
+            });
+
             modelBuilder.Entity<Empresa>(entity =>
             {
                 entity.HasIndex(e => e.Id, "Empresas_id_uindex")
@@ -65,6 +78,8 @@ namespace SeguimientoEgresados.Models
                     .HasMaxLength(30)
                     .IsUnicode(false)
                     .HasColumnName("estado");
+
+                entity.Property(e => e.IdCuestionario).HasColumnName("id_cuestionario");
 
                 entity.Property(e => e.IdUsuario).HasColumnName("id_usuario");
 
@@ -102,6 +117,12 @@ namespace SeguimientoEgresados.Models
                     .HasMaxLength(512)
                     .IsUnicode(false)
                     .HasColumnName("website");
+
+                entity.HasOne(d => d.IdCuestionarioNavigation)
+                    .WithMany(p => p.Empresas)
+                    .HasForeignKey(d => d.IdCuestionario)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("Empresas_Cuestionarios_id_fk");
 
                 entity.HasOne(d => d.IdUsuarioNavigation)
                     .WithMany(p => p.Empresas)

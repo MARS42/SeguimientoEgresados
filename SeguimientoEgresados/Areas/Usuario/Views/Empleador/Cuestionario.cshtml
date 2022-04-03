@@ -1,10 +1,41 @@
+@model SeguimientoEgresados.Models.Cuestionario
+
 @{
     ViewBag.Title = "Cuestionario de empleador";
     //Layout = "_Layout";
 }
 
+@if (Model != null)
+{
+    <div>Tienes cuestionario</div>
+}
+else
+{
+    <div>No tienes cuestionario</div>
+}
+
 <div class="container p-4">
     <div class="col-12 animate__animated animate__fadeIn animate__delay-1s">
-        <iframe class="w-100 vh-100" src="https://docs.google.com/forms/d/e/1FAIpQLSdxnCn-lQrH6pjDkW7PSr7YvyL12DJMwtbWrqP1flgJy3WUdQ/viewform?embedded=true" frameborder="0" marginheight="0" marginwidth="0">Cargando…</iframe>
+        <button>Terminado</button>
+        <iframe class="w-100 vh-100" src="https://docs.google.com/forms/d/e/1FAIpQLSdxnCn-lQrH6pjDkW7PSr7YvyL12DJMwtbWrqP1flgJy3WUdQ/viewform?embedded=true" frameborder="0" marginheight="0" marginwidth="0" onload="cuestionarioCargado(this)">
+            Cargando…
+        </iframe>
     </div>
 </div>
+
+<script>
+
+const iframe = document.querySelectorAll('iframe');
+// iframe.forEach(item => {
+//    console.log(item.contentWindow.document.);
+// });
+
+
+function cuestionarioCargado(form){
+    console.log(form.src);
+}
+@{
+    
+}
+
+</script>
