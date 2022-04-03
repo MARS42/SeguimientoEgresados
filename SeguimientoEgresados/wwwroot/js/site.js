@@ -30,5 +30,8 @@ function resizeIframe(obj) {
 function clickActionBtn(btn) {
     console.log("click " + btn)
     //btn.disabled = true;
+    btn.style.pointerEvents = "none";
+    btn.style.cursor = "default";
+    btn.style.opacity = "0.7";
     btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
 }
