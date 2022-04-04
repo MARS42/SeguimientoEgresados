@@ -8,7 +8,7 @@
 @if (Model != null)
 {
     <div class="container p-4">
-        <div class="row justify-content-center">
+        <div class="row justify-content-center animate__animated animate__fadeIn animate__faster">
             <div class="col-12 col-md-10 col-lg-8 col-xl-6 card">
                 <div class="card-body">
                     <h3>Ya has registrado el cuestionario</h3>
@@ -24,9 +24,10 @@
 else
 {
     <div class="container p-4">
-        <div class="row justify-content-center">
+        <form asp-action="Cuestionario" method="POST" class="row justify-content-center">
             <div class="col-auto animate__animated animate__fadeIn animate__delay-2s">
-                <button type="submit" class="btn btn-primary animate__animated animate__rubberBand animate__slower animate__infinite" name="Verificar" value="He finalizado el cuestionario">
+                <button type="submit" class="btn btn-primary animate__animated animate__flash animate__delay-1s animate__slow animate__repeat-2" name="Verificar" value="He finalizado el cuestionario"
+                        onclick="clickActionBtn(this)">
                     He finalizado el cuestionario<i class="fa-regular fa-circle-check mx-2"></i>
                 </button>
             </div>
@@ -37,7 +38,7 @@ else
                     </iframe>
                 </form>
             </div>
-        </div>
+        </form>
     </div>
 }
 
