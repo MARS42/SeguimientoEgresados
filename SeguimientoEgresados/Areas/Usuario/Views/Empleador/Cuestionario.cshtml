@@ -7,11 +7,14 @@
 
 @if (Model != null)
 {
+    <div class="container m-4">
+        <h2>@ViewBag.Title</h2>
+    </div>
     <div class="container p-4">
         <div class="row justify-content-center animate__animated animate__fadeIn animate__faster">
             <div class="col-12 col-md-10 col-lg-8 col-xl-6 card">
                 <div class="card-body">
-                    <h3>Ya has registrado el cuestionario</h3>
+                    <h3>Has registrado el cuestionario</h3>
                     <p>El cuestionario se lleva a cabo cada cierto intervalo de tiempo, cuando puedas realizarlo de nuevo recibirás una notificación en tu correo electrónico.</p>
                     <p><strong>Última aplicación: </strong>@Html.DisplayFor(m => m.UltimaAplicacion)</p>
                     <p><strong>Próxima aplicación: </strong>@Html.DisplayFor(m => m.ProximaAplicacion)</p>
