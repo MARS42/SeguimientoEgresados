@@ -24,15 +24,38 @@
 else
 {
     <div class="container p-4">
+        @* <div class="toast d-block position-absolute top-50 start-50 translate-middle" style="z-index: 1024" role="alert" aria-live="assertive" aria-atomic="true"> *@
+        @*   <div class="toast-header"> *@
+        @*     <img src="" class="rounded me-2" alt="..."> *@
+        @*     <strong class="me-auto">Bootstrap</strong> *@
+        @*     <small>11 mins ago</small> *@
+        @*     <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button> *@
+        @*   </div> *@
+        @*   <div class="toast-body"> *@
+        @*     Hello, world! This is a toast message. *@
+        @*   </div> *@
+        @* </div> *@
+        
+        @* <div class="toast d-block position-absolute top-20 start-50 translate-middle" style="z-index: 1024" role="alert" aria-live="assertive" aria-atomic="true"> *@
+        @*   <div class="toast-header bg-primary text-white"> *@
+        @*     <i class="fa-solid fa-triangle-exclamation fa-lg mx-2"></i> *@
+        @*     <strong class="me-auto">Aviso</strong> *@
+        @*     <small>.</small> *@
+        @*     <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button> *@
+        @*   </div> *@
+        @*   <div class="toast-body"> *@
+        @*     Hello, world! This is a toast message. *@
+        @*   </div> *@
+        @* </div> *@
         <form asp-action="Cuestionario" method="POST" class="row justify-content-center">
-            <div class="col-auto animate__animated animate__fadeIn animate__delay-2s">
-                <button type="submit" class="btn btn-primary animate__animated animate__flash animate__delay-1s animate__slow animate__repeat-2" name="Verificar" value="He finalizado el cuestionario"
+            <div class="col-auto m-2">
+                <button type="submit" class="btn btn-primary animate__animated animate__flash animate__delay-2s animate__slow animate__repeat-2" name="Verificar" value="He finalizado el cuestionario"
                         onclick="clickActionBtn(this)">
                     He finalizado el cuestionario<i class="fa-regular fa-circle-check mx-2"></i>
                 </button>
             </div>
             <div class="col-12 animate__animated animate__fadeIn animate__delay-1s">
-                <form asp-action ="Cuestionario" method="post">
+                <form asp-action="Cuestionario" method="post">
                     <iframe class="w-100 vh-100" src="https://docs.google.com/forms/d/e/1FAIpQLSdxnCn-lQrH6pjDkW7PSr7YvyL12DJMwtbWrqP1flgJy3WUdQ/viewform?embedded=true" frameborder="0" marginheight="0" marginwidth="0" onload="cuestionarioCargado(this)">
                         Cargando…
                     </iframe>

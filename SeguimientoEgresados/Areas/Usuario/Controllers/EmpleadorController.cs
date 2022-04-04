@@ -29,6 +29,10 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
         {
             Models.Usuario? user = HttpContext.Session.Get<Models.Usuario>("User");
             var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Id.Equals(user!.Id));
+            var cuestionario = await _context.Cuestionarios.FirstOrDefaultAsync(c => c.IdUsuario.Equals(usuario!.Id));
+            Console.WriteLine("cues: " + cuestionario);
+            ViewData["Cuestionario"] = cuestionario;
+            
             return View(usuario);
         }
         
