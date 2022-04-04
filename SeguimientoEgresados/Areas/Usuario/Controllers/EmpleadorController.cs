@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using SeguimientoEgresados.Models;
+using SeguimientoEgresados.Models.ViewModels;
 using SeguimientoEgresados.Services;
 using SeguimientoEgresados.Utils;
 
@@ -37,6 +38,31 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             Console.WriteLine($"User id: {user.Id}, empresa id: {empresa.Nombre}");
             
             return View(empresa);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> MiEmpresa(Empresa model)
+        {
+            Models.Usuario? user = HttpContext.Session.Get<Models.Usuario>("User");
+            var empresa = await _context.Empresas.FirstOrDefaultAsync(e => e.IdUsuario.Equals(user!.Id));
+
+            empresa.Colonia = model.Colonia;
+            empresa.Cp = model.Cp;
+            empresa.Domicilio = model.Domicilio;
+            empresa.Estado = model.Estado;
+            empresa.Municipio = model.Municipio;
+            empresa.Nombre = model.Nombre;
+            empresa.Pais = model.Pais;
+            empresa.Rfc = model.Rfc;
+            empresa.RazonSocial = model.RazonSocial;
+            empresa.Website = model.Website;
+            empresa.CorreoEmpresa = model.CorreoEmpresa;
+            empresa.Telefono = model.Telefono;
+            
+            _context.Entry(empresa).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            //return Ok(model);
+            return RedirectToAction("MiEmpresa");
         }
 
         public IActionResult PublicarEmpleo()
