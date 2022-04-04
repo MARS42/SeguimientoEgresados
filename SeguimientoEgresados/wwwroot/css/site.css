@@ -102,6 +102,10 @@ body {
   color: white;
 }
 
+.nav-link:hover{
+  text-decoration: underline;
+}
+
 .fixed-top {
   top: -5px;
   transform: translateY(5px);
