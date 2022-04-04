@@ -7,23 +7,39 @@
 
 @if (Model != null)
 {
-    <div>Tienes cuestionario</div>
+    <div class="container p-4">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-8 col-xl-6 card">
+                <div class="card-body">
+                    <h3>Ya has registrado el cuestionario</h3>
+                    <p>El cuestionario se lleva a cabo cada cierto intervalo de tiempo, cuando puedas realizarlo de nuevo recibirás una notificación en tu correo electrónico.</p>
+                    <p><strong>Última aplicación: </strong>@Html.DisplayFor(m => m.UltimaAplicacion)</p>
+                    <p><strong>Próxima aplicación: </strong>@Html.DisplayFor(m => m.ProximaAplicacion)</p>
+                    <i class="fa-regular fa-circle-check fa-2xl mx-2 float-end text-success"></i>
+                </div>
+            </div>
+        </div>
+    </div>
 }
 else
 {
-    <div>No tienes cuestionario</div>
-}
-
-<div class="container p-4">
-    <div class="col-12 animate__animated animate__fadeIn animate__delay-1s">
-        <form asp-action ="Cuestionario" method="post">
-            <input type="submit" name="Verificar" value="Verificar">
-            <iframe class="w-100 vh-100" src="https://docs.google.com/forms/d/e/1FAIpQLSdxnCn-lQrH6pjDkW7PSr7YvyL12DJMwtbWrqP1flgJy3WUdQ/viewform?embedded=true" frameborder="0" marginheight="0" marginwidth="0" onload="cuestionarioCargado(this)">
-                Cargando…
-            </iframe>
-        </form>
+    <div class="container p-4">
+        <div class="row justify-content-center">
+            <div class="col-auto animate__animated animate__fadeIn animate__delay-2s">
+                <button type="submit" class="btn btn-primary animate__animated animate__rubberBand animate__slower animate__infinite" name="Verificar" value="He finalizado el cuestionario">
+                    He finalizado el cuestionario<i class="fa-regular fa-circle-check mx-2"></i>
+                </button>
+            </div>
+            <div class="col-12 animate__animated animate__fadeIn animate__delay-1s">
+                <form asp-action ="Cuestionario" method="post">
+                    <iframe class="w-100 vh-100" src="https://docs.google.com/forms/d/e/1FAIpQLSdxnCn-lQrH6pjDkW7PSr7YvyL12DJMwtbWrqP1flgJy3WUdQ/viewform?embedded=true" frameborder="0" marginheight="0" marginwidth="0" onload="cuestionarioCargado(this)">
+                        Cargando…
+                    </iframe>
+                </form>
+            </div>
+        </div>
     </div>
-</div>
+}
 
 <script>
 

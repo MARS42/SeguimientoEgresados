@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using SeguimientoEgresados.Models;
 using SeguimientoEgresados.Services;
@@ -56,15 +58,19 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
         {
             Models.Usuario? user = HttpContext.Session.Get<Models.Usuario>("User");
             string msg = await googleSheets.VerificarCuestionario(user!.Email);
-
+            
             if (!InsertarCuestionario(msg))
             {
                 return View();
             }
             
+            var id_usuario = new SqlParameter("@id_usuario", user!.Id);
             
+            await _context.Database.ExecuteSqlRawAsync("exec CrearCuestionario @id_usuario", id_usuario);
             
-            return View();
+            //return View();
+            return RedirectToAction("Cuestionario");
+            return Ok(await googleSheets.VerificarCuestionario(user!.Email));
         }
         
         public IActionResult CerrarSesion()
