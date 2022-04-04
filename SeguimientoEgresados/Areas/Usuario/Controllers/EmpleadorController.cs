@@ -25,9 +25,27 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             this.googleSheets = googleSheets;
         }
         
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            Models.Usuario? user = HttpContext.Session.Get<Models.Usuario>("User");
+            var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Id.Equals(user!.Id));
+            return View(usuario);
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> Index(Models.Usuario model)
+        {
+            Models.Usuario? user = HttpContext.Session.Get<Models.Usuario>("User");
+            var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Id.Equals(user!.Id));
+
+            usuario.Nombre = model.Nombre;
+            usuario.ApellidoPaterno = model.ApellidoPaterno;
+            usuario.ApellidoMaterno = model.ApellidoMaterno;
+            //usuario.Email = model.Email;
+            
+            _context.Entry(usuario).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
         
         public async Task<IActionResult> MiEmpresa()
