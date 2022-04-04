@@ -16,10 +16,12 @@ else
 
 <div class="container p-4">
     <div class="col-12 animate__animated animate__fadeIn animate__delay-1s">
-        <button>Terminado</button>
-        <iframe class="w-100 vh-100" src="https://docs.google.com/forms/d/e/1FAIpQLSdxnCn-lQrH6pjDkW7PSr7YvyL12DJMwtbWrqP1flgJy3WUdQ/viewform?embedded=true" frameborder="0" marginheight="0" marginwidth="0" onload="cuestionarioCargado(this)">
-            Cargando…
-        </iframe>
+        <form asp-action ="Cuestionario" method="post">
+            <input type="submit" name="Verificar" value="Verificar">
+            <iframe class="w-100 vh-100" src="https://docs.google.com/forms/d/e/1FAIpQLSdxnCn-lQrH6pjDkW7PSr7YvyL12DJMwtbWrqP1flgJy3WUdQ/viewform?embedded=true" frameborder="0" marginheight="0" marginwidth="0" onload="cuestionarioCargado(this)">
+                Cargando…
+            </iframe>
+        </form>
     </div>
 </div>
 

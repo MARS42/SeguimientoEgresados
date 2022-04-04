@@ -5,15 +5,11 @@ namespace SeguimientoEgresados.Models
 {
     public partial class Cuestionario
     {
-        public Cuestionario()
-        {
-            Empresas = new HashSet<Empresa>();
-        }
-
         public int Id { get; set; }
         public DateTime? UltimaAplicacion { get; set; }
         public DateTime ProximaAplicacion { get; set; }
+        public int? IdUsuario { get; set; }
 
-        public virtual ICollection<Empresa> Empresas { get; set; }
+        public virtual Usuario? IdUsuarioNavigation { get; set; }
     }
 }

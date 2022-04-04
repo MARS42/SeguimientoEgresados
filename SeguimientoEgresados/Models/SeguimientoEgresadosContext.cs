@@ -18,6 +18,7 @@ namespace SeguimientoEgresados.Models
 
         public virtual DbSet<Cuestionario> Cuestionarios { get; set; } = null!;
         public virtual DbSet<Empresa> Empresas { get; set; } = null!;
+        public virtual DbSet<IntervalosCuestionario> IntervalosCuestionarios { get; set; } = null!;
         public virtual DbSet<Modulo> Modulos { get; set; } = null!;
         public virtual DbSet<Operacione> Operaciones { get; set; } = null!;
         public virtual DbSet<RolOperacion> RolOperacions { get; set; } = null!;
@@ -42,9 +43,16 @@ namespace SeguimientoEgresados.Models
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
+                entity.Property(e => e.IdUsuario).HasColumnName("id_usuario");
+
                 entity.Property(e => e.ProximaAplicacion).HasColumnName("proxima_aplicacion");
 
                 entity.Property(e => e.UltimaAplicacion).HasColumnName("ultima_aplicacion");
+
+                entity.HasOne(d => d.IdUsuarioNavigation)
+                    .WithMany(p => p.Cuestionarios)
+                    .HasForeignKey(d => d.IdUsuario)
+                    .HasConstraintName("Cuestionarios_Usuarios_id_fk");
             });
 
             modelBuilder.Entity<Empresa>(entity =>
@@ -78,8 +86,6 @@ namespace SeguimientoEgresados.Models
                     .HasMaxLength(30)
                     .IsUnicode(false)
                     .HasColumnName("estado");
-
-                entity.Property(e => e.IdCuestionario).HasColumnName("id_cuestionario");
 
                 entity.Property(e => e.IdUsuario).HasColumnName("id_usuario");
 
@@ -118,16 +124,34 @@ namespace SeguimientoEgresados.Models
                     .IsUnicode(false)
                     .HasColumnName("website");
 
-                entity.HasOne(d => d.IdCuestionarioNavigation)
-                    .WithMany(p => p.Empresas)
-                    .HasForeignKey(d => d.IdCuestionario)
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("Empresas_Cuestionarios_id_fk");
-
                 entity.HasOne(d => d.IdUsuarioNavigation)
                     .WithMany(p => p.Empresas)
                     .HasForeignKey(d => d.IdUsuario)
                     .HasConstraintName("Empresas_Usuarios_id_fk");
+            });
+
+            modelBuilder.Entity<IntervalosCuestionario>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("IntervalosCuestionario");
+
+                entity.HasIndex(e => e.Nombre, "IntervalosCuestionario_nombre_uindex")
+                    .IsUnique();
+
+                entity.Property(e => e.IdRol).HasColumnName("id_rol");
+
+                entity.Property(e => e.Meses).HasColumnName("meses");
+
+                entity.Property(e => e.Nombre)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("nombre");
+
+                entity.HasOne(d => d.IdRolNavigation)
+                    .WithMany()
+                    .HasForeignKey(d => d.IdRol)
+                    .HasConstraintName("IntervalosCuestionario_Roles_id_fk");
             });
 
             modelBuilder.Entity<Modulo>(entity =>

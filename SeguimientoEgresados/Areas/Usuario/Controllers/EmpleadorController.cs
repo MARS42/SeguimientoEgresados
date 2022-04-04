@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SeguimientoEgresados.Models;
+using SeguimientoEgresados.Services;
 using SeguimientoEgresados.Utils;
 
 namespace SeguimientoEgresados.Areas.Usuario.Controllers
@@ -13,10 +14,12 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
     public class EmpleadorController : Controller
     {
         private SeguimientoEgresadosContext _context;
+        private IGoogleSheetsService googleSheets;
 
-        public EmpleadorController(SeguimientoEgresadosContext context)
+        public EmpleadorController(SeguimientoEgresadosContext context, IGoogleSheetsService googleSheets)
         {
             _context = context;
+            this.googleSheets = googleSheets;
         }
         
         public IActionResult Index()
@@ -43,15 +46,36 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
         {
             Models.Usuario? user = HttpContext.Session.Get<Models.Usuario>("User");
             var empresa = await _context.Empresas.FirstOrDefaultAsync(e => e.IdUsuario.Equals(user!.Id));
-            var cuestionario = await _context.Cuestionarios.FirstOrDefaultAsync(c => c.Id.Equals(empresa!.IdCuestionario));
+            var cuestionario = await _context.Cuestionarios.FirstOrDefaultAsync(c => c.IdUsuario.Equals(empresa!.IdUsuario));
 
             return View(cuestionario);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Cuestionario(String Verificar)
+        {
+            Models.Usuario? user = HttpContext.Session.Get<Models.Usuario>("User");
+            string msg = await googleSheets.VerificarCuestionario(user!.Email);
+
+            if (!InsertarCuestionario(msg))
+            {
+                return View();
+            }
+            
+            
+            
+            return View();
         }
         
         public IActionResult CerrarSesion()
         {
             HttpContext.Session.Remove("User");
             return RedirectToAction("Index", "Inicio", new { area="" });
+        }
+
+        private bool InsertarCuestionario(string sheetsResponse)
+        {
+            return sheetsResponse.Equals("Ok");
         }
     }
 }

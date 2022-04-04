@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using SeguimientoEgresados.Filters;
 using SeguimientoEgresados.Models;
+using SeguimientoEgresados.Services;
 
 const string policy = "MyPolicy";
 
@@ -16,6 +17,8 @@ builder.Services.AddDbContext<SeguimientoEgresadosContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("SegegContext"));
 });
+
+builder.Services.AddScoped<IGoogleSheetsService, GoogleSheetsService>();
 
 builder.Services.AddCors(options =>
 {
