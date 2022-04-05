@@ -95,6 +95,10 @@ body {
   color: white;
 }
 
+.nav-pills .nav-link:is(.activeSec) {
+  text-decoration: underline;
+}
+
 .nav-pills .nav-link:hover {
   /*background-color: rgba(0, 255, 0, 0.5);*/
   background-color: rgba(255, 255, 255, 0.2);
@@ -107,8 +111,8 @@ body {
 }
 
 .fixed-top {
-  top: -5px;
-  transform: translateY(5px);
-  transition: transform .3s;
+  /*top: -10px;*/
+  /*transform: translateY(10px);*/
+  /*transition: transform 0.3s;*/
 }
 

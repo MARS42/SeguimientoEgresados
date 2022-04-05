@@ -1,5 +1,5 @@
 @using SeguimientoEgresados.Utils
-<div class="container text-center" id="bannerLogos">
+<div class="container text-center animate__animated animate__faster" id="bannerLogos">
     <img src="~/images/logo_gobmex.png" alt="Gobierno de México" class="bannersLogos">
     <img src="~/images/logo_sep.png" alt="Secretaría de Educación Pública" class="bannersLogos">
     <img src="~/images/logo_tecnm.jpg" alt="Tecnológico Nacional de México" class="bannersLogos">
@@ -38,7 +38,7 @@
                     </li>
                 </ul>
     
-                <div class="d-flex align-items-center justify-content-around">
+                <div class="row align-items-center justify-content-around">
                     @* <a class="btn btn-toolbar px-3 me-3" asp-area="" asp-controller="Inicio" asp-action="Index">Inicio</a> *@
                     @{
                         string? controller = Convert.ToString(ViewContext.HttpContext.Request.RouteValues["Controller"]);

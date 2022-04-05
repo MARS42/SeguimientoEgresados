@@ -7,17 +7,24 @@ document.addEventListener("DOMContentLoaded", function(){
 
     window.addEventListener('scroll', function() {
 
-        const bannerLogosHeight = document.getElementById('bannerLogos').offsetHeight;
+        const bannerLogos = document.getElementById('bannerLogos');
+        const bannerLogosHeight = bannerLogos.offsetHeight;
         if (window.scrollY > bannerLogosHeight) {
             // add padding top to show content behind navbar
             navbar_height = document.getElementById('globalNavbar').offsetHeight;
-            bannerLogos.style.opacity = "0";
+            //bannerLogos.style.opacity = "0";
             document.body.style.paddingTop = navbar_height + 'px';
+
+            bannerLogos.classList.remove("animate__fadeInDown");
+            bannerLogos.classList.add("animate__fadeOut");
+            
             document.getElementById('globalNavbar').classList.add('fixed-top');
         } else {
             // remove padding top from body
             document.body.style.paddingTop = '0';
-            bannerLogos.style.opacity = "1";
+            //bannerLogos.style.opacity = "1";
+            bannerLogos.classList.remove("animate__fadeOut");
+            bannerLogos.classList.add("animate__fadeInDown");
             document.getElementById('globalNavbar').classList.remove('fixed-top');
         }
     });
