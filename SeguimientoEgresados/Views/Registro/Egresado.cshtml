@@ -1,6 +1,176 @@
+@model SeguimientoEgresados.Models.ViewModels.RegistroEgresadoViewModel
+
 @{
     ViewBag.Title = "Registro de egresado";
     //Layout = "_Layout";
 }
 
-<h2>title</h2>
+@* <div class="container p-4 vh-100"> *@
+@*     <form asp-action="Empleador" method="POST" class="card p-3"> *@
+@*         <div class="card-body"> *@
+@*             <div class="row"> *@
+@*                 <h3>Registro de empleador</h3> *@
+@*                 <div class="stackpane container-fluid"> *@
+@*                     <div class="stack-item form-step invisible row justify-content-center animate__animated animate__faster"> *@
+@*                         <div class="col-12 col-md-8 col-lg-7 col-xl-6"> *@
+@*                             <div class="row justify-content-end"> *@
+@*                                 <h5>Datos de acceso</h5> *@
+@*                                 <div class="col-12 col-md-6"> *@
+@*                                     <div class="form-floating mb-3"> *@
+@*                                         <input asp-for="Nombres" type="text" class="form-control display-3" placeholder="Nombre completo del representante"> *@
+@*                                         <label asp-for="Nombres"><i class="fa-solid fa-user-tie mx-2"></i>Nombre(s)</label> *@
+@*                                     </div> *@
+@*                                     <span asp-validation-for="Nombres"></span> *@
+@*                                 </div> *@
+@*                                 <div class="col-12 col-md-6"> *@
+@*                                     <div class="form-floating mb-3"> *@
+@*                                         <input asp-for="Apellidos" type="text" class="form-control display-3" placeholder="Apellidos del representante"> *@
+@*                                         <label asp-for="Apellidos"><i class="fa-solid fa-user-tie mx-2"></i>Apellidos</label> *@
+@*                                     </div> *@
+@*                                     <span asp-validation-for="Apellidos"></span> *@
+@*                                 </div> *@
+@*                                 <div class="col-12"> *@
+@*                                     <div class="form-floating mb-3"> *@
+@*                                         <input asp-for="Email" type="email" class="form-control display-3" placeholder="Correo electrónico"> *@
+@*                                         <label asp-for="Email"><i class="fa-solid fa-at mx-2"></i>Correo electrónico</label> *@
+@*                                     </div> *@
+@*                                     <span asp-validation-for="Email"></span> *@
+@*                                 </div> *@
+@*                                 <div class="col-12"> *@
+@*                                     <div class="form-floating mb-3"> *@
+@*                                         <input asp-for="Password" type="password" class="form-control display-3" placeholder="Contraseña"> *@
+@*                                         <label asp-for="Password"><i class="fa-solid fa-lock mx-2"></i>Contraseña</label> *@
+@*                                     </div> *@
+@*                                     <span asp-validation-for="Password"></span> *@
+@*                                 </div> *@
+@*                                 <div class="col-12"> *@
+@*                                     <div class="form-floating mb-3"> *@
+@*                                         <input type="password" class="form-control display-3" placeholder="Confirmar contraseña"> *@
+@*                                         <label><i class="fa-solid fa-lock mx-2"></i>Confirmar contraseña</label> *@
+@*                                     </div> *@
+@*                                 </div> *@
+@*                                 <div class="col-12 col-md-6 col-lg-5 col-xl-4"> *@
+@*                                     <button type="button" data-step="0" data-stepmode="next" class="stepBtn btn btn-primary w-100">Siguiente<i class="fa-solid fa-angle-right mx-2"></i></button> *@
+@*                                 </div> *@
+@*                             </div> *@
+@*                         </div> *@
+@*                     </div> *@
+@*                     <div class="stack-item form-step invisible row justify-content-center animate__animated animate__faster"> *@
+@*                         <div class="col-12 col-md-8 col-lg-7 col-xl-6"> *@
+@*                             <div class="row justify-content-end"> *@
+@*                                 <h5>Datos de la empresa</h5> *@
+@*                                 <div class="col-12"> *@
+@*                                     <div class="form-floating mb-3"> *@
+@*                                         <input asp-for="NombreEmpresa" type="text" class="form-control display-3" placeholder="Nombre de la empresa"> *@
+@*                                         <label asp-for="NombreEmpresa"><i class="fa-solid fa-building mx-2"></i>Nombre de la empresa</label> *@
+@*                                     </div> *@
+@*                                     <span asp-validation-for="NombreEmpresa"></span> *@
+@*                                 </div> *@
+@*                                 <div class="col-12"> *@
+@*                                     <div class="form-floating mb-3"> *@
+@*                                         <input asp-for="RFC" type="text" class="form-control" placeholder="RFC"> *@
+@*                                         <label asp-for="RFC"><i class="fa-solid fa-id-card mx-2"></i>RFC</label> *@
+@*                                     </div> *@
+@*                                     <span asp-validation-for="RFC"></span> *@
+@*                                 </div> *@
+@*                                 <div class="col-12"> *@
+@*                                     <div class="form-floating mb-3"> *@
+@*                                         <input asp-for="RazonSocial" type="text" class="form-control" placeholder="Razón social"> *@
+@*                                         <label asp-for="RazonSocial"><i class="fa-solid fa-comment mx-2"></i>Razón social</label> *@
+@*                                     </div> *@
+@*                                     <span asp-validation-for="RazonSocial"></span> *@
+@*                                 </div> *@
+@*                                 <div class="col-12"> *@
+@*                                     <div class="form-floating mb-3"> *@
+@*                                         <input asp-for="Domicilio" type="text" class="form-control" placeholder="Domicilio"> *@
+@*                                         <label asp-for="Domicilio"><i class="fa-solid fa-location-crosshairs mx-2"></i>Domicilio</label> *@
+@*                                     </div> *@
+@*                                     <span asp-validation-for="Domicilio"></span> *@
+@*                                 </div> *@
+@*                                 <div class="col-12 row m-0 p-0"> *@
+@*                                     <div class="col-12 col-lg-6"> *@
+@*                                         <div class="form-floating mb-3"> *@
+@*                                             <input asp-for="Colonia" type="text" class="form-control" placeholder="Colonia"> *@
+@*                                             <label asp-for="Colonia"><i class="fa-solid fa-road mx-2"></i>Colonia</label> *@
+@*                                         </div> *@
+@*                                         <span asp-validation-for="Colonia"></span> *@
+@*                                     </div> *@
+@*                                     <div class="col-12 col-lg-6"> *@
+@*                                         <div class="form-floating mb-3"> *@
+@*                                             <input asp-for="CodigoPostal" type="text" class="form-control" placeholder="Código postal"> *@
+@*                                             <label asp-for="CodigoPostal"><i class="fa-solid fa-envelopes-bulk mx-2"></i>Código postal</label> *@
+@*                                         </div> *@
+@*                                         <span asp-validation-for="CodigoPostal"></span> *@
+@*                                     </div> *@
+@*                                 </div> *@
+@*                                 <div class="col-12 row m-0 p-0"> *@
+@*                                     <div class="col-12 col-lg-4"> *@
+@*                                         <div class="form-floating mb-3"> *@
+@*                                             <input asp-for="Pais" type="text" class="form-control" placeholder="Código País"> *@
+@*                                             <label asp-for="Pais"><i class="fa-solid fa-earth-africa mx-2"></i>País</label> *@
+@*                                         </div> *@
+@*                                         <span asp-validation-for="Pais"></span> *@
+@*                                     </div> *@
+@*                                     <div class="col-12 col-lg-4"> *@
+@*                                         <div class="form-floating mb-3"> *@
+@*                                             <input asp-for="Estado" type="text" class="form-control" placeholder="Estado"> *@
+@*                                             <label asp-for="Estado">Estado</label> *@
+@*                                         </div> *@
+@*                                         <span asp-validation-for="Estado"></span> *@
+@*                                     </div> *@
+@*                                     <div class="col-12 col-lg-4"> *@
+@*                                         <div class="form-floating mb-3"> *@
+@*                                             <input asp-for="Municipio" type="text" class="form-control" placeholder="Municipio"> *@
+@*                                             <label asp-for="Municipio">Municipio</label> *@
+@*                                         </div> *@
+@*                                         <span asp-validation-for="Municipio"></span> *@
+@*                                     </div> *@
+@*                                 </div> *@
+@*                                 <div class="col-12"> *@
+@*                                     <div class="form-floating mb-3"> *@
+@*                                         <input asp-for="EmailEmpresa" type="text" class="form-control" placeholder="Correo empresarial"> *@
+@*                                         <label asp-for="EmailEmpresa"><i class="fa-solid fa-envelopes-bulk mx-2"></i>Correo empresarial</label> *@
+@*                                     </div> *@
+@*                                     <span asp-validation-for="EmailEmpresa"></span> *@
+@*                                 </div> *@
+@*                                 <div class="col-12"> *@
+@*                                     <div class="form-floating mb-3"> *@
+@*                                         <input asp-for="Telefono" type="text" class="form-control" placeholder="Teléfono"> *@
+@*                                         <label asp-for="Telefono"><i class="fa-solid fa-phone mx-2"></i>Teléfono</label> *@
+@*                                     </div> *@
+@*                                     <span asp-validation-for="Telefono"></span> *@
+@*                                 </div> *@
+@*                                 <div class="col-12"> *@
+@*                                     <div class="form-floating mb-3"> *@
+@*                                         <input asp-for="Website" type="text" class="form-control" placeholder="P+agina web"> *@
+@*                                         <label asp-for="Website"><i class="fa-solid fa-globe mx-2"></i>Página web</label> *@
+@*                                     </div> *@
+@*                                     <span asp-validation-for="Website"></span> *@
+@*                                 </div> *@
+@*                                 <div class="col-6 col-md-5 col-lg-5 col-xl-4"> *@
+@*                                     <button type="button" data-step="1" data-stepmode="prev" class="stepBtn btn btn-secondary w-100">Volver<i class="fa-solid fa-angle-right mx-2"></i></button> *@
+@*                                 </div> *@
+@*                                 <div class="col-6 col-md-5 col-lg-5 col-xl-4"> *@
+@*                                     <button type="submit" class="btn btn-success w-100" onclick="resizeStacks(); clickActionBtn(this);">Registrarse<i class="fa-solid fa-angle-right mx-2"></i></button> *@
+@*                                 </div> *@
+@*                             </div> *@
+@*                         </div> *@
+@*                     </div> *@
+@*                 </div> *@
+@*             </div> *@
+@*             <div class="row"> *@
+@*                 <div class="col-12"> *@
+@*                     <div asp-validation-summary="ModelOnly" class="text-danger"></div> *@
+@*                 </div> *@
+@*             </div> *@
+@*         </div> *@
+@*     </form> *@
+@* </div> *@
+<script src="~/js/registroEmpleador.js"></script>
+<script src="~/js/redimensionarStacks.js"></script>
+@section Scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
