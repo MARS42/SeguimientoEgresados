@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using SeguimientoEgresados.Models;
@@ -40,12 +41,49 @@ namespace SeguimientoEgresados.Controllers
         
         public IActionResult Egresado()
         {
+            ViewData["Generos"] = new SelectList(_context.Generos, "Id", "Nombre");
+            ViewData["EstadosCiviles"] = new SelectList(_context.EstadosCiviles, "Id", "Nombre");
+            ViewData["Carreras"] = new SelectList(_context.Carreras, "Id", "Nombre");
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> Egresado(RegistroEgresadoViewModel model)
         {
+            if (!ModelState.IsValid)
+                return View(model);
+            
+            var nombres = new SqlParameter("@nombre", model.Nombres);
+            var ap1 = new SqlParameter("@apellido_paterno", model.ApellidoPaterno);
+            var ap2 = new SqlParameter("@apellido_materno", model.ApellidoMaterno);
+            var email = new SqlParameter("@email", model.Email);
+            var password = new SqlParameter("@password", model.Password);
+            var id_rol = new SqlParameter("@id_rol", 4);
+            var id_generado = new SqlParameter("@id_generado", SqlDbType.Int)
+            {
+                Direction = ParameterDirection.Output
+            };
+            
+            await _context.Database.ExecuteSqlRawAsync("exec AgregarUsuario @nombre, @apellido_paterno, @apellido_materno, @email, @password, @id_rol,@id_generado out", nombres, ap1, ap2, email, password, id_rol, id_generado);
+
+            var egresado = new Egresado()
+            {
+                Colonia = model.Colonia,
+                Cp = int.Parse(model.CodigoPostal),
+                Domicilio = model.Domicilio,
+                Estado = model.Estado,
+                Municipio = model.Municipio,
+                Pais = model.Pais,
+                Telefono = model.Telefono,
+                EstadoNacimiento = model.EstadoNacimiento,
+                FechaEgreso = model.FechaEgreso,
+                FechaNacimiento = model.FechaNacimiento,
+                MunicipioNacimiento = model.MunicipioNacimiento,
+                NControl = model.NoControl,
+                PaisNacimiento = model.PaisNacimiento,
+                
+            };
+            
             return RedirectToAction("Index", "Acceso", new { Email = model.Email, Password = model.Password });
         }
 

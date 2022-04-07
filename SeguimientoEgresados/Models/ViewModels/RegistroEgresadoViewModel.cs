@@ -11,8 +11,8 @@ public class RegistroEgresadoViewModel
     [Required] public string Password { get; set; }
     
     [Required] [DataType(DataType.PhoneNumber)]public string Telefono { get; set; }
-    [Required] public string Genero { get; set; }
-    [Required] public string EstadoCivil { get; set; }
+    [Required] public int idGenero { get; set; }
+    [Required] public int idEstadoCivil { get; set; }
     
     [Required] [DataType(DataType.Date)]public DateTime FechaNacimiento { get; set; }
     [Required] public string PaisNacimiento { get; set; }
@@ -27,6 +27,6 @@ public class RegistroEgresadoViewModel
     [Required] public string Municipio { get; set; }
     
     [Required] public string NoControl { get; set; }
-    [Required] public string Carrera { get; set; }
-    [Required] public DateTime FechaEgreso { get; set; }
+    [Required] public int idCarrera { get; set; }
+    [Required][DataType(DataType.Date)] public DateTime FechaEgreso { get; set; }
 }
