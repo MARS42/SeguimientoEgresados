@@ -9,7 +9,7 @@
     <form asp-action="Egresado" method="POST" class="card p-3">
         <div class="card-body">
             <div class="row">
-                <h3>Registro de egresado</h3>
+                <h3>Registro de egresado+</h3>
                 <div class="stackpane container-fluid">
                         @* Datos de acceso *@
                     <div class="stack-item form-step invisible row justify-content-center animate__animated animate__faster">
@@ -93,6 +93,14 @@
                                 <h5>Datos de nacimiento</h5>
                                 @* Datos nacimiento *@
                                 <div class="col-12 row m-0 p-0">
+                                    @* Fecha de egreso *@
+                                    <div class="col-12">
+                                        <div class="form-floating mb-3">
+                                            <input asp-for="FechaNacimiento" class="form-control display-3" placeholder="Fecha nacimiento">
+                                            <label asp-for="FechaNacimiento"><i class="fa-solid fa-calendar-day mx-2"></i>Fecha de nacimiento</label>
+                                        </div>
+                                        <span asp-validation-for="FechaNacimiento"></span>
+                                    </div>
                                     <div class="col-12 col-lg-4">
                                         <div class="form-floating mb-3">
                                             <input asp-for="PaisNacimiento" type="text" class="form-control" placeholder="Código País">
@@ -202,7 +210,7 @@
                                 @* Carrera *@
                                 <div class="col-12">
                                     <div class="form-floating mb-3">
-                                        <input asp-for="Carrera" class="form-control display-3" placeholder="Carrea">
+                                        <input asp-for="Carrera" class="form-control display-3" placeholder="Carrera">
                                         <label asp-for="Carrera"><i class="fa-solid fa-graduation-cap mx-2"></i>Carrera</label>
                                     </div>
                                     <span asp-validation-for="Carrera"></span>
@@ -210,7 +218,7 @@
                                 @* Fecha de egreso *@
                                 <div class="col-12">
                                     <div class="form-floating mb-3">
-                                        <input asp-for="FechaEgreso" class="form-control display-3" placeholder="Confirmar contraseña">
+                                        <input asp-for="FechaEgreso" class="form-control display-3" placeholder="Fecha de egreso">
                                         <label asp-for="FechaEgreso"><i class="fa-solid fa-calendar-day mx-2"></i>Fecha de egreso</label>
                                     </div>
                                     <span asp-validation-for="FechaEgreso"></span>
