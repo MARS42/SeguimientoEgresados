@@ -48,6 +48,7 @@ namespace SeguimientoEgresados.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Egresado(RegistroEgresadoViewModel model)
         {
             if (!ModelState.IsValid)
@@ -81,7 +82,9 @@ namespace SeguimientoEgresados.Controllers
                 MunicipioNacimiento = model.MunicipioNacimiento,
                 NControl = model.NoControl,
                 PaisNacimiento = model.PaisNacimiento,
-                
+                IdCarrera = model.idCarrera,
+                IdGenero = model.idGenero,
+                IdEstadoCivil = model.idEstadoCivil
             };
             
             return RedirectToAction("Index", "Acceso", new { Email = model.Email, Password = model.Password });
