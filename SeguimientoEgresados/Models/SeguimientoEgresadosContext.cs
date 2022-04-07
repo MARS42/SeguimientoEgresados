@@ -16,8 +16,12 @@ namespace SeguimientoEgresados.Models
         {
         }
 
+        public virtual DbSet<Carrera> Carreras { get; set; } = null!;
         public virtual DbSet<Cuestionario> Cuestionarios { get; set; } = null!;
+        public virtual DbSet<Egresado> Egresados { get; set; } = null!;
         public virtual DbSet<Empresa> Empresas { get; set; } = null!;
+        public virtual DbSet<EstadosCivile> EstadosCiviles { get; set; } = null!;
+        public virtual DbSet<Genero> Generos { get; set; } = null!;
         public virtual DbSet<IntervalosCuestionario> IntervalosCuestionarios { get; set; } = null!;
         public virtual DbSet<Modulo> Modulos { get; set; } = null!;
         public virtual DbSet<Operacione> Operaciones { get; set; } = null!;
@@ -36,6 +40,22 @@ namespace SeguimientoEgresados.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Carrera>(entity =>
+            {
+                entity.HasIndex(e => e.Id, "Carreras_id_uindex")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.Nombre, "Carreras_nombre_uindex")
+                    .IsUnique();
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Nombre)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("nombre");
+            });
+
             modelBuilder.Entity<Cuestionario>(entity =>
             {
                 entity.HasIndex(e => e.Id, "Cuestionarios_id_uindex")
@@ -53,6 +73,94 @@ namespace SeguimientoEgresados.Models
                     .WithMany(p => p.Cuestionarios)
                     .HasForeignKey(d => d.IdUsuario)
                     .HasConstraintName("Cuestionarios_Usuarios_id_fk");
+            });
+
+            modelBuilder.Entity<Egresado>(entity =>
+            {
+                entity.HasIndex(e => e.Id, "Egresados_id_uindex")
+                    .IsUnique();
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Colonia)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("colonia");
+
+                entity.Property(e => e.Cp).HasColumnName("cp");
+
+                entity.Property(e => e.Domicilio)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("domicilio");
+
+                entity.Property(e => e.Estado)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("estado");
+
+                entity.Property(e => e.EstadoNacimiento)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("estadoNacimiento");
+
+                entity.Property(e => e.FechaEgreso).HasColumnName("fechaEgreso");
+
+                entity.Property(e => e.FechaNacimiento).HasColumnName("fechaNacimiento");
+
+                entity.Property(e => e.IdCarrera).HasColumnName("id_carrera");
+
+                entity.Property(e => e.IdEstadoCivil).HasColumnName("id_estadoCivil");
+
+                entity.Property(e => e.IdGenero).HasColumnName("id_genero");
+
+                entity.Property(e => e.Municipio)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("municipio");
+
+                entity.Property(e => e.MunicipioNacimiento)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("municipioNacimiento");
+
+                entity.Property(e => e.NControl)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("nControl");
+
+                entity.Property(e => e.Pais)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("pais");
+
+                entity.Property(e => e.PaisNacimiento)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("paisNacimiento");
+
+                entity.Property(e => e.Telefono)
+                    .HasMaxLength(15)
+                    .IsUnicode(false)
+                    .HasColumnName("telefono");
+
+                entity.HasOne(d => d.IdCarreraNavigation)
+                    .WithMany(p => p.Egresados)
+                    .HasForeignKey(d => d.IdCarrera)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("Egresados_Carreras_id_fk");
+
+                entity.HasOne(d => d.IdEstadoCivilNavigation)
+                    .WithMany(p => p.Egresados)
+                    .HasForeignKey(d => d.IdEstadoCivil)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("Egresados_EstadosCiviles_id_fk");
+
+                entity.HasOne(d => d.IdGeneroNavigation)
+                    .WithMany(p => p.Egresados)
+                    .HasForeignKey(d => d.IdGenero)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("Egresados_Generos_id_fk");
             });
 
             modelBuilder.Entity<Empresa>(entity =>
@@ -128,6 +236,35 @@ namespace SeguimientoEgresados.Models
                     .WithMany(p => p.Empresas)
                     .HasForeignKey(d => d.IdUsuario)
                     .HasConstraintName("Empresas_Usuarios_id_fk");
+            });
+
+            modelBuilder.Entity<EstadosCivile>(entity =>
+            {
+                entity.HasIndex(e => e.Nombre, "EstadosCiviles_estadoCivil_uindex")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.Id, "EstadosCiviles_id_uindex")
+                    .IsUnique();
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Nombre)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("nombre");
+            });
+
+            modelBuilder.Entity<Genero>(entity =>
+            {
+                entity.HasIndex(e => e.Id, "Generos_id_uindex")
+                    .IsUnique();
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Nombre)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("nombre");
             });
 
             modelBuilder.Entity<IntervalosCuestionario>(entity =>
