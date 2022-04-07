@@ -43,6 +43,12 @@ namespace SeguimientoEgresados.Controllers
             return View();
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Egresado(RegistroEgresadoViewModel model)
+        {
+            return RedirectToAction("Index", "Acceso", new { Email = model.Email, Password = model.Password });
+        }
+
         public IActionResult Empleador()
         {
             return View();
