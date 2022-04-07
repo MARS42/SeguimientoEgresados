@@ -24,24 +24,31 @@
                                     @* Email *@
                                     <div class="col-12 col-lg-4">
                                         <div class="form-floating mb-3">
-                                            <input asp-for="Nombre" type="text" class="form-control display-3" placeholder="Nombre completo del representante">
+                                            <input asp-for="Nombre" type="text" class="form-control display-3" placeholder="Nombres">
                                             <label asp-for="Nombre"><i class="fa-solid fa-user-tie mx-2"></i>Nombre(s)</label>
                                         </div>
                                         <span asp-validation-for="Nombre"></span>
                                     </div>
                                     <div class="col-12 col-md-6 col-lg-4">
                                         <div class="form-floating mb-3">
-                                            <input asp-for="ApellidoPaterno" type="text" class="form-control display-3" placeholder="Apellido 1 del representante">
+                                            <input asp-for="ApellidoPaterno" type="text" class="form-control display-3" placeholder="Apellido 1">
                                             <label asp-for="ApellidoPaterno"><i class="fa-solid fa-user-tie mx-2"></i>A. paterno</label>
                                         </div>
                                         <span asp-validation-for="ApellidoPaterno"></span>
                                     </div>
                                     <div class="col-12 col-md-6 col-lg-4">
                                         <div class="form-floating mb-3">
-                                            <input asp-for="ApellidoMaterno" type="text" class="form-control display-3" placeholder="Apellido 2 del representante">
+                                            <input asp-for="ApellidoMaterno" type="text" class="form-control display-3" placeholder="Apellido 2">
                                             <label asp-for="ApellidoMaterno"><i class="fa-solid fa-user-tie mx-2"></i>A. materno</label>
                                         </div>
                                         <span asp-validation-for="ApellidoMaterno"></span>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-floating mb-3">
+                                            <input asp-for="Password" type="password" class="form-control display-3" placeholder="Contraseña">
+                                            <label asp-for="Password"><i class="fa-solid fa-lock mx-2"></i>Contraseña</label>
+                                        </div>
+                                        <span asp-validation-for="Password"></span>
                                     </div>
                                     @* Botón next *@
                                     <div class="col-12 col-md-6 col-lg-5 col-xl-4">
