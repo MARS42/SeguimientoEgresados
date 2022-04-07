@@ -8,6 +8,7 @@ namespace SeguimientoEgresados.Models
         public Usuario()
         {
             Cuestionarios = new HashSet<Cuestionario>();
+            Egresados = new HashSet<Egresado>();
             Empresas = new HashSet<Empresa>();
         }
 
@@ -24,6 +25,7 @@ namespace SeguimientoEgresados.Models
 
         public virtual Role IdRolNavigation { get; set; } = null!;
         public virtual ICollection<Cuestionario> Cuestionarios { get; set; }
+        public virtual ICollection<Egresado> Egresados { get; set; }
         public virtual ICollection<Empresa> Empresas { get; set; }
     }
 }

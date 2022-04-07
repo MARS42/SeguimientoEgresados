@@ -114,6 +114,8 @@ namespace SeguimientoEgresados.Models
 
                 entity.Property(e => e.IdGenero).HasColumnName("id_genero");
 
+                entity.Property(e => e.IdUsuario).HasColumnName("id_usuario");
+
                 entity.Property(e => e.Municipio)
                     .HasMaxLength(30)
                     .IsUnicode(false)
@@ -161,6 +163,11 @@ namespace SeguimientoEgresados.Models
                     .HasForeignKey(d => d.IdGenero)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("Egresados_Generos_id_fk");
+
+                entity.HasOne(d => d.IdUsuarioNavigation)
+                    .WithMany(p => p.Egresados)
+                    .HasForeignKey(d => d.IdUsuario)
+                    .HasConstraintName("Egresados_Usuarios_id_fk");
             });
 
             modelBuilder.Entity<Empresa>(entity =>
