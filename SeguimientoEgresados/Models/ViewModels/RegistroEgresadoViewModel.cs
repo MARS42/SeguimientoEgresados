@@ -5,7 +5,8 @@ namespace SeguimientoEgresados.Models.ViewModels;
 public class RegistroEgresadoViewModel
 {
     [Required] public string Nombres { get; set; }
-    [Required] public string Apellidos { get; set; }
+    [Required] public string ApellidoPaterno { get; set; }
+    [Required] public string ApellidoMaterno { get; set; }
     [Required] [DataType(DataType.EmailAddress, ErrorMessage = "Correo electrónico no valido")] public string Email { get; set; }
     [Required] public string Password { get; set; }
     
@@ -23,7 +24,7 @@ public class RegistroEgresadoViewModel
     [Required] [DataType(DataType.PostalCode)] public string CodigoPostal { get; set; }
     [Required] public string Pais { get; set; }
     [Required] public string Estado { get; set; }
-    [Required] public string Municipo { get; set; }
+    [Required] public string Municipio { get; set; }
     
     [Required] public string NoControl { get; set; }
     [Required] public string Carrera { get; set; }
