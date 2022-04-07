@@ -84,8 +84,12 @@ namespace SeguimientoEgresados.Controllers
                 PaisNacimiento = model.PaisNacimiento,
                 IdCarrera = model.idCarrera,
                 IdGenero = model.idGenero,
-                IdEstadoCivil = model.idEstadoCivil
+                IdEstadoCivil = model.idEstadoCivil,
+                IdUsuario = Convert.ToInt32(id_generado.Value)
             };
+
+            await _context.Egresados.AddAsync(egresado);
+            await _context.SaveChangesAsync();
             
             return RedirectToAction("Index", "Acceso", new { Email = model.Email, Password = model.Password });
         }
@@ -137,7 +141,7 @@ namespace SeguimientoEgresados.Controllers
                 RazonSocial = model.RazonSocial
             };
 
-            _context.Empresas.Add(empresa);
+            await _context.Empresas.AddAsync(empresa);
             await _context.SaveChangesAsync();
             
             return RedirectToAction("Index", "Acceso", new { Email = model.Email, Password = model.Password });
