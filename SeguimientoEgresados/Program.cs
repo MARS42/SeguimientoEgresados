@@ -1,3 +1,4 @@
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using SeguimientoEgresados.Filters;
 using SeguimientoEgresados.Models;
@@ -7,6 +8,9 @@ const string policy = "MyPolicy";
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+builder.Host.ConfigureHostConfiguration(config => config.AddEnvironmentVariables(prefix: "SE_"));
+
 // Add services to the container.
 builder.Services.AddControllersWithViews(services =>
 {
@@ -15,7 +19,17 @@ builder.Services.AddControllersWithViews(services =>
 
 builder.Services.AddDbContext<SeguimientoEgresadosContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("SegegContext"));
+    var connectionBuilder = new SqlConnectionStringBuilder(
+        builder.Configuration.GetConnectionString("Default"))
+    {
+        DataSource = builder.Configuration.GetSection("DataSource").Value,
+        Password = builder.Configuration.GetSection("DBPassword").Value,
+    };
+
+    var connectionString = connectionBuilder.ConnectionString;
+    Console.WriteLine("Connection: " + connectionString);
+
+    options.UseSqlServer(connectionString);
 });
 
 builder.Services.AddScoped<IGoogleSheetsService, GoogleSheetsService>();
