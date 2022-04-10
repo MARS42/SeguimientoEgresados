@@ -8,7 +8,6 @@ const string policy = "MyPolicy";
 
 var builder = WebApplication.CreateBuilder(args);
 
-
 builder.Host.ConfigureHostConfiguration(config => config.AddEnvironmentVariables(prefix: "SE_"));
 
 // Add services to the container.
@@ -28,6 +27,7 @@ builder.Services.AddDbContext<SeguimientoEgresadosContext>(options =>
 
     var connectionString = connectionBuilder.ConnectionString;
     Console.WriteLine("Connection: " + connectionString);
+    //Console.WriteLine("Google: " + builder.Configuration.GetSection("AppSettings:GoogleClientId").ToString());
 
     options.UseSqlServer(connectionString);
 });
