@@ -30,9 +30,10 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             Models.Usuario? user = HttpContext.Session.Get<Models.Usuario>("User");
             var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Id.Equals(user!.Id));
             var cuestionario = await _context.Cuestionarios.FirstOrDefaultAsync(c => c.IdUsuario.Equals(usuario!.Id));
-            Console.WriteLine("cues: " + cuestionario);
-            ViewData["Cuestionario"] = cuestionario;
-            
+            //Console.WriteLine("cues: " + cuestionario);
+            //ViewData["Cuestionario"] = cuestionario;
+            ViewData["Aviso"] = await Aviso(user.Id);
+
             return View(usuario);
         }
         
@@ -58,7 +59,8 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             var empresa = await _context.Empresas.FirstOrDefaultAsync(e => e.IdUsuario.Equals(user!.Id));
             
             Console.WriteLine($"User id: {user.Id}, empresa id: {empresa.Nombre}");
-            
+            ViewData["Aviso"] = await Aviso(user.Id);
+
             return View(empresa);
         }
 
@@ -87,8 +89,10 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             return RedirectToAction("MiEmpresa");
         }
 
-        public IActionResult PublicarEmpleo()
+        public async Task<IActionResult> PublicarEmpleo()
         {
+            Models.Usuario? user = HttpContext.Session.Get<Models.Usuario>("User");
+            ViewData["Aviso"] = await Aviso(user.Id);
             return View();
         }
         
@@ -98,7 +102,32 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             var empresa = await _context.Empresas.FirstOrDefaultAsync(e => e.IdUsuario.Equals(user!.Id));
             var cuestionario = await _context.Cuestionarios.FirstOrDefaultAsync(c => c.IdUsuario.Equals(empresa!.IdUsuario));
 
+            if (cuestionario != null && DateTime.Compare(cuestionario.ProximaAplicacion, DateTime.Now) <= 0)
+            {
+                ViewData["Modo"] = "Editar";
+                ViewData["ModoBoton"] = "He actualizado el cuestionario";
+            }
+            else if (cuestionario == null)
+            {
+                ViewData["Modo"] = "Crear";
+                ViewData["ModoBoton"] = "He finalizado el cuestionario";
+            }
+            else
+                ViewData["Modo"] = "Hecho";
+
             return View(cuestionario);
+        }
+
+        private async Task<AvisoCuestionario> Aviso(int idUsuario)
+        {
+            Cuestionario? cuestionario = await _context.Cuestionarios.FirstOrDefaultAsync(c => c.IdUsuario.Equals(idUsuario));
+            if(cuestionario == null)
+                return new AvisoCuestionario("Bienvenido al seguimiento de egresados", "El sistema de seguimiento egresados centra y ofrece su información para el conocimiento y beneficio de todos.<br/>Esto es posible mediante la obtención de información de los miembros que la integran.Por ello, debes realizar un cuestionario inicial y completar tu registro.");
+
+            if (DateTime.Compare(cuestionario.ProximaAplicacion, DateTime.Now) <= 0)
+                return new AvisoCuestionario("Actualización de cuestionario", $"Tu última aplicación del cuestinario fue el {cuestionario.UltimaAplicacion.Value.ToString()}, puedes volver a aplicarlo para mantener tus datos actualizados.");
+
+            return null;
         }
 
         [HttpPost]
@@ -106,19 +135,18 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
         {
             Models.Usuario? user = HttpContext.Session.Get<Models.Usuario>("User");
             string msg = await googleSheets.VerificarCuestionario(user!.Email);
+            Console.WriteLine($"{msg} - {Verificar}");
             
             if (!InsertarCuestionario(msg))
             {
                 return View();
             }
             
-            var id_usuario = new SqlParameter("@id_usuario", user!.Id);
+            //var id_usuario = new SqlParameter("@id_usuario", user!.Id);
             
-            await _context.Database.ExecuteSqlRawAsync("exec CrearCuestionario @id_usuario", id_usuario);
+            //await _context.Database.ExecuteSqlRawAsync("exec CrearCuestionario @id_usuario", id_usuario);
             
-            //return View();
             return RedirectToAction("Cuestionario");
-            return Ok(await googleSheets.VerificarCuestionario(user!.Email));
         }
         
         public IActionResult CerrarSesion()

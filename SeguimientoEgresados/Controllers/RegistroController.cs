@@ -107,9 +107,8 @@ namespace SeguimientoEgresados.Controllers
                 return View(model);
 
             var nombres = new SqlParameter("@nombre", model.Nombres);
-            string[] apellidos = model.Apellidos.Split(" ");
-            var ap1 = new SqlParameter("@apellido_paterno", apellidos[0]);
-            var ap2 = new SqlParameter("@apellido_materno", apellidos[1]);
+            var ap1 = new SqlParameter("@apellido_paterno", model.ApellidoPaterno);
+            var ap2 = new SqlParameter("@apellido_materno", model.ApellidoMaterno);
             var email = new SqlParameter("@email", model.Email);
             var password = new SqlParameter("@password", model.Password);
             var id_rol = new SqlParameter("@id_rol", 5);

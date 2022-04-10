@@ -7,7 +7,9 @@ public class RegistroEmpleadorViewModel
     [Required]
     public string Nombres { get; set; }
     [Required]
-    public string Apellidos { get; set; }
+    public string ApellidoPaterno { get; set; }
+    [Required]
+    public string ApellidoMaterno { get; set; }
     [Required]
     public string Email { get; set; }
     [Required]
@@ -34,6 +36,5 @@ public class RegistroEmpleadorViewModel
     public string EmailEmpresa { get; set; }
     [Required]
     public string Telefono { get; set; }
-    [Required]
     public string Website { get; set; }
 }

@@ -2,10 +2,12 @@
 
 @{
     ViewBag.Title = "Cuestionario de empleador";
+    string modo = (string)ViewData["Modo"];
+    string modoBtn = (string)ViewData["ModoBoton"];
     //Layout = "_Layout";
 }
 
-@if (Model != null)
+@if (modo.Equals("Hecho"))
 {
     <div class="container m-4">
         <h2>@ViewBag.Title</h2>
@@ -52,9 +54,10 @@ else
         @* </div> *@
         <form asp-action="Cuestionario" method="POST" class="row justify-content-center">
             <div class="col-auto m-2">
-                <button type="submit" class="btn btn-primary animate__animated animate__flash animate__delay-2s animate__slow animate__repeat-2" name="Verificar" value="He finalizado el cuestionario"
+                <button type="submit" class="btn btn-primary animate__animated animate__flash animate__delay-2s animate__slow animate__repeat-2" name="Verificar" value="@modo"
                         onclick="clickActionBtn(this)">
-                    He finalizado el cuestionario<i class="fa-regular fa-circle-check mx-2"></i>
+                    @modoBtn
+                    <i class="fa-regular fa-circle-check mx-2"></i>
                 </button>
             </div>
             <div class="col-12 animate__animated animate__fadeIn animate__delay-1s">
