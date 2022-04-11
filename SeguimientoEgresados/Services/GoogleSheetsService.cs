@@ -15,7 +15,7 @@ public class GoogleSheetsService : IGoogleSheetsService
 
     public GoogleSheetsService()
     {
-        string[] Scopes = { SheetsService.Scope.SpreadsheetsReadonly };
+        string[] Scopes = { SheetsService.Scope.Spreadsheets };
         string ApplicationName = "Google Sheets API .NET Quickstart";
 
         using (var stream =
@@ -48,15 +48,52 @@ public class GoogleSheetsService : IGoogleSheetsService
         String spreadsheetId = "1UmZ1fropK_rOYmZ-5eDtTGoJIrP4bb4KtgNLgcgQDxA";
 
         List<Google.Apis.Sheets.v4.Data.Request> requests = new List<Google.Apis.Sheets.v4.Data.Request>();
-        
-        requests.Add(new Google.Apis.Sheets.v4.Data.Request() {
 
+        List<ConditionValue> conditionValues = new List<ConditionValue>();
+        conditionValues.Add(new ConditionValue()
+        {
+            UserEnteredValue = email
+        });
+
+        List<FilterSpec> filterSpecs = new List<FilterSpec>();
+        filterSpecs.Add(new FilterSpec()
+        {
+            ColumnIndex = 1,
+            FilterCriteria = new FilterCriteria()
+            {
+                Condition = new BooleanCondition(){
+                    Type = "TEXT_EQ",
+                    Values = conditionValues
+                }
+            }
+        });
+
+        BasicFilter bf = new()
+        {
+            Range = new GridRange()
+            {
+                SheetId = 748402175,
+                StartColumnIndex = 1,
+                EndColumnIndex = 2
+            },
+            FilterSpecs = filterSpecs
+        };
+
+        SetBasicFilterRequest bfr = new()
+        {
+            Filter = bf
+        };
+
+        requests.Add(new Google.Apis.Sheets.v4.Data.Request() {
+            SetBasicFilter = bfr
         });
 
 
         // TODO: Assign values to desired properties of `requestBody`:
-        Google.Apis.Sheets.v4.Data.BatchUpdateSpreadsheetRequest requestBody = new Google.Apis.Sheets.v4.Data.BatchUpdateSpreadsheetRequest();
-        requestBody.Requests = requests;
+        Google.Apis.Sheets.v4.Data.BatchUpdateSpreadsheetRequest requestBody = new Google.Apis.Sheets.v4.Data.BatchUpdateSpreadsheetRequest
+        {
+            Requests = requests
+        };
 
         SpreadsheetsResource.BatchUpdateRequest request = service.Spreadsheets.BatchUpdate(requestBody, spreadsheetId);
 
