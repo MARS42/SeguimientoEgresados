@@ -32,12 +32,19 @@ else
 {
     <div class="container p-4">
         <form asp-action="Cuestionario" method="POST" class="row justify-content-center">
-            <div class="col-auto m-2">
-                <button type="submit" class="btn btn-primary animate__animated animate__flash animate__delay-2s animate__slow animate__repeat-2" name="Verificar" value="@modo"
-                        onclick="clickActionBtn(this)">
-                    @modoBtn
-                    <i class="fa-regular fa-circle-check mx-2"></i>
-                </button>
+            @* <div class="col-auto m-2"> *@
+            @*     <button type="submit" class="btn btn-primary animate__animated animate__flash animate__delay-2s animate__slow animate__repeat-2" name="Verificar" value="@modo" *@
+            @*             onclick="clickActionBtn(this)"> *@
+            @*         @modoBtn *@
+            @*         <i class="fa-regular fa-circle-check mx-2"></i> *@
+            @*     </button> *@
+            @* </div> *@
+            <div class="position-fixed start-50 translate-middle w-100 row justify-content-center" style="z-index: 1000;bottom: 0">
+                <div class="col-12 col-sm-6 col-md-5 col-lg-4 col-xl-3">
+                    <button type="submit" class="w-100 btn btn-success rounded-pill shadow px-4 py-2 animate__animated animate__bounceInUp" name="Verificar" value="@modo">
+                        @modoBtn<i class="fa-solid fa-check mx-2"></i>
+                    </button>
+                </div>
             </div>
             <div class="col-12 animate__animated animate__fadeIn animate__delay-1s">
                 <form asp-action="Cuestionario" method="post">
