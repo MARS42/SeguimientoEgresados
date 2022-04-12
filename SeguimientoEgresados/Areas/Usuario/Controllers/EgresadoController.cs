@@ -31,7 +31,7 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             //Console.WriteLine("cues: " + cuestionario);
             //ViewData["Cuestionario"] = cuestionario;
             
-            ViewData["Aviso"] = await _notificaciones.VerificarCuestionario(HttpContext);
+            await _notificaciones.VerificarCuestionario(HttpContext, ViewData, true);
             
             return View(usuario);
         }
@@ -61,7 +61,7 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             ViewData["Carreras"] = new SelectList(_context.Carreras, "Id", "Nombre");
             
             Console.WriteLine($"User id: {user.Id}, empresa id: {egresado.NControl}");
-            ViewData["Aviso"] = await _notificaciones.VerificarCuestionario(HttpContext);
+            await _notificaciones.VerificarCuestionario(HttpContext, ViewData, true);
             
             return View(egresado);
         }
@@ -120,7 +120,7 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
                 ViewData["Modo"] = "Hecho";
             
             if (error)
-                ViewData["Error"] = new AvisoCuestionario("Aún no has respondido el cuestionario", "Parece que aún no está registrado el cuestionario, contestalo y al finalizar pulsa el botón ENVIAR del formulario");
+                ViewData["Error"] = new AvisoCuestionario("Aún no has respondido el cuestionario", "Parece que aún no está registrado el cuestionario, contestalo y al finalizar pulsa el botón ENVIAR del formulario", true);
             return View(cuestionario);
         }
         

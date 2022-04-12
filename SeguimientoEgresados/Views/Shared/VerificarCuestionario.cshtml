@@ -22,21 +22,27 @@
                     @(aviso.Cuerpo)
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Realizarlo más tarde</button> 
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Realizarlo más tarde</button>
                     <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close">Ir al cuestionario<i class="fa-solid fa-play mx-2"></i></button>
                 </div>
             </form>
         </div>
     </div>
-    <script>
 
+    <script>
         const linkCuestionario = document.getElementById("link-cuestionario");
         linkCuestionario.classList.add("text-warning");
-        linkCuestionario.innerHTML += '<i class="fa-solid fa-bell fa-shake"></i>';
-
-        window.addEventListener('DOMContentLoaded', (event) => {
-        document.getElementById("openModal").click();
-        });
-
+        linkCuestionario.innerHTML += '<i class="fa-solid fa-bell fa-shake mx-2"></i>';
     </script>
+
+    @if (aviso.forceShow)
+    {
+        <script>
+    
+            window.addEventListener('DOMContentLoaded', (event) => {
+            document.getElementById("openModal").click();
+            });
+
+        </script>
+    }
 }

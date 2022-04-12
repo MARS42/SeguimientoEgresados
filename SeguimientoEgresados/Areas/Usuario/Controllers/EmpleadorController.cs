@@ -34,7 +34,7 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             var cuestionario = await _context.Cuestionarios.FirstOrDefaultAsync(c => c.IdUsuario.Equals(usuario!.Id));
             //Console.WriteLine("cues: " + cuestionario);
             //ViewData["Cuestionario"] = cuestionario;
-            ViewData["Aviso"] = await _notificaciones.VerificarCuestionario(HttpContext);
+            await _notificaciones.VerificarCuestionario(HttpContext, ViewData, true);
 
             return View(usuario);
         }
@@ -61,7 +61,7 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             var empresa = await _context.Empresas.FirstOrDefaultAsync(e => e.IdUsuario.Equals(user!.Id));
             
             Console.WriteLine($"User id: {user.Id}, empresa id: {empresa.Nombre}");
-            ViewData["Aviso"] = await _notificaciones.VerificarCuestionario(HttpContext);
+            await _notificaciones.VerificarCuestionario(HttpContext, ViewData, true);
 
             return View(empresa);
         }
@@ -94,7 +94,7 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
         public async Task<IActionResult> PublicarEmpleo()
         {
             Models.Usuario? user = HttpContext.Session.Get<Models.Usuario>("User");
-            ViewData["Aviso"] = await _notificaciones.VerificarCuestionario(HttpContext);
+            await _notificaciones.VerificarCuestionario(HttpContext, ViewData, true);
             return View();
         }
         
@@ -119,7 +119,7 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
                 ViewData["Modo"] = "Hecho";
             
             if (error)
-                ViewData["Error"] = new AvisoCuestionario("Aún no has respondido el cuestionario", "Parece que aún no está registrado el cuestionario, contestalo y al finalizar pulsa el botón ENVIAR del formulario");
+                ViewData["Error"] = new AvisoCuestionario("Aún no has respondido el cuestionario", "Parece que aún no está registrado el cuestionario, contestalo y al finalizar pulsa el botón ENVIAR del formulario", true);
 
             return View(cuestionario);
         }
