@@ -18,11 +18,13 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
     {
         private SeguimientoEgresadosContext _context;
         private IGoogleSheetsService googleSheets;
+        private readonly INotificacionesService _notificaciones;
 
-        public EmpleadorController(SeguimientoEgresadosContext context, IGoogleSheetsService googleSheets)
+        public EmpleadorController(SeguimientoEgresadosContext context, IGoogleSheetsService googleSheets, INotificacionesService notificaciones)
         {
             _context = context;
             this.googleSheets = googleSheets;
+            _notificaciones = notificaciones;
         }
         
         public async Task<IActionResult> Index()
@@ -32,7 +34,7 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             var cuestionario = await _context.Cuestionarios.FirstOrDefaultAsync(c => c.IdUsuario.Equals(usuario!.Id));
             //Console.WriteLine("cues: " + cuestionario);
             //ViewData["Cuestionario"] = cuestionario;
-            ViewData["Aviso"] = await Aviso(user.Id);
+            ViewData["Aviso"] = await _notificaciones.VerificarCuestionario(HttpContext);
 
             return View(usuario);
         }
@@ -59,7 +61,7 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             var empresa = await _context.Empresas.FirstOrDefaultAsync(e => e.IdUsuario.Equals(user!.Id));
             
             Console.WriteLine($"User id: {user.Id}, empresa id: {empresa.Nombre}");
-            ViewData["Aviso"] = await Aviso(user.Id);
+            ViewData["Aviso"] = await _notificaciones.VerificarCuestionario(HttpContext);
 
             return View(empresa);
         }
@@ -92,7 +94,7 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
         public async Task<IActionResult> PublicarEmpleo()
         {
             Models.Usuario? user = HttpContext.Session.Get<Models.Usuario>("User");
-            ViewData["Aviso"] = await Aviso(user.Id);
+            ViewData["Aviso"] = await _notificaciones.VerificarCuestionario(HttpContext);
             return View();
         }
         
@@ -156,18 +158,6 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
         {
             HttpContext.Session.Remove("User");
             return RedirectToAction("Index", "Inicio", new { area="" });
-        }
-        
-        private async Task<AvisoCuestionario> Aviso(int idUsuario)
-        {
-            Cuestionario? cuestionario = await _context.Cuestionarios.FirstOrDefaultAsync(c => c.IdUsuario.Equals(idUsuario));
-            if(cuestionario == null)
-                return new AvisoCuestionario("Bienvenido al seguimiento de egresados", "El sistema de seguimiento egresados centra y ofrece su información para el conocimiento y beneficio de todos.<br/>Esto es posible mediante la obtención de información de los miembros que la integran.Por ello, debes realizar un cuestionario inicial y completar tu registro.");
-
-            if (DateTime.Compare(cuestionario.ProximaAplicacion, DateTime.Now) <= 0)
-                return new AvisoCuestionario("Actualización de cuestionario", $"Tu última aplicación del cuestinario fue el {cuestionario.UltimaAplicacion.Value.ToString()}, puedes volver a aplicarlo para mantener tus datos actualizados.");
-
-            return null;
         }
 
         private bool InsertarCuestionario(string sheetsResponse)

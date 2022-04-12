@@ -33,6 +33,7 @@ builder.Services.AddDbContext<SeguimientoEgresadosContext>(options =>
 });
 
 builder.Services.AddScoped<IGoogleSheetsService, GoogleSheetsService>();
+builder.Services.AddScoped<INotificacionesService, NotificacionesService>();
 
 builder.Services.AddCors(options =>
 {
