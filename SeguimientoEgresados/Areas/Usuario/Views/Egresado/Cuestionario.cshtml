@@ -9,14 +9,48 @@
     var error = ViewData["Error"] as AvisoCuestionario;
 }
 
-<div class="position-fixed start-50 translate-middle w-100 row justify-content-center" style="z-index: 1000;bottom: 0">
-    <div class="col-12 col-sm-6 col-md-5 col-lg-4 col-xl-3">
-        <button class="w-100 btn btn-success rounded-pill shadow px-4 py-2 animate__animated animate__bounceInUp">Registrar<i class="fa-solid fa-check mx-2"></i></button>
+@if (modo.Equals("Hecho"))
+{
+    <div class="container m-4">
+        <h2>@ViewBag.Title</h2>
     </div>
-</div>
+    <div class="container p-4">
+        <div class="row justify-content-center animate__animated animate__fadeIn animate__faster">
+            <div class="col-12 col-md-10 col-lg-8 col-xl-6 card">
+                <div class="card-body">
+                    <h3>Has registrado el cuestionario</h3>
+                    <p>El cuestionario se lleva a cabo cada cierto intervalo de tiempo, cuando puedas realizarlo de nuevo recibirás una notificación en tu correo electrónico.</p>
+                    <p><strong>Última aplicación: </strong>@Html.DisplayFor(m => m.UltimaAplicacion)</p>
+                    <p><strong>Próxima aplicación: </strong>@Html.DisplayFor(m => m.ProximaAplicacion)</p>
+                    <i class="fa-regular fa-circle-check fa-2xl mx-2 float-end text-success"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="container p-4">
+        <form asp-action="Cuestionario" method="POST" class="row justify-content-center">
+            <div class="position-fixed start-50 translate-middle w-100 row justify-content-center" style="z-index: 1000;bottom: 0">
+                <div class="col-12 col-sm-6 col-md-5 col-lg-4 col-xl-3">
+                    <button class="w-100 btn btn-success rounded-pill shadow px-4 py-2 animate__animated animate__bounceInUp" name="Verificar" value="@modo" onclick="clickActionBtn(this)">
+                        @modoBtn<i class="fa-solid fa-check mx-2"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="col-12 animate__animated animate__fadeIn animate__delay-1s">
+                <form asp-action="Cuestionario" method="post">
+                    <iframe class="w-100 vh-100" src="https://docs.google.com/forms/d/e/1FAIpQLScvINiMCoetXy5_XZhlcCAC8YNrb5of34RoPy1qs6JXh1zs_g/viewform?embedded=true" frameborder="0" marginheight="0" marginwidth="0" onload="cuestionarioCargado(this)">
+                        Cargando…
+                    </iframe>
+                </form>
+            </div>
+        </form>
+    </div>
+}
 
-<div class="container p-4">
-    <div class="col-12 animate__animated animate__fadeIn animate__delay-1s">
-        <iframe class="w-100 vh-100" src="https://docs.google.com/forms/d/e/1FAIpQLScvINiMCoetXy5_XZhlcCAC8YNrb5of34RoPy1qs6JXh1zs_g/viewform?embedded=true" onload="resizeIframe(this);" frameborder="0" marginheight="0" marginwidth="0">Cargando…</iframe>
-    </div>
-</div>
+@if (error != null)
+{
+    @await Html.PartialAsync("ModalErrorCuestionario", error)
+}

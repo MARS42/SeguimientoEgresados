@@ -131,7 +131,7 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             string msg = "";
             if (cuestionario == null)
             {
-                msg = await googleSheets.VerificarCuestionario(user!.Email);
+                msg = await googleSheets.VerificarCuestionario(false, user!.Email);
                 
                 if (!InsertarCuestionario(msg))
                     return RedirectToAction("Cuestionario", new { error = true });
@@ -141,7 +141,7 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             }
             else
             {
-                msg = await googleSheets.VerificarCuestionario(user!.Email, cuestionario.ProximaAplicacion);
+                msg = await googleSheets.VerificarCuestionario(false, user!.Email, cuestionario.ProximaAplicacion);
                 Console.WriteLine("Actualziación: " + msg);
                 if (!InsertarCuestionario(msg))
                     return RedirectToAction("Cuestionario", new { error = true });

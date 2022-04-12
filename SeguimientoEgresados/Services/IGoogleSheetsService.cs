@@ -8,6 +8,6 @@ public interface IGoogleSheetsService
     public UserCredential credential { get; }
     public SheetsService service { get; }
     
-    public Task<string> VerificarCuestionario(string email);
-    public Task<string> VerificarCuestionario(string email, DateTime fecha);
+    public Task<string> VerificarCuestionario(bool egresado, string email);
+    public Task<string> VerificarCuestionario(bool egresado, string email, DateTime fecha);
 }

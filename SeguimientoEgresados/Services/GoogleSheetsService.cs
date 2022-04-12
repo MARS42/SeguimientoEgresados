@@ -43,9 +43,9 @@ public class GoogleSheetsService : IGoogleSheetsService
         });
     }
 
-    public async Task<string> VerificarCuestionario(string email)
+    public async Task<string> VerificarCuestionario(bool egresado, string email)
     {
-        String spreadsheetId = "1UmZ1fropK_rOYmZ-5eDtTGoJIrP4bb4KtgNLgcgQDxA";
+        String spreadsheetId = egresado ? "1fAcF7KnSrsCmNkiW934EvUyTjt4QEyfO5lfwMk0Kgrw" : "1UmZ1fropK_rOYmZ-5eDtTGoJIrP4bb4KtgNLgcgQDxA";
 
         //List<Google.Apis.Sheets.v4.Data.Request> requests = new List<Google.Apis.Sheets.v4.Data.Request>();
 
@@ -126,10 +126,9 @@ public class GoogleSheetsService : IGoogleSheetsService
         return "Error";
     }
     
-    public async Task<string> VerificarCuestionario(string email, DateTime fecha)
+    public async Task<string> VerificarCuestionario(bool egresado, string email, DateTime fecha)
     {
-        String spreadsheetId = "1UmZ1fropK_rOYmZ-5eDtTGoJIrP4bb4KtgNLgcgQDxA";
-
+        String spreadsheetId = egresado ? "1fAcF7KnSrsCmNkiW934EvUyTjt4QEyfO5lfwMk0Kgrw" : "1UmZ1fropK_rOYmZ-5eDtTGoJIrP4bb4KtgNLgcgQDxA";
         String range = "Respuestas de formulario 1!A:B";
 
         SpreadsheetsResource.ValuesResource.GetRequest request = service.Spreadsheets.Values.Get(spreadsheetId, range);
