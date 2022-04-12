@@ -1,2 +1,29 @@
 ﻿@model AvisoCuestionario
 
+<!-- Button trigger modal -->
+<button type="button" class="btn invisible btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="openModal">
+    Modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header text-danger">
+                <h5 class="modal-title" id="staticBackdropLabel"><i class="fa-solid fa-circle-exclamation mx-2"></i>@(Model.Titulo)</h5>
+                @* <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> *@
+            </div>
+            <div class="modal-body">
+                @(Model.Cuerpo)
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close">Entendido<i class="fa-solid fa-thumbs-up mx-2"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+        document.getElementById("openModal").click();
+    });
+</script>

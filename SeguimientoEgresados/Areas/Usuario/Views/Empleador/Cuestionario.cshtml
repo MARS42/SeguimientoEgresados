@@ -9,11 +9,6 @@
     //Layout = "_Layout";
 }
 
-@if (error != null)
-{
-    <h1>@error.Cuerpo</h1>
-}
-
 @if (modo.Equals("Hecho"))
 {
     <div class="container m-4">
@@ -55,19 +50,7 @@ else
     </div>
 }
 
-<script>
-
-const iframe = document.querySelectorAll('iframe');
-// iframe.forEach(item => {
-//    console.log(item.contentWindow.document.);
-// });
-
-
-function cuestionarioCargado(form){
-    console.log(form.src);
+@if (error != null)
+{
+    @await Html.PartialAsync("ModalErrorCuestionario", error)
 }
-@{
-    
-}
-
-</script>
