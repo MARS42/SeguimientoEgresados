@@ -28,33 +28,33 @@ namespace SeguimientoEgresados.Controllers
         // }
         
         [HttpGet]
-        public async Task<IActionResult> Index(string Email, string Password)
+        public async Task<IActionResult> Index()
         {
-            if(string.IsNullOrEmpty(Email) || string.IsNullOrEmpty(Password))
-                return RedirigirPerfil(View());
-        
-            var email = new SqlParameter("@email", Email);
-            var password = new SqlParameter("@password", Password);
-            var idUsuario = new SqlParameter("@id_usuario", SqlDbType.Int)
-            {
-                Direction = ParameterDirection.Output
-            };
+            // if(string.IsNullOrEmpty(Email) || string.IsNullOrEmpty(Password))
+            //     return RedirigirPerfil(View());
+            //
+            // var email = new SqlParameter("@email", Email);
+            // var password = new SqlParameter("@password", Password);
+            // var idUsuario = new SqlParameter("@id_usuario", SqlDbType.Int)
+            // {
+            //     Direction = ParameterDirection.Output
+            // };
 
-            var users = await _context.Database.ExecuteSqlRawAsync("exec AccesoUsuario @email, @password, @id_usuario out", email, password, idUsuario);
+            //var users = await _context.Database.ExecuteSqlRawAsync("exec AccesoUsuario @email, @password, @id_usuario out", email, password, idUsuario);
                 
-            Console.WriteLine("Id fount: " + idUsuario.Value);
+            //Console.WriteLine("Id fount: " + idUsuario.Value);
                 
-            var oUser = await _context.Usuarios
-                .FirstOrDefaultAsync(u => u.Id.Equals(Convert.ToInt32(idUsuario.Value)));
+            //var oUser = await _context.Usuarios
+            //    .FirstOrDefaultAsync(u => u.Id.Equals(Convert.ToInt32(idUsuario.Value)));
                 
-            if (oUser == null)
-            {
-                ViewBag.Error = "Usuario o contraseña invalida";
-                return View();
-            }
-
-            //Session["User"] = oUser;
-            HttpContext.Session.Set<Usuario>("User", oUser);
+            // if (oUser == null)
+            // {
+            //     ViewBag.Error = "Usuario o contraseña invalida";
+            //     return View();
+            // }
+            //
+            // //Session["User"] = oUser;
+            // HttpContext.Session.Set<Usuario>("User", oUser);
                 
             return RedirigirPerfil(View());
         }

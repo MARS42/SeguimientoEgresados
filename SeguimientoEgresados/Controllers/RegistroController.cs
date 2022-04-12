@@ -90,8 +90,9 @@ namespace SeguimientoEgresados.Controllers
 
             await _context.Egresados.AddAsync(egresado);
             await _context.SaveChangesAsync();
-            
-            return RedirectToAction("Index", "Acceso", new { Email = model.Email, Password = model.Password });
+            //return RedirectToAction("Index", "Acceso", new { Email = model.Email, Password = model.Password });
+            return RedirectToActionPreserveMethod("Index", "Acceso",
+                new AccesoViewModel() {Email = model.Email, Password = model.Password});
         }
 
         public IActionResult Empleador()
@@ -143,7 +144,9 @@ namespace SeguimientoEgresados.Controllers
             await _context.Empresas.AddAsync(empresa);
             await _context.SaveChangesAsync();
             
-            return RedirectToAction("Index", "Acceso", new { Email = model.Email, Password = model.Password });
+            //return RedirectToAction("Index", "Acceso", new { Email = model.Email, Password = model.Password });
+            return RedirectToActionPreserveMethod("Index", "Acceso",
+                new AccesoViewModel() {Email = model.Email, Password = model.Password});
         }
     }
 }
