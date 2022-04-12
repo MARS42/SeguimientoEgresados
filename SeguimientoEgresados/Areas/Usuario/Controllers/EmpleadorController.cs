@@ -96,7 +96,8 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             return View();
         }
         
-        public async Task<IActionResult> Cuestionario()
+        [HttpGet]
+        public async Task<IActionResult> Cuestionario(bool error = false)
         {
             Models.Usuario? user = HttpContext.Session.Get<Models.Usuario>("User");
             var empresa = await _context.Empresas.FirstOrDefaultAsync(e => e.IdUsuario.Equals(user!.Id));
@@ -114,10 +115,49 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             }
             else
                 ViewData["Modo"] = "Hecho";
+            
+            if (error)
+                ViewData["Error"] = new AvisoCuestionario("Aún no has respondido el cuestionario", "Parece que aún no está registrado el cuestionario, contestalo y al finalizar pulsa el botón ENVIAR del formulario");
 
             return View(cuestionario);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Cuestionario(String Verificar)
+        {
+            Models.Usuario? user = HttpContext.Session.Get<Models.Usuario>("User");
+            var cuestionario = await _context.Cuestionarios.FirstOrDefaultAsync(c => c.IdUsuario.Equals(user.Id));
+
+            string msg = "";
+            if (cuestionario == null)
+            {
+                msg = await googleSheets.VerificarCuestionario(user!.Email);
+                
+                if (!InsertarCuestionario(msg))
+                    return RedirectToAction("Cuestionario", new { error = true });
+                
+                var id_usuario = new SqlParameter("@id_usuario", user!.Id);
+                await _context.Database.ExecuteSqlRawAsync("exec CrearCuestionario @id_usuario", id_usuario);
+            }
+            else
+            {
+                msg = await googleSheets.VerificarCuestionario(user!.Email, cuestionario.ProximaAplicacion);
+                Console.WriteLine("Actualziación: " + msg);
+                if (!InsertarCuestionario(msg))
+                    return RedirectToAction("Cuestionario", new { error = true });
+                
+                var id_usuario = new SqlParameter("@id_usuario", user!.Id);
+                await _context.Database.ExecuteSqlRawAsync("exec ActualizarCuestionario @id_usuario", id_usuario);
+            }
+            return RedirectToAction("Cuestionario");
+        }
+        
+        public IActionResult CerrarSesion()
+        {
+            HttpContext.Session.Remove("User");
+            return RedirectToAction("Index", "Inicio", new { area="" });
+        }
+        
         private async Task<AvisoCuestionario> Aviso(int idUsuario)
         {
             Cuestionario? cuestionario = await _context.Cuestionarios.FirstOrDefaultAsync(c => c.IdUsuario.Equals(idUsuario));
@@ -128,31 +168,6 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
                 return new AvisoCuestionario("Actualización de cuestionario", $"Tu última aplicación del cuestinario fue el {cuestionario.UltimaAplicacion.Value.ToString()}, puedes volver a aplicarlo para mantener tus datos actualizados.");
 
             return null;
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Cuestionario(String Verificar)
-        {
-            Models.Usuario? user = HttpContext.Session.Get<Models.Usuario>("User");
-            string msg = await googleSheets.VerificarCuestionario(user!.Email);
-            Console.WriteLine($"{msg} - {Verificar}");
-            
-            if (!InsertarCuestionario(msg))
-            {
-                return View();
-            }
-            
-            //var id_usuario = new SqlParameter("@id_usuario", user!.Id);
-            
-            //await _context.Database.ExecuteSqlRawAsync("exec CrearCuestionario @id_usuario", id_usuario);
-            
-            return RedirectToAction("Cuestionario");
-        }
-        
-        public IActionResult CerrarSesion()
-        {
-            HttpContext.Session.Remove("User");
-            return RedirectToAction("Index", "Inicio", new { area="" });
         }
 
         private bool InsertarCuestionario(string sheetsResponse)

@@ -4,7 +4,14 @@
     ViewBag.Title = "Cuestionario de empleador";
     string modo = (string)ViewData["Modo"];
     string modoBtn = (string)ViewData["ModoBoton"];
+
+    var error = ViewData["Error"] as AvisoCuestionario;
     //Layout = "_Layout";
+}
+
+@if (error != null)
+{
+    <h1>@error.Cuerpo</h1>
 }
 
 @if (modo.Equals("Hecho"))
@@ -29,29 +36,6 @@
 else
 {
     <div class="container p-4">
-        @* <div class="toast d-block position-absolute top-50 start-50 translate-middle" style="z-index: 1024" role="alert" aria-live="assertive" aria-atomic="true"> *@
-        @*   <div class="toast-header"> *@
-        @*     <img src="" class="rounded me-2" alt="..."> *@
-        @*     <strong class="me-auto">Bootstrap</strong> *@
-        @*     <small>11 mins ago</small> *@
-        @*     <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button> *@
-        @*   </div> *@
-        @*   <div class="toast-body"> *@
-        @*     Hello, world! This is a toast message. *@
-        @*   </div> *@
-        @* </div> *@
-        
-        @* <div class="toast d-block position-absolute top-20 start-50 translate-middle" style="z-index: 1024" role="alert" aria-live="assertive" aria-atomic="true"> *@
-        @*   <div class="toast-header bg-primary text-white"> *@
-        @*     <i class="fa-solid fa-triangle-exclamation fa-lg mx-2"></i> *@
-        @*     <strong class="me-auto">Aviso</strong> *@
-        @*     <small>.</small> *@
-        @*     <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button> *@
-        @*   </div> *@
-        @*   <div class="toast-body"> *@
-        @*     Hello, world! This is a toast message. *@
-        @*   </div> *@
-        @* </div> *@
         <form asp-action="Cuestionario" method="POST" class="row justify-content-center">
             <div class="col-auto m-2">
                 <button type="submit" class="btn btn-primary animate__animated animate__flash animate__delay-2s animate__slow animate__repeat-2" name="Verificar" value="@modo"

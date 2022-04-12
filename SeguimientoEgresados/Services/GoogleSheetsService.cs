@@ -47,88 +47,118 @@ public class GoogleSheetsService : IGoogleSheetsService
     {
         String spreadsheetId = "1UmZ1fropK_rOYmZ-5eDtTGoJIrP4bb4KtgNLgcgQDxA";
 
-        List<Google.Apis.Sheets.v4.Data.Request> requests = new List<Google.Apis.Sheets.v4.Data.Request>();
+        //List<Google.Apis.Sheets.v4.Data.Request> requests = new List<Google.Apis.Sheets.v4.Data.Request>();
 
-        List<ConditionValue> conditionValues = new List<ConditionValue>();
-        conditionValues.Add(new ConditionValue()
-        {
-            UserEnteredValue = email
-        });
-
-        List<FilterSpec> filterSpecs = new List<FilterSpec>();
-        filterSpecs.Add(new FilterSpec()
-        {
-            ColumnIndex = 1,
-            FilterCriteria = new FilterCriteria()
-            {
-                Condition = new BooleanCondition(){
-                    Type = "TEXT_EQ",
-                    Values = conditionValues
-                }
-            }
-        });
-
-        BasicFilter bf = new()
-        {
-            Range = new GridRange()
-            {
-                SheetId = 748402175,
-                StartColumnIndex = 1,
-                EndColumnIndex = 2
-            },
-            FilterSpecs = filterSpecs
-        };
-
-        SetBasicFilterRequest bfr = new()
-        {
-            Filter = bf
-        };
-
-        requests.Add(new Google.Apis.Sheets.v4.Data.Request() {
-            SetBasicFilter = bfr
-        });
-
-
-        // TODO: Assign values to desired properties of `requestBody`:
-        Google.Apis.Sheets.v4.Data.BatchUpdateSpreadsheetRequest requestBody = new Google.Apis.Sheets.v4.Data.BatchUpdateSpreadsheetRequest
-        {
-            Requests = requests
-        };
-
-        SpreadsheetsResource.BatchUpdateRequest request = service.Spreadsheets.BatchUpdate(requestBody, spreadsheetId);
-
-        // To execute asynchronously in an async method, replace `request.Execute()` as shown:
-        Google.Apis.Sheets.v4.Data.BatchUpdateSpreadsheetResponse response = await request.ExecuteAsync();
-
-        Console.WriteLine(JsonConvert.SerializeObject(response));
+        // BasicFilter bf = new()
+        // {
+        //     Range = new GridRange()
+        //     {
+        //         SheetId = 748402175,
+        //         StartColumnIndex = 1,
+        //         EndColumnIndex = 2
+        //     },
+        //     FilterSpecs = new List<FilterSpec>()
+        //     {
+        //         new FilterSpec()
+        //         {
+        //             ColumnIndex = 1,
+        //             FilterCriteria = new FilterCriteria()
+        //             {
+        //                 Condition = new BooleanCondition()
+        //                 {
+        //                     Type = "TEXT_EQ",
+        //                     Values = new List<ConditionValue>()
+        //                     {
+        //                         new ConditionValue()
+        //                         {
+        //                             UserEnteredValue = email
+        //                         }
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //     }
+        // };
+        //
+        // SetBasicFilterRequest bfr = new()
+        // {
+        //     Filter = bf
+        // };
+        //
+        // requests.Add(new Google.Apis.Sheets.v4.Data.Request() {
+        //     SetBasicFilter = bfr
+        // });
+        //
+        //
+        // Google.Apis.Sheets.v4.Data.BatchUpdateSpreadsheetRequest requestBody = new Google.Apis.Sheets.v4.Data.BatchUpdateSpreadsheetRequest
+        // {
+        //     Requests = requests
+        // };
+        //
+        // SpreadsheetsResource.BatchUpdateRequest request = service.Spreadsheets.BatchUpdate(requestBody, spreadsheetId);
+        //
+        // // To execute asynchronously in an async method, replace `request.Execute()` as shown:
+        // Google.Apis.Sheets.v4.Data.BatchUpdateSpreadsheetResponse response = await request.ExecuteAsync();
+        //
+        // Console.WriteLine(JsonConvert.SerializeObject(response));
         // Data.BatchUpdateSpreadsheetResponse response = await request.ExecuteAsync();
 
-        //String range = "Respuestas de formulario 1!A2:B20";
+        String range = "Respuestas de formulario 1!B:B";
 
-        //SpreadsheetsResource.ValuesResource.GetRequest request = service.Spreadsheets.Values.Get(spreadsheetId, range);
+        SpreadsheetsResource.ValuesResource.GetRequest request = service.Spreadsheets.Values.Get(spreadsheetId, range);
 
-        //ValueRange response = await request.ExecuteAsync();
+        ValueRange response = await request.ExecuteAsync();
 
-        //IList<IList<Object>> values = response.Values;
+        IList<IList<object>> values = response.Values;
 
-        //if (values != null && values.Count > 0)
-        //{
-        //    //Console.WriteLine("Name, Major");
-        //    //if (values.SelectMany(row => row.Cast<string>()).Any(cell => cell.Equals(email)))
-        //    //{
-        //    //    return "Ok";
-        //    //}
-        //    foreach(var fila in values)
-        //    {
-        //        string fecha = (string)fila[0];
-        //        //string emailf = (string)fila[1];
-        //        Console.WriteLine($"{fecha} - {email}");
-        //    }
-        //}
-        //else
-        //{
-        //    return "Data are null o equals to 0";
-        //}
+        if (values != null && values.Count > 0)
+        {
+            //Console.WriteLine("Name, Major");
+            if (values.SelectMany(row => row.Cast<string>()).Any(cell => cell.Equals(email)))
+            {
+                return "Ok";
+            }
+        }
+        else
+        {
+            return "Data are null o equals to 0";
+        }
+        return "Error";
+    }
+    
+    public async Task<string> VerificarCuestionario(string email, DateTime fecha)
+    {
+        String spreadsheetId = "1UmZ1fropK_rOYmZ-5eDtTGoJIrP4bb4KtgNLgcgQDxA";
+
+        String range = "Respuestas de formulario 1!A:B";
+
+        SpreadsheetsResource.ValuesResource.GetRequest request = service.Spreadsheets.Values.Get(spreadsheetId, range);
+
+        ValueRange response = await request.ExecuteAsync();
+
+        IList<IList<object>> values = response.Values;
+
+        IList<DateTime> fechas = new List<DateTime>(); 
+
+        Console.WriteLine($"Fecha: {fecha}");
+        if (values != null && values.Count > 0)
+        {
+            foreach (IList<object> fila in values)
+            {
+                if(fila.Count > 1 && fila[1].ToString()!.Equals(email))
+                    fechas.Add(DateTime.Parse(fila[0].ToString()!));
+            }
+
+            if (fechas.Count <= 0)
+                return "Error";
+            
+            if (fechas.Any(f => DateTime.Compare(f, fecha) > 0))
+                return "Ok";
+        }
+        else
+        {
+            return "Data are null o equals to 0";
+        }
         return "Error";
     }
 }

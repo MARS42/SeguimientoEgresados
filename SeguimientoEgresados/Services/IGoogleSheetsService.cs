@@ -9,4 +9,5 @@ public interface IGoogleSheetsService
     public SheetsService service { get; }
     
     public Task<string> VerificarCuestionario(string email);
+    public Task<string> VerificarCuestionario(string email, DateTime fecha);
 }
