@@ -1,0 +1,22 @@
+﻿@{
+    int item = (int)(ViewData["SidebarItem"] ?? 1);
+}
+
+<div class="list-group">
+    <a asp-area="Usuario" asp-controller="Administrativo" asp-action="Index" class='list-group-item list-group-item-action @(item == 1 ? "active" : "")' aria-current="true">
+        <i class="fa-regular fa-file-lines mx-2"></i>General
+    </a>
+    <a asp-area="Usuario" asp-controller="Administrativo" asp-action="Egresados" class='list-group-item list-group-item-action @(item == 2 ? "active" : "")'>
+        <i class="fa-solid fa-graduation-cap mx-2"></i>Egresados
+    </a>
+    <a asp-area="Usuario" asp-controller="Administrativo" asp-action="Empleadores" class='list-group-item list-group-item-action @(item == 3 ? "active" : "")'>
+        <i class="fa-solid fa-briefcase mx-2"></i>Empleadores
+    </a>
+    <a asp-area="Usuario" asp-controller="Administrativo" asp-action="CambiosPassword" class='list-group-item list-group-item-action @(item == 4 ? "active" : "")'>
+        <i class="fa-solid fa-unlock mx-2"></i>Cambios de contraseña
+    </a>
+    <a asp-area="Usuario" asp-controller="Administrativo" asp-action="Reportes" class='list-group-item list-group-item-action @(item == 5 ? "active" : "")'>
+        <i class="fa-solid fa-comment mx-2"></i>Quejas y reportes
+    </a>
+</div>
+

@@ -23,7 +23,38 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
         {
             Models.Usuario? user = HttpContext.Session.Get<Models.Usuario>("User");
             var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Id.Equals(user!.Id));
+            ViewData["SidebarItem"] = 1;
             return View(usuario);
+        }
+
+        public async Task<IActionResult> General()
+        {
+            return PartialView();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Egresados()
+        {
+            ViewData["SidebarItem"] = 2;
+            return PartialView(await _context.Egresados.ToListAsync());
+        }
+        
+        public async Task<IActionResult> Empleadores()
+        {
+            ViewData["SidebarItem"] = 3;
+            return PartialView();
+        }
+        
+        public async Task<IActionResult> CambiosPassword()
+        {
+            ViewData["SidebarItem"] = 4;
+            return PartialView();
+        }
+        
+        public async Task<IActionResult> Reportes()
+        {
+            ViewData["SidebarItem"] = 5;
+            return PartialView();
         }
 
         public IActionResult CerrarSesion()
