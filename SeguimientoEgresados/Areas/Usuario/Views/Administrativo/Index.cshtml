@@ -5,3 +5,35 @@
 }
 
 <h3>Bienvenido al sistema @Html.DisplayFor(m => m.Nombre)</h3>
+<div class="container-fluid vh-100" id="main-view">
+    <div class="row">
+        <div class="col-12 col-md-6 col-lg-4 col-xl-2">
+            <div class="list-group">
+                <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+                    <i class="fa-regular fa-file-lines mx-2"></i>General
+                </a>
+                <a href="#" class="list-group-item list-group-item-action">
+                    <i class="fa-solid fa-graduation-cap mx-2"></i>Egresados
+                </a>
+                <a href="#" class="list-group-item list-group-item-action">
+                    <i class="fa-solid fa-briefcase mx-2"></i>Empleadores
+                </a>
+                <a href="#" class="list-group-item list-group-item-action">
+                    <i class="fa-solid fa-unlock mx-2"></i>Cambios de contraseña
+                </a>
+                <a class="list-group-item list-group-item-action">
+                    <i class="fa-solid fa-comment mx-2"></i>Reportes
+                </a>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-8 col-xl-10 border rounded">
+            Cotenido
+        </div>
+    </div>
+</div>
+
+@* <script> *@
+@*     window.addEventListener('DOMContentLoaded', (event) => { *@
+@*     document.getElementById("main-view").scrollIntoView({block:"start"}); *@
+@*     }); *@
+@* </script> *@

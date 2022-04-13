@@ -42,3 +42,11 @@ function clickActionBtn(btn) {
     btn.style.opacity = "0.7";
     btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
 }
+
+function headerHeight(){
+    return document.getElementById("header").offsetHeight;
+}
+
+document.addEventListener('scroll', (e) => {
+    console.log(headerHeight())
+})
