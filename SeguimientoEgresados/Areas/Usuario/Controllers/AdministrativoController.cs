@@ -25,5 +25,12 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Id.Equals(user!.Id));
             return View(usuario);
         }
+
+        public IActionResult CerrarSesion()
+        {
+            HttpContext.Session.Remove("User");
+            HttpContext.Session.Remove("Module");
+            return RedirectToAction("Index", "Inicio", new { area="" });
+        }
     }
 }

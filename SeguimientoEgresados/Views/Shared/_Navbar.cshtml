@@ -60,6 +60,13 @@
                                     case 5: //Empleador
                                         @await Html.PartialAsync("NavbarParts/_OpcionesEmpleador")
                                         break;
+                                    default:
+                                        int? mod = ViewContext.HttpContext.Session.GetInt32("Module");
+                                        if (mod != null)
+                                        {
+                                            @await Html.PartialAsync("NavbarParts/_OpcionesAdministrativo")
+                                        }
+                                        break;
                                 }
                             }
                         }

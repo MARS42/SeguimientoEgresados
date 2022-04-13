@@ -125,6 +125,7 @@ namespace SeguimientoEgresados.Controllers
 
                 if (query.Any())
                 {
+                    HttpContext.Session.SetInt32("Module", query.First().Id);
                     return RedirectToAction("Index", "Administrativo", new { area = "Usuario" });
                 }
             }
