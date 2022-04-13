@@ -32,6 +32,7 @@
       <Folder Include="Areas\Galeria\Controllers" />
       <Folder Include="Areas\Usuario\Data" />
       <Folder Include="Areas\Usuario\Models" />
+      <Folder Include="Areas\Usuario\Pages" />
       <Folder Include="Pages" />
       <Folder Include="token.json\" />
       <Folder Include="wwwroot\images" />

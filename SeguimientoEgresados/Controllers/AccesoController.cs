@@ -56,7 +56,7 @@ namespace SeguimientoEgresados.Controllers
             // //Session["User"] = oUser;
             // HttpContext.Session.Set<Usuario>("User", oUser);
                 
-            return RedirigirPerfil(View());
+            return await RedirigirPerfil(View());
         }
 
 
@@ -91,7 +91,7 @@ namespace SeguimientoEgresados.Controllers
                 //Session["User"] = oUser;
                 HttpContext.Session.Set<Usuario>("User", oUser);
                 
-                return RedirigirPerfil(View());
+                return await RedirigirPerfil(View());
             }
             catch (Exception ex)
             {
@@ -101,17 +101,31 @@ namespace SeguimientoEgresados.Controllers
 
         }
 
-        private IActionResult RedirigirPerfil(IActionResult defaultView)
+        private async Task<IActionResult> RedirigirPerfil(IActionResult defaultView)
         {
             Usuario? user = HttpContext.Session.Get<Usuario>("User"); 
             if (user != null)
             {
-                switch (user.IdRol)
+                var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Id.Equals(user!.Id));
+
+                switch (usuario.IdRol)
                 {
                     case 4:         //Egresado
-                        return RedirectToAction("Index", "Egresado", new {area = "Usuario"});
+                        return RedirectToAction("Index", "Egresado", new { area = "Usuario" });
                     case 5:         //Empleador
-                        return RedirectToAction("Index", "Empleador", new {area = "Usuario"});
+                        return RedirectToAction("Index", "Empleador", new { area = "Usuario" });
+                }
+                
+                var query = from modulo in _context.Modulos
+                    join operacion in _context.Operaciones on modulo.Id equals operacion.IdModulo
+                    join rolOp in _context.RolOperacions on operacion.Id equals rolOp.IdOperacion into matches
+                    from match in matches.DefaultIfEmpty()
+                    where match.IdRol == usuario.IdRol
+                    select modulo;
+
+                if (query.Any())
+                {
+                    return RedirectToAction("Index", "Administrativo", new { area = "Usuario" });
                 }
             }
 
