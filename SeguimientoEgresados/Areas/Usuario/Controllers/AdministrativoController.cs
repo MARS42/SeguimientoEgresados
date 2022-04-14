@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SeguimientoEgresados.Models;
+using SeguimientoEgresados.Models.ViewModels;
 using SeguimientoEgresados.Utils;
 
 namespace SeguimientoEgresados.Areas.Usuario.Controllers
@@ -69,14 +70,63 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             return PartialView("_GetEgresados", await _context.Egresados.ToListAsync());
         }
 
-        public async Task<IActionResult> GetEmpleadores()
+        public async Task<IActionResult> GetEmpleadores(string ordenTabla, string busqueda)
         {
+            ViewData["NombreSort"] = String.IsNullOrEmpty(ordenTabla) ? "nombre_desc" : "";
+            ViewData["RepSort"] = ordenTabla == "rep_desc" ? "rep_asc" : "fecha_desc";
+            ViewData["RegSort"] = ordenTabla == "fecha_desc" ? "fecha_asc" : "fecha_desc";
+            
+            ViewData["Busqueda"] = busqueda;
+            
             var query =
-                from empleador in _context.Empresas
-                join usuario in _context.Usuarios on empleador.IdUsuario equals usuario.Id into matches
+                from empresa in _context.Empresas
+                join usuario in _context.Usuarios on empresa.IdUsuario equals usuario.Id into matches
                 from match in matches.DefaultIfEmpty()
-                select new { };
-            return PartialView("_GetEmpleadores", await _context.Empresas.ToListAsync());
+                select new EmpresaViewModel(match.Id, empresa.Id)
+                {
+                    Nombre = empresa.Nombre,
+                    Correo = empresa.CorreoEmpresa,
+                    Rfc = empresa.Rfc,
+                    Telefono = empresa.Telefono,
+                    NombreRep = match.Nombre,
+                    Ape1Rep = match.ApellidoPaterno,
+                    Ape2Rep = match.ApellidoMaterno,
+                    FechaRegistro = match.Fecha,
+                    
+                };
+            
+            if (!string.IsNullOrEmpty(busqueda))
+            {
+                query = query.Where(e => e.Nombre.Contains(busqueda)
+                                         || e.NombreRep.Contains(busqueda)
+                                         || e.Ape1Rep.Contains(busqueda)
+                                         || e.Ape2Rep.Contains(busqueda)
+                                         || e.Rfc.Contains(busqueda));
+            }
+
+            switch (ordenTabla)
+            {
+                case "nombre_desc":
+                    query = query.OrderByDescending(e => e.Nombre);
+                    break;
+                case "fecha_desc":
+                    query = query.OrderByDescending(e => e.FechaRegistro);
+                    break;
+                case "fecha_asc":
+                    query = query.OrderBy(e => e.FechaRegistro);
+                    break;
+                case "rep_desc":
+                    query = query.OrderByDescending(e => e.Representante);
+                    break;
+                case "rep_asc":
+                    query = query.OrderBy(e => e.Representante);
+                    break;
+                default:
+                    query = query.OrderBy(e => e.Nombre);
+                    break;
+            }
+            
+            return PartialView("_GetEmpleadores", await query.AsNoTracking().ToListAsync());
         }
     }
 }

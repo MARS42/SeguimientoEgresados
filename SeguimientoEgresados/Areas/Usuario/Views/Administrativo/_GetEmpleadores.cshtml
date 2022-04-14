@@ -1,21 +1,31 @@
-﻿@model IEnumerable<Empresa>
+﻿@model IEnumerable<EmpresaViewModel>
 
-<table class="table">
+<table class="table table-hover">
     <thead>
         <tr>
-            <th scope="col">Nombre</th>
-            <th scope="col">Correo</th>
+            <th scope="col"><a class="text-primary text-decoration-none manita" onclick='ordenar("@ViewData["NombreSort"]")'>Nombre</a></th>
+            <th scope="col"><a class="text-primary text-decoration-none manita" onclick='ordenar("@ViewData["RepSort"]")'>Representante</a></th>
             <th scope="col">RFC</th>
+            <th scope="col">Correo</th>
+            <th scope="col">Teléfono</th>
+            <th scope="col"><a class="text-primary text-decoration-none manita" onclick='ordenar("@ViewData["RegSort"]")'>Registro</a></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (Empresa e in Model)
+        @foreach (var e in Model)
         {
-            <tr>
+            <tr class="manita">
                 <td>@e.Nombre</td>
-                <td>@e.CorreoEmpresa</td>
+                <td>@e.Representante</td>
                 <td>@e.Rfc</td>
+                <td>@e.Correo</td>
+                <td>@e.Telefono</td>
+                <td>@e.FechaRegistro</td>
             </tr>
         }
     </tbody>
 </table>
+
+<script>
+
+</script>

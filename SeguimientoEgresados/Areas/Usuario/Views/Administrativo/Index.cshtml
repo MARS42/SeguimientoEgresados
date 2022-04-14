@@ -40,7 +40,7 @@
 {
 
 
-<script>
+    <script>
     
         //$(document).ready(function (){
         
@@ -118,16 +118,32 @@
             });
         }
         
-        function actualizarTabla(dataUrl){
-                const cont = document.getElementById('contenido');
+        function buscar(){
+            var url = "@Url.Action("GetEmpleadores")?busqueda=" + document.getElementById("busqueda").value;
+            
+            const cont = document.getElementById('contenido');
+    
+            cont.innerHTML = '<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>';
+            fetch(url)
+            .then(res => res.text())
+            .then(body => {
+                cont.innerHTML = body;
+            });
+        }
         
-                cont.innerHTML = '<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>';
-                fetch(dataUrl)
-                .then(res => res.text())
-                .then(body => {
-                    cont.innerHTML = body;
-                });
-            }
+        function ordenar(orden){
+            
+            var url = "@Url.Action("GetEmpleadores")?ordenTabla=" + orden;
+            
+            const cont = document.getElementById('contenido');
+        
+            cont.innerHTML = '<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>';
+            fetch(url)
+            .then(res => res.text())
+            .then(body => {
+                cont.innerHTML = body;
+            });
+        }
     </script>
 }
 

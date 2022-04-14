@@ -1,16 +1,11 @@
 ﻿@model IEnumerable<Empresa>
 
-@{
-    ViewBag.Title = "Empleadores";
-}
-
-
 <div class="container-fluid animate__animated animate__fadeIn">
     <form>
         <div class="form-actions no-color">
             <p>
-                Buscar: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
-                <input type="button" value="Search" class="btn btn-default" onclick='actualizarTabla("@Url.Action("GetEmpleadores")")'/> |
+                Buscar: <input id="busqueda" type="text" name="busqueda" value="@ViewData["Busqueda"]" />
+                <input type="button" value="Search" class="btn btn-default" onclick='buscar()'/> |
                 <a asp-action="Index">Listar todos</a>
             </p>
         </div>
