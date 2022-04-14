@@ -1,4 +1,5 @@
 @using SeguimientoEgresados.Utils
+@using System.Security.Claims
 <div class="container text-center animate__animated animate__faster" id="bannerLogos">
     <img src="~/images/logo_gobmex.png" alt="Gobierno de México" class="bannersLogos">
     <img src="~/images/logo_sep.png" alt="Secretaría de Educación Pública" class="bannersLogos">
@@ -44,25 +45,26 @@
                         string? controller = Convert.ToString(ViewContext.HttpContext.Request.RouteValues["Controller"]);
                         if (!controller!.Equals("Acceso"))
                         {
-                            Usuario? usuario = ViewContext.HttpContext.Session.Get<Usuario>("User");
-                            if (usuario == null)
+                            if (!User.Identity.IsAuthenticated)
                             {
                                 @await Html.PartialAsync("NavbarParts/_OpcionesVisitante")
                             }
                             else
                             {
-                                Console.WriteLine(usuario.Nombre);
-                                switch (usuario.IdRol)
+                                string? rol = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+                                string? modulo = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.System)?.Value;
+                                //string rol = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+                                Console.WriteLine(rol);
+                                switch (rol)
                                 {
-                                    case 4: //Egresado
+                                    case "Egresado": //Egresado
                                         @await Html.PartialAsync("NavbarParts/_OpcionesEgresado")
                                         break;
-                                    case 5: //Empleador
+                                    case "Empleador": //Empleador
                                         @await Html.PartialAsync("NavbarParts/_OpcionesEmpleador")
                                         break;
                                     default:
-                                        int? mod = ViewContext.HttpContext.Session.GetInt32("Module");
-                                        if (mod != null)
+                                        if (modulo != null)
                                         {
                                             @await Html.PartialAsync("NavbarParts/_OpcionesAdministrativo")
                                         }

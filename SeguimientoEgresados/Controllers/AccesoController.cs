@@ -2,7 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -28,7 +31,7 @@ namespace SeguimientoEgresados.Controllers
         // }
         
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string returnUrl)
         {
             // if(string.IsNullOrEmpty(Email) || string.IsNullOrEmpty(Password))
             //     return RedirigirPerfil(View());
@@ -55,7 +58,8 @@ namespace SeguimientoEgresados.Controllers
             //
             // //Session["User"] = oUser;
             // HttpContext.Session.Set<Usuario>("User", oUser);
-                
+
+            ViewData["ReturnUrl"] = returnUrl;
             return await RedirigirPerfil(View());
         }
 
@@ -75,9 +79,9 @@ namespace SeguimientoEgresados.Controllers
                     Direction = ParameterDirection.Output
                 };
 
-                var users = await _context.Database.ExecuteSqlRawAsync("exec AccesoUsuario @email, @password, @id_usuario out", email, password, idUsuario);
+                await _context.Database.ExecuteSqlRawAsync("exec AccesoUsuario @email, @password, @id_usuario out", email, password, idUsuario);
                 
-                Console.WriteLine("Id fount: " + idUsuario.Value);
+                Console.WriteLine("Id found: " + idUsuario.Value);
                 
                 var oUser = await _context.Usuarios
                     .FirstOrDefaultAsync(u => u.Id.Equals(Convert.ToInt32(idUsuario.Value)));
@@ -88,10 +92,44 @@ namespace SeguimientoEgresados.Controllers
                     return View(model);
                 }
 
-                //Session["User"] = oUser;
-                HttpContext.Session.Set<Usuario>("User", oUser);
+                var rol = await _context.Roles.FirstOrDefaultAsync(r => r.Id.Equals(oUser.IdRol));
+                var query = from modulo in _context.Modulos
+                    join operacion in _context.Operaciones on modulo.Id equals operacion.IdModulo
+                    join rolOp in _context.RolOperacions on operacion.Id equals rolOp.IdOperacion into matches
+                    from match in matches.DefaultIfEmpty()
+                    where match.IdRol == rol.Id
+                    select modulo;
                 
+                List<Claim> claims = new ()
+                {
+                    new Claim(ClaimTypes.Name, oUser.Nombre),
+                    new Claim(ClaimTypes.Role, rol!.Nombre),
+                    new Claim(ClaimTypes.Email, oUser.Email),
+                    new Claim(ClaimTypes.System, query.First().Nombre)
+                };
+                ClaimsIdentity claimsIdentity = new (claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                ClaimsPrincipal claimsPrincipal = new(claimsIdentity);
+
+                await HttpContext.SignInAsync(claimsPrincipal);
+                
+                //HttpContext.Session.Set<Usuario>("User", oUser);
+                
+                switch (rol.Id)
+                {
+                    case 1:
+                    case 2:
+                    case 3:
+                        return RedirectToAction("Index", "Administrativo", new { area = "Usuario" });
+                    case 4:         //Egresado
+                        return RedirectToAction("Index", "Egresado", new { area = "Usuario" });
+                    case 5:         //Empleador
+                        return RedirectToAction("Index", "Empleador", new { area = "Usuario" });
+                }
+                
+                //if(string.IsNullOrEmpty(returnUrl))
                 return await RedirigirPerfil(View());
+                
+                //return Redirect(returnUrl);
             }
             catch (Exception ex)
             {
@@ -103,31 +141,39 @@ namespace SeguimientoEgresados.Controllers
 
         private async Task<IActionResult> RedirigirPerfil(IActionResult defaultView)
         {
-            Usuario? user = HttpContext.Session.Get<Usuario>("User"); 
-            if (user != null)
+            //Usuario? user = HttpContext.Session.Get<Usuario>("User");
+            
+            if (!User.Identity.IsAuthenticated)
+                return defaultView;
+            
+            var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+            var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Email.Equals(email));
+            if (usuario != null)
             {
-                var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Id.Equals(user!.Id));
-
                 switch (usuario.IdRol)
                 {
+                    case 1:
+                    case 2:
+                    case 3:
+                        return RedirectToAction("Index", "Administrativo", new { area = "Usuario" });
                     case 4:         //Egresado
                         return RedirectToAction("Index", "Egresado", new { area = "Usuario" });
                     case 5:         //Empleador
                         return RedirectToAction("Index", "Empleador", new { area = "Usuario" });
                 }
                 
-                var query = from modulo in _context.Modulos
-                    join operacion in _context.Operaciones on modulo.Id equals operacion.IdModulo
-                    join rolOp in _context.RolOperacions on operacion.Id equals rolOp.IdOperacion into matches
-                    from match in matches.DefaultIfEmpty()
-                    where match.IdRol == usuario.IdRol
-                    select modulo;
-
-                if (query.Any())
-                {
-                    HttpContext.Session.SetInt32("Module", query.First().Id);
-                    return RedirectToAction("Index", "Administrativo", new { area = "Usuario" });
-                }
+                // var query = from modulo in _context.Modulos
+                //     join operacion in _context.Operaciones on modulo.Id equals operacion.IdModulo
+                //     join rolOp in _context.RolOperacions on operacion.Id equals rolOp.IdOperacion into matches
+                //     from match in matches.DefaultIfEmpty()
+                //     where match.IdRol == usuario.IdRol
+                //     select modulo;
+                //
+                // if (query.Any())
+                // {
+                //     HttpContext.Session.SetInt32("Module", query.First().Id);
+                //     return RedirectToAction("Index", "Administrativo", new { area = "Usuario" });
+                // }
             }
 
             return defaultView;

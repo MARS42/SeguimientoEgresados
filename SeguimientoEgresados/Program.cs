@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using SeguimientoEgresados.Filters;
@@ -13,7 +14,19 @@ builder.Host.ConfigureHostConfiguration(config => config.AddEnvironmentVariables
 // Add services to the container.
 builder.Services.AddControllersWithViews(services =>
 {
-    services.Filters.Add(new VerificarSesion());
+    //services.Filters.Add(new VerificarSesion());
+});
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+{
+    options.LoginPath = "/Acceso";
+    options.Events = new CookieAuthenticationEvents()
+    {
+        OnValidatePrincipal = async context =>
+        {
+            await Task.CompletedTask;
+        }
+    };
 });
 
 builder.Services.AddDbContext<SeguimientoEgresadosContext>(options =>
@@ -70,7 +83,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseSession();

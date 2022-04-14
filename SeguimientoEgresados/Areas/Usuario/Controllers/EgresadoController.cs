@@ -1,3 +1,6 @@
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
@@ -9,6 +12,7 @@ using SeguimientoEgresados.Utils;
 
 namespace SeguimientoEgresados.Areas.Usuario.Controllers
 {
+    [Authorize(Roles = "Egresado")]
     [Area("Usuario")]
     public class EgresadoController : Controller
     {
@@ -25,22 +29,24 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
         
         public async Task<IActionResult> Index()
         {
-            Models.Usuario? user = HttpContext.Session.Get<Models.Usuario>("User");
-            var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Id.Equals(user!.Id));
+            //Models.Usuario? user = HttpContext.Session.Get<Models.Usuario>("User");
+            //var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Id.Equals(user!.Id));
+            
             //var cuestionario = await _context.Cuestionarios.FirstOrDefaultAsync(c => c.IdUsuario.Equals(usuario!.Id));
             //Console.WriteLine("cues: " + cuestionario);
             //ViewData["Cuestionario"] = cuestionario;
             
             await _notificaciones.VerificarCuestionario(HttpContext, ViewData, true);
             
-            return View(usuario);
+            return View(await GetUsuario());
         }
         
         [HttpPost]
         public async Task<IActionResult> Index(Models.Usuario model)
         {
-            Models.Usuario? user = HttpContext.Session.Get<Models.Usuario>("User");
-            var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Id.Equals(user!.Id));
+            //Models.Usuario? user = HttpContext.Session.Get<Models.Usuario>("User");
+            //var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Id.Equals(user!.Id));
+            var usuario = await GetUsuario();
 
             usuario.Nombre = model.Nombre;
             usuario.ApellidoPaterno = model.ApellidoPaterno;
@@ -54,7 +60,8 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
 
         public async Task<IActionResult> MisDatos()
         {
-            Models.Usuario? user = HttpContext.Session.Get<Models.Usuario>("User");
+            //Models.Usuario? user = HttpContext.Session.Get<Models.Usuario>("User");
+            var user = await GetUsuario();
             var egresado = await _context.Egresados.FirstOrDefaultAsync(e => e.IdUsuario.Equals(user!.Id));
             ViewData["Generos"] = new SelectList(_context.Generos, "Id", "Nombre");
             ViewData["EstadosCiviles"] = new SelectList(_context.EstadosCiviles, "Id", "Nombre");
@@ -69,7 +76,8 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
         [HttpPost]
         public async Task<IActionResult> MisDatos(Egresado model)
         {
-            Models.Usuario? user = HttpContext.Session.Get<Models.Usuario>("User");
+            //Models.Usuario? user = HttpContext.Session.Get<Models.Usuario>("User");
+            var user = await GetUsuario();
             var egresado = await _context.Egresados.FirstOrDefaultAsync(e => e.IdUsuario.Equals(user!.Id));
 
             egresado.Colonia = model.Colonia;
@@ -102,7 +110,8 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
         [HttpGet]
         public async Task<IActionResult> Cuestionario(bool error = false)
         {
-            Models.Usuario? user = HttpContext.Session.Get<Models.Usuario>("User");
+            //Models.Usuario? user = HttpContext.Session.Get<Models.Usuario>("User");
+            var user = await GetUsuario();
             var egresado = await _context.Egresados.FirstOrDefaultAsync(e => e.IdUsuario.Equals(user!.Id));
             var cuestionario = await _context.Cuestionarios.FirstOrDefaultAsync(c => c.IdUsuario.Equals(egresado!.IdUsuario));
 
@@ -127,7 +136,8 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
         [HttpPost]
         public async Task<IActionResult> Cuestionario(String Verificar)
         {
-            Models.Usuario? user = HttpContext.Session.Get<Models.Usuario>("User");
+            //Models.Usuario? user = HttpContext.Session.Get<Models.Usuario>("User");
+            var user = await GetUsuario();
             var cuestionario = await _context.Cuestionarios.FirstOrDefaultAsync(c => c.IdUsuario.Equals(user.Id));
 
             string msg = "";
@@ -153,10 +163,17 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             }
             return RedirectToAction("Cuestionario");
         }
-        
-        public IActionResult CerrarSesion()
+
+        private async Task<Models.Usuario?> GetUsuario()
         {
-            HttpContext.Session.Remove("User");
+            var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+            return await _context.Usuarios.FirstOrDefaultAsync(u => u.Email.Equals(email));
+        }
+        
+        public async Task<IActionResult> CerrarSesion()
+        {
+            //HttpContext.Session.Remove("User");
+            await HttpContext.SignOutAsync();
             return RedirectToAction("Index", "Inicio", new { area="" });
         }
         

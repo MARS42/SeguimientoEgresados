@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SeguimientoEgresados.Models;
@@ -10,6 +13,7 @@ using SeguimientoEgresados.Utils;
 
 namespace SeguimientoEgresados.Areas.Usuario.Controllers
 {
+    [Authorize(Roles = "Administrador,Moderador,Capturista")]
     [Area("Usuario")]
     public class AdministrativoController : Controller
     {
@@ -22,8 +26,9 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
         
         public async Task<IActionResult> Index()
         {
-            Models.Usuario? user = HttpContext.Session.Get<Models.Usuario>("User");
-            var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Id.Equals(user!.Id));
+            //Models.Usuario? user = HttpContext.Session.Get<Models.Usuario>("User");
+            var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+            var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Email.Equals(email));
             ViewData["SidebarItem"] = 1;
             return View(usuario);
         }
@@ -58,10 +63,11 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             return PartialView();
         }
 
-        public IActionResult CerrarSesion()
+        public async Task<IActionResult> CerrarSesion()
         {
-            HttpContext.Session.Remove("User");
-            HttpContext.Session.Remove("Module");
+            await HttpContext.SignOutAsync();
+            //HttpContext.Session.Remove("User");
+            //HttpContext.Session.Remove("Module");
             return RedirectToAction("Index", "Inicio", new { area="" });
         }
 
