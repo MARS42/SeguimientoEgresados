@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.ViewFeatures;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 using SeguimientoEgresados.Models;
 using SeguimientoEgresados.Models.ViewModels;
@@ -15,14 +16,17 @@ public class NotificacionesService : INotificacionesService
         _context = context;
     }
     
-    public async Task<AvisoCuestionario> VerificarCuestionario(HttpContext httpContext, ViewDataDictionary viewData, bool forceShow)
+    public async Task<AvisoCuestionario> VerificarCuestionario(ClaimsPrincipal claimsPrincipal, HttpContext httpContext, ViewDataDictionary viewData, bool forceShow)
     {
-        Usuario user = httpContext.Session.Get<Usuario>("User")!;
+        //Usuario user = httpContext.Session.Get<Usuario>("User")!;
 
-        if (user == null)
+        if (!claimsPrincipal.Identity.IsAuthenticated)
             return null;
         
-        Cuestionario? cuestionario = await _context.Cuestionarios.FirstOrDefaultAsync(c => c.IdUsuario.Equals(user.Id));
+        var email = claimsPrincipal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+        var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Email.Equals(email));
+        Cuestionario? cuestionario = await _context.Cuestionarios.FirstOrDefaultAsync(c => c.IdUsuario.Equals(usuario.Id));
+        
         if (cuestionario == null)
         {
             viewData["Aviso"] = new AvisoCuestionario("Bienvenido al seguimiento de egresados",

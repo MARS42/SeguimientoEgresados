@@ -20,7 +20,7 @@ namespace SeguimientoEgresados.Areas.Empleadores.Controllers
         [HttpGet, Route("~/Empleadores/")]
         public async Task<IActionResult> Index()
         {
-            await _notificaciones.VerificarCuestionario(HttpContext, ViewData, false);
+            await _notificaciones.VerificarCuestionario(User, HttpContext, ViewData, false);
             return View();
         }
     }

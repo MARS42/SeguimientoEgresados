@@ -20,14 +20,14 @@ public class InicioController : Controller
     //[AutorizarUser(idOperacion:1)]
     public async Task<IActionResult> Index()
     {
-        await _notificaciones.VerificarCuestionario(HttpContext, ViewData, false);
+        await _notificaciones.VerificarCuestionario(User, HttpContext, ViewData, false);
         return View();
     }
 
     //[AutorizarUser(idOperacion:3)]
     public async Task<IActionResult> Privacy()
     {
-        await _notificaciones.VerificarCuestionario(HttpContext, ViewData, false);
+        await _notificaciones.VerificarCuestionario(User, HttpContext, ViewData, false);
         return View();
     }
 

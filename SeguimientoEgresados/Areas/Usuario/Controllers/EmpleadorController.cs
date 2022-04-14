@@ -39,7 +39,7 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             
             //Console.WriteLine("cues: " + cuestionario);
             //ViewData["Cuestionario"] = cuestionario;
-            await _notificaciones.VerificarCuestionario(HttpContext, ViewData, true);
+            await _notificaciones.VerificarCuestionario(User, HttpContext, ViewData, true);
 
             return View(await GetUsuario());
         }
@@ -68,7 +68,7 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             var empresa = await _context.Empresas.FirstOrDefaultAsync(e => e.IdUsuario.Equals(user!.Id));
             
             Console.WriteLine($"User id: {user.Id}, empresa id: {empresa.Nombre}");
-            await _notificaciones.VerificarCuestionario(HttpContext, ViewData, true);
+            await _notificaciones.VerificarCuestionario(User, HttpContext, ViewData, true);
 
             return View(empresa);
         }
@@ -103,7 +103,7 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
         {
             //Models.Usuario? user = HttpContext.Session.Get<Models.Usuario>("User");
             var user = await GetUsuario();
-            await _notificaciones.VerificarCuestionario(HttpContext, ViewData, true);
+            await _notificaciones.VerificarCuestionario(User, HttpContext, ViewData, true);
             return View();
         }
         

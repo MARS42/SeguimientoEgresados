@@ -29,7 +29,7 @@ namespace SeguimientoEgresados.Areas.Egresados.Controllers
             if (_usuario == null)
                 return RedirectToAction("Index", "Acceso",new {area = "Egresados" });
 */
-            await _notificaciones.VerificarCuestionario(HttpContext, ViewData, false);
+            await _notificaciones.VerificarCuestionario(User, HttpContext, ViewData, false);
             return View();
         }
 

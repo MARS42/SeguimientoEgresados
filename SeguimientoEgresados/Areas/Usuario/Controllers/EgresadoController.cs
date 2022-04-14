@@ -36,7 +36,7 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             //Console.WriteLine("cues: " + cuestionario);
             //ViewData["Cuestionario"] = cuestionario;
             
-            await _notificaciones.VerificarCuestionario(HttpContext, ViewData, true);
+            await _notificaciones.VerificarCuestionario(User, HttpContext, ViewData, true);
             
             return View(await GetUsuario());
         }
@@ -68,7 +68,7 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             ViewData["Carreras"] = new SelectList(_context.Carreras, "Id", "Nombre");
             
             Console.WriteLine($"User id: {user.Id}, empresa id: {egresado.NControl}");
-            await _notificaciones.VerificarCuestionario(HttpContext, ViewData, true);
+            await _notificaciones.VerificarCuestionario(User, HttpContext, ViewData, true);
             
             return View(egresado);
         }

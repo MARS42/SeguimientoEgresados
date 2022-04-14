@@ -19,7 +19,7 @@ namespace SeguimientoEgresados.Areas.About.Controllers
         
         public async Task<IActionResult> Index()
         {
-            await _notificaciones.VerificarCuestionario(HttpContext, ViewData, false);
+            await _notificaciones.VerificarCuestionario(User, HttpContext, ViewData, false);
             return View();
         }
     }
