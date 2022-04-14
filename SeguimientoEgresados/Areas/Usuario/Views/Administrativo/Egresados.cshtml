@@ -1,8 +1,37 @@
 ﻿@model List<Egresado>
 
 <div class="container-fluid animate__animated animate__fadeIn">
-    @foreach (Egresado e in Model)
-    {
-        <p>@e.IdUsuario</p>
-    }
+    <form>
+        <div class="form-actions no-color">
+            <p>
+                Buscar: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+                <input type="submit" value="Search" class="btn btn-default" /> |
+                <a asp-action="Index">Lista completa</a>
+            </p>
+        </div>
+    </form>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Número de control</th>
+                <th scope="col">Fecha de egreso</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Egresado e in Model)
+            {
+                <tr>
+                    <td>@e.NControl</td>
+                    <td>@e.FechaEgreso</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        console.log("xd");
+    });
+</script>

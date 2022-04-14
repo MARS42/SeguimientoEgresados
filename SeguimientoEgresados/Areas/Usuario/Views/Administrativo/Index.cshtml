@@ -35,32 +35,67 @@
 
 <script>
     
-    $(document).ready(function (){
+    //$(document).ready(function (){
         
-        let lastItem = $("#inicio");
-        const firstUrl = $(lastItem).data('url');
-        $.get(firstUrl).done(function (data){
-            $('#vista').html(data);
+    //    let lastItem = $("#inicio");
+    //    const firstUrl = $(lastItem).data('url');
+    //    $.get(firstUrl).done(function (data){
+    //        $('#vista').html(data);
+    //    });
+        
+    //    $(".list-group-item").click(function () {
+            
+    //        if ($(this).is(lastItem))
+    //            return;
+            
+    //        const url = $(this).data('url');
+            
+    //        $(this).addClass('active');
+    //        if (lastItem != null)
+    //            $(lastItem).removeClass('active');
+            
+    //        lastItem = $(this);
+            
+    //        $("#vista").html('<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>');
+    //        $.get(url).done(function (data){
+    //            $('#vista').html(data);
+    //        });
+    //    });
+    //});
+
+    window.addEventListener('DOMContentLoaded', (event) => {
+        const vista = document.getElementById('vista');
+
+        let lastItem = document.getElementById("inicio");
+        const firtsUrl = lastItem.dataset.url;
+        fetch(firtsUrl)
+        .then(res => res.text())
+        .then(body => {
+            vista.innerHTML = body;
         });
-        
-        $(".list-group-item").click(function () {
-            
-            if ($(this).is(lastItem))
-                return;
-            
-            const url = $(this).data('url');
-            
-            $(this).addClass('active');
-            if (lastItem != null)
-                $(lastItem).removeClass('active');
-            
-            lastItem = $(this);
-            
-            $("#vista").html('<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>');
-            $.get(url).done(function (data){
-                $('#vista').html(data);
+
+        const links = document.getElementsByClassName('list-group-item');
+
+        for(let i = 0; i < links.length; i++){
+            links[i].addEventListener('click', (event) => {
+
+                if(event.target === lastItem)
+                    return;
+
+                event.target.classList.add('active');
+                lastItem.classList.remove('active');
+                lastItem = event.target;
+
+                const url = event.target.dataset.url;
+                vista.innerHTML = '<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>';
+
+                fetch(url)
+                .then(res => res.text())
+                .then(body => {
+                    vista.innerHTML = body;
+                });
             });
-        });
+        }
     });
 </script>
 

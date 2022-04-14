@@ -1,4 +1,4 @@
-﻿@model dynamic
+﻿@model IEnumerable<Empresa>
 
 @{
     ViewBag.Title = "Empleadores";
@@ -6,5 +6,23 @@
 
 
 <div class="container-fluid animate__animated animate__fadeIn">
-<h1>Empleadores</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Correo</th>
+                <th scope="col">RFC</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Empresa e in Model)
+            {
+                <tr>
+                    <td>@e.Nombre</td>
+                    <td>@e.CorreoEmpresa</td>
+                    <td>@e.Rfc</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>

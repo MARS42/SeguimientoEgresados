@@ -42,7 +42,7 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
         public async Task<IActionResult> Empleadores()
         {
             ViewData["SidebarItem"] = 3;
-            return PartialView();
+            return PartialView(await _context.Empresas.ToListAsync());
         }
         
         public async Task<IActionResult> CambiosPassword()
