@@ -6,23 +6,15 @@
 
 
 <div class="container-fluid animate__animated animate__fadeIn">
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Nombre</th>
-                <th scope="col">Correo</th>
-                <th scope="col">RFC</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (Empresa e in Model)
-            {
-                <tr>
-                    <td>@e.Nombre</td>
-                    <td>@e.CorreoEmpresa</td>
-                    <td>@e.Rfc</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <form>
+        <div class="form-actions no-color">
+            <p>
+                Buscar: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+                <input type="button" value="Search" class="btn btn-default" onclick='actualizarTabla("@Url.Action("GetEmpleadores")")'/> |
+                <a asp-action="Index">Listar todos</a>
+            </p>
+        </div>
+    </form>
+
+    <div id="contenido" data-url="@Url.Action("GetEmpleadores")"></div>
 </div>

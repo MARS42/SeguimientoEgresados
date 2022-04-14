@@ -36,7 +36,7 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
         public async Task<IActionResult> Egresados()
         {
             ViewData["SidebarItem"] = 2;
-            return PartialView(await _context.Egresados.ToListAsync());
+            return PartialView();
         }
         
         public async Task<IActionResult> Empleadores()
@@ -62,6 +62,21 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             HttpContext.Session.Remove("User");
             HttpContext.Session.Remove("Module");
             return RedirectToAction("Index", "Inicio", new { area="" });
+        }
+
+        public async Task<IActionResult> GetEgresados()
+        {
+            return PartialView("_GetEgresados", await _context.Egresados.ToListAsync());
+        }
+
+        public async Task<IActionResult> GetEmpleadores()
+        {
+            var query =
+                from empleador in _context.Empresas
+                join usuario in _context.Usuarios on empleador.IdUsuario equals usuario.Id into matches
+                from match in matches.DefaultIfEmpty()
+                select new { };
+            return PartialView("_GetEmpleadores", await _context.Empresas.ToListAsync());
         }
     }
 }

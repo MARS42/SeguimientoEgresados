@@ -20,6 +20,9 @@
                 <a href="#" data-url="@Url.Action("Empleadores")" class='list-group-item list-group-item-action '>
                     <i class="fa-solid fa-briefcase mx-2"></i>Empleadores
                 </a>
+                <a href="#" data-url="@Url.Action("Empleadores")" class='list-group-item list-group-item-action '>
+                    <i class="fa-solid fa-image mx-2"></i>Galería
+                </a>
                 <a href="#" data-url="@Url.Action("CambiosPassword")" class='list-group-item list-group-item-action '>
                     <i class="fa-solid fa-unlock mx-2"></i>Cambios de contraseña
                 </a>
@@ -33,71 +36,100 @@
     </div>
 </div>
 
+@section Scripts
+{
+
+
 <script>
     
-    //$(document).ready(function (){
+        //$(document).ready(function (){
         
-    //    let lastItem = $("#inicio");
-    //    const firstUrl = $(lastItem).data('url');
-    //    $.get(firstUrl).done(function (data){
-    //        $('#vista').html(data);
-    //    });
+        //    let lastItem = $("#inicio");
+        //    const firstUrl = $(lastItem).data('url');
+        //    $.get(firstUrl).done(function (data){
+        //        $('#vista').html(data);
+        //    });
         
-    //    $(".list-group-item").click(function () {
+        //    $(".list-group-item").click(function () {
             
-    //        if ($(this).is(lastItem))
-    //            return;
+        //        if ($(this).is(lastItem))
+        //            return;
             
-    //        const url = $(this).data('url');
+        //        const url = $(this).data('url');
             
-    //        $(this).addClass('active');
-    //        if (lastItem != null)
-    //            $(lastItem).removeClass('active');
+        //        $(this).addClass('active');
+        //        if (lastItem != null)
+        //            $(lastItem).removeClass('active');
             
-    //        lastItem = $(this);
+        //        lastItem = $(this);
             
-    //        $("#vista").html('<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>');
-    //        $.get(url).done(function (data){
-    //            $('#vista').html(data);
-    //        });
-    //    });
-    //});
+        //        $("#vista").html('<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>');
+        //        $.get(url).done(function (data){
+        //            $('#vista').html(data);
+        //        });
+        //    });
+        //});
 
-    window.addEventListener('DOMContentLoaded', (event) => {
-        const vista = document.getElementById('vista');
+        window.addEventListener('DOMContentLoaded', (event) => {
+            const vista = document.getElementById('vista');
 
-        let lastItem = document.getElementById("inicio");
-        const firtsUrl = lastItem.dataset.url;
-        fetch(firtsUrl)
-        .then(res => res.text())
-        .then(body => {
-            vista.innerHTML = body;
+            let lastItem = document.getElementById("inicio");
+            const firtsUrl = lastItem.dataset.url;
+            fetch(firtsUrl)
+            .then(res => res.text())
+            .then(body => {
+                vista.innerHTML = body;
+            });
+
+            const links = document.getElementsByClassName('list-group-item');
+
+            for(let i = 0; i < links.length; i++){
+                links[i].addEventListener('click', (event) => {
+
+                    if(event.target === lastItem)
+                        return;
+
+                    event.target.classList.add('active');
+                    lastItem.classList.remove('active');
+                    lastItem = event.target;
+
+                    const url = event.target.dataset.url;
+
+                    fetch(url)
+                    .then(res => res.text())
+                    .then(body => {
+                        vista.innerHTML = body;
+                        updateView();
+                    });
+                });
+            }
         });
 
-        const links = document.getElementsByClassName('list-group-item');
-
-        for(let i = 0; i < links.length; i++){
-            links[i].addEventListener('click', (event) => {
-
-                if(event.target === lastItem)
-                    return;
-
-                event.target.classList.add('active');
-                lastItem.classList.remove('active');
-                lastItem = event.target;
-
-                const url = event.target.dataset.url;
-                vista.innerHTML = '<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>';
-
-                fetch(url)
-                .then(res => res.text())
-                .then(body => {
-                    vista.innerHTML = body;
-                });
+    
+        function updateView(){
+            const cont = document.getElementById('contenido');
+            const dataUrl = cont.dataset.url;
+    
+            cont.innerHTML = '<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>';
+            fetch(dataUrl)
+            .then(res => res.text())
+            .then(body => {
+                cont.innerHTML = body;
             });
         }
-    });
-</script>
+        
+        function actualizarTabla(dataUrl){
+                const cont = document.getElementById('contenido');
+        
+                cont.innerHTML = '<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>';
+                fetch(dataUrl)
+                .then(res => res.text())
+                .then(body => {
+                    cont.innerHTML = body;
+                });
+            }
+    </script>
+}
 
 @* <script> *@
 @*     window.addEventListener('DOMContentLoaded', (event) => { *@

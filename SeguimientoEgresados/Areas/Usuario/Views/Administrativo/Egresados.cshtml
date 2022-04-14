@@ -1,5 +1,4 @@
-﻿@model List<Egresado>
-
+﻿
 <div class="container-fluid animate__animated animate__fadeIn">
     <form>
         <div class="form-actions no-color">
@@ -10,28 +9,10 @@
             </p>
         </div>
     </form>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Número de control</th>
-                <th scope="col">Fecha de egreso</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (Egresado e in Model)
-            {
-                <tr>
-                    <td>@e.NControl</td>
-                    <td>@e.FechaEgreso</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    
+    <div id="contenido" data-url="@Url.Action("GetEgresados")"></div>
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', (event) => {
-        console.log("xd");
-    });
+
 </script>
