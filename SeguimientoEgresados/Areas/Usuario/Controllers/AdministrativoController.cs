@@ -70,11 +70,21 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             return PartialView("_GetEgresados", await _context.Egresados.ToListAsync());
         }
 
-        public async Task<IActionResult> GetEmpleadores(string ordenTabla, string busqueda)
+        public async Task<IActionResult> GetEmpleadores(string ordenTabla, string busqueda, string filtroActual, int? pagina)
         {
+            ViewData["OrdenActual"] = ordenTabla;
             ViewData["NombreSort"] = String.IsNullOrEmpty(ordenTabla) ? "nombre_desc" : "";
             ViewData["RepSort"] = ordenTabla == "rep_desc" ? "rep_asc" : "fecha_desc";
             ViewData["RegSort"] = ordenTabla == "fecha_desc" ? "fecha_asc" : "fecha_desc";
+            
+            if (busqueda != null)
+            {
+                pagina = 1;
+            }
+            else
+            {
+                busqueda = filtroActual;
+            }
             
             ViewData["Busqueda"] = busqueda;
             
@@ -126,7 +136,8 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
                     break;
             }
             
-            return PartialView("_GetEmpleadores", await query.AsNoTracking().ToListAsync());
+            int pageSize = 3;
+            return PartialView("_GetEmpleadores",  await ListaPaginada<EmpresaViewModel>.CreateAsync(query.AsNoTracking(), pagina ?? 1, pageSize));
         }
     }
 }

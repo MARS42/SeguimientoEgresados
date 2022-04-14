@@ -118,22 +118,49 @@
             });
         }
         
-        function buscar(){
-            var url = "@Url.Action("GetEmpleadores")?busqueda=" + document.getElementById("busqueda").value;
-            
-            const cont = document.getElementById('contenido');
-    
-            cont.innerHTML = '<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>';
-            fetch(url)
-            .then(res => res.text())
-            .then(body => {
-                cont.innerHTML = body;
-            });
-        }
+        // function buscar(){
+        //     var url = "@Url.Action("GetEmpleadores")?busqueda=" + document.getElementById("busqueda").value;
+        //    
+        //     const cont = document.getElementById('contenido');
+        //
+        //     cont.innerHTML = '<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>';
+        //     fetch(url)
+        //     .then(res => res.text())
+        //     .then(body => {
+        //         cont.innerHTML = body;
+        //     });
+        // }
         
-        function ordenar(orden){
+        let order = "";
+        
+        // function ordenar(orden){
+        //    
+        //     order = orden;
+        //     const busqueda = document.getElementById("busqueda").value;
+        //     const filtroActual = "@ViewData["Busqueda"]";
+        //    
+        //     //var url = "@Url.Action("GetEmpleadores")?ordenTabla=" + orden;
+        //     var url = "@Url.Action("GetEmpleadores")?" + `ordenTabla=${orden}&busqueda=${busqueda}&filtroActual=${filtroActual}`;
+        //    
+        //     const cont = document.getElementById('contenido');
+        //
+        //     cont.innerHTML = '<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>';
+        //     fetch(url)
+        //     .then(res => res.text())
+        //     .then(body => {
+        //         cont.innerHTML = body;
+        //     });
+        // }
+        //
+        function actualizar(pagina = 1, ordenTabla = null){
             
-            var url = "@Url.Action("GetEmpleadores")?ordenTabla=" + orden;
+            //const orden = "@ViewData["OrdenActual"]";
+            const orden = ordenTabla === null ? order : ordenTabla;
+            order = orden;
+            const busqueda = document.getElementById("busqueda").value;
+            const filtroActual = "@ViewData["Busqueda"]";
+            
+            var url = "@Url.Action("GetEmpleadores")?" + `ordenTabla=${orden}&busqueda=${busqueda}&filtroActual=${filtroActual}&pagina=${pagina}`;
             
             const cont = document.getElementById('contenido');
         
