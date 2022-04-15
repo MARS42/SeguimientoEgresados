@@ -1,0 +1,25 @@
+﻿@model System.Collections.Generic.IEnumerable<EgresadoViewModel>
+
+<table class="table table-hover animate__animated animate__fadeIn">
+    <thead>
+    <tr>
+        <th scope="col"><a class="text-primary text-decoration-none manita" >Nombre</a></th>
+        <th scope="col"><a class="text-primary text-decoration-none manita">No. Control</a></th>
+        <th scope="col">Carrera</th>
+        <th scope="col">Correo</th>
+        <th scope="col">Fecha de registro</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var e in Model)
+    {
+        <tr class="manita">
+            <td>@e.NombreCompleto</td>
+            <td>@e.NoControl</td>
+            <td>@e.Carrera</td>
+            <td>@e.Correo</td>
+            <td>@e.FechaRegistro</td>
+        </tr>
+    }
+    </tbody>
+</table>

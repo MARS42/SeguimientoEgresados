@@ -2,14 +2,13 @@
 
 <div class="container-fluid animate__animated animate__fadeIn">
     <div class="row justify-content-center">
-        <div class="col-12 d-flex justify-content-center align-items-center">
+        <div class="col-12 mb-3 d-flex justify-content-center align-items-center">
             <div class="form-floating w-50">
                 <input type="text" class="form-control" id="busqueda" name="busqueda" placeholder="Buscar" data-tabla="tablaEgresados">
                 <label for="floatingInput"><i class="fa-solid fa-magnifying-glass"></i></label>
             </div>
-            <a class="text-primary text-decoration-none manita" onclick='actualizarTabla("tablaEmpleadores", 1)'><i class="fa-solid fa-trash mx-2"></i>Borrar filtros</a>
+            <a class="text-primary text-decoration-none manita" onclick='actualizarTabla("tablaEgresados", 1)'><i class="fa-solid fa-trash mx-2"></i>Borrar filtros</a>
         </div>
+        <div id="tablaEgresados" class="to-load table-responsive row col-12 justify-content-center" data-url="@Url.Action("GetEgresados")"></div>
     </div>
-    
-    <div id="tablaEgresados" class="to-load table-responsive" data-url="@Url.Action("GetEgresados")"></div>
 </div>

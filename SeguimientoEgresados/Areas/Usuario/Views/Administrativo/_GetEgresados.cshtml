@@ -1,39 +1,43 @@
 ﻿@model SeguimientoEgresados.Utils.ListaPaginada<EgresadoViewModel>
 
-<table class="table table-hover animate__animated animate__fadeIn">
-    <thead>
-    <tr>
-        <th scope="col"><a class="text-primary text-decoration-none manita" onclick='actualizarTabla("tablaEgresados", 1, "@ViewData["NombreSort"]")'>Nombre</a></th>
-        <th scope="col"><a class="text-primary text-decoration-none manita" onclick='actualizarTabla("tablaEgresados", 1, "@ViewData["RepSort"]")'>No. Control</a></th>
-        <th scope="col">Carrera</th>
-        <th scope="col">Correo</th>
-        <th scope="col">Fecha de registro</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var e in Model)
-    {
-        <tr class="manita">
-            <td>@e.NombreCompleto</td>
-            <td>@e.NoControl</td>
-            <td>@e.Carrera</td>
-            <td>@e.Correo</td>
-            <td>@e.FechaRegistro</td>
+<div class="col-12">
+    <table class="table table-hover animate__animated animate__fadeIn animate__faster">
+        <thead>
+        <tr>
+            <th scope="col"><a class="text-primary text-decoration-none manita" onclick='actualizarTabla("tablaEgresados", 1, "@ViewData["NombreSort"]")'>Nombre</a></th>
+            <th scope="col"><a class="text-primary text-decoration-none manita" onclick='actualizarTabla("tablaEgresados", 1, "@ViewData["RepSort"]")'>No. Control</a></th>
+            <th scope="col">Carrera</th>
+            <th scope="col">Correo</th>
+            <th scope="col">Fecha de registro</th>
         </tr>
-    }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        @foreach (var e in Model)
+        {
+            <tr class="manita">
+                <td>@e.NombreCompleto</td>
+                <td>@e.NoControl</td>
+                <td>@e.Carrera</td>
+                <td>@e.Correo</td>
+                <td>@e.FechaRegistro</td>
+            </tr>
+        }
+        </tbody>
+    </table>
 
+</div>
 @{
     var prevDisabled = !Model.HasPreviousPage ? "btn-secondary disabled" : "btn-primary";
     var nextDisabled = !Model.HasNextPage ? "btn-secondary disabled" : "btn-primary";
 }
 
-<a class="btn @prevDisabled"
-   onclick="actualizarTabla('tablaEgresados', @(Model.PageIndex - 1))">
-    Anterior
-</a>
-<a class="btn @nextDisabled"
-   onclick="actualizarTabla('tablaEgresados', @(Model.PageIndex + 1))">
-    Siguiente
-</a>
+<div class="col-12 d-flex justify-content-end">
+    <a class="btn @prevDisabled mx-2"
+       onclick="actualizarTabla('tablaEgresados', @(Model.PageIndex - 1))">
+        Anterior
+    </a>
+    <a class="btn @nextDisabled"
+       onclick="actualizarTabla('tablaEgresados', @(Model.PageIndex + 1))">
+        Siguiente
+    </a>
+</div>
