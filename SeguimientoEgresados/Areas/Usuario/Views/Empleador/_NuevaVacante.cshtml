@@ -1,0 +1,102 @@
+﻿@model dynamic
+
+<!-- Modal nueva vacante -->
+<div class="modal fade" id="modalNuevaVacante" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel"><i class="fa-solid fa-briefcase mx-2"></i>Publicar nueva vacante</h5>
+                @* <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> *@
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control"placeholder="Título del empleo">
+                                <label class="" for="floatingInput"><i class="fa-solid fa-heading mx-2"></i>Título</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating mb-3">
+                                <textarea class="form-control" placeholder="Escriba la descripción del empleo" id="floatingTextarea" style="height: 200px"></textarea>
+                                <label for="floatingTextarea"><i class="fa-solid fa-circle-question mx-2"></i>Descripción</label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            @* <div class="form-floating mb-3"> *@
+                            @*     <input type="text" class="form-control"placeholder="Funciones"> *@
+                            @*     <label for="floatingInput"><i class="fa-solid fa-briefcase mx-2"></i>Funciones</label> *@
+                            @* </div> *@
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title"><i class="fa-solid fa-briefcase mx-2"></i>Funciones</h5>
+                                    <div id="funciones" class="d-flex flex-column align-items-center">
+                                        <a onclick="agregarFuncion()" class="text-primary text-decoration-none manita"><i class="fa-solid fa-circle-plus mx-2"></i>Agregar función o actividad</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title"><i class="fa-solid fa-brain mx-2"></i>Requisitos</h5>
+                                    <div id="requisitos" class="d-flex flex-column align-items-center">
+                                        <a onclick="agregarRequisito()" class="text-primary text-decoration-none manita"><i class="fa-solid fa-circle-plus mx-2"></i>Agregar requisito</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title"><i class="fa-solid fa-clipboard mx-2"></i>Detalles</h5>
+                                    <div class="row">
+                                        <div class="col-12 col-lg-4 d-flex align-items-center">
+                                            <label for="tipoContrato" class="form-label col-sm-4 col-form-label">Tipo de contrato</label>
+                                            <select class="form-select" name="tipoContrato" aria-label="Default select example">
+                                                <option selected>Fijo</option>
+                                                <option value="1">Temporal</option>
+                                                <option value="2">Prácticas</option>
+                                                <option value="3">Indeterminado</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-12 col-lg-4 d-flex align-items-center my-sm-3 my-lg-0">
+                                            <label for="tipoModalidad" class="form-label col-sm-4 col-form-label">Modalidad</label>
+                                            <select class="form-select" name="tipoModalidad" aria-label="Default select example">
+                                                <option selected>Presencial</option>
+                                                <option value="1">En línea</option>
+                                                <option value="2">Híbrida</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-12 col-lg-4">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" id="horario" placeholder="Horario">
+                                                <label for="horario"><i class="fa-solid fa-calendar-days mx-2"></i>Horario</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title"><i class="fa-solid fa-hand-holding-dollar mx-2"></i>Oferta</h5>
+                                    <div class="d-flex flex-column align-items-center">
+                                        <div id="ofertas" class="container-fluid row"></div>
+                                        <a onclick="agregarOferta()" class="text-primary text-decoration-none manita"><i class="fa-solid fa-circle-plus mx-2"></i>Agregar oferta</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" onclick="cancelar()">Cancelar</button>
+                <button type="button" class="btn btn-primary"><i class="fa-solid fa-signs-post mx-2"></i>Publicar</button>
+            </div>
+        </div>
+    </div>
+</div>

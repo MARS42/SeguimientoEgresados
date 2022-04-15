@@ -164,6 +164,12 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             }
             return RedirectToAction("Cuestionario");
         }
+
+        [HttpGet]
+        public IActionResult NuevaVacante()
+        {
+            return PartialView("_NuevaVacante");
+        }
         
         private async Task<Models.Usuario?> GetUsuario()
         {
