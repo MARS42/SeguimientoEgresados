@@ -145,5 +145,14 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             int pageSize = 3;
             return PartialView("_GetEmpleadores",  await ListaPaginada<EmpresaViewModel>.CreateAsync(query.AsNoTracking(), pagina ?? 1, pageSize));
         }
+
+        public async Task<IActionResult> BusquedaEmpleadores(string term)
+        {
+            var query = from empresa in _context.Empresas
+                where empresa.Nombre.Contains(term)
+                select empresa.Nombre;
+
+            return Json(await query.ToListAsync());
+        }
     }
 }

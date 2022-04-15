@@ -41,35 +41,6 @@
 
 
     <script>
-    
-        //$(document).ready(function (){
-        
-        //    let lastItem = $("#inicio");
-        //    const firstUrl = $(lastItem).data('url');
-        //    $.get(firstUrl).done(function (data){
-        //        $('#vista').html(data);
-        //    });
-        
-        //    $(".list-group-item").click(function () {
-            
-        //        if ($(this).is(lastItem))
-        //            return;
-            
-        //        const url = $(this).data('url');
-            
-        //        $(this).addClass('active');
-        //        if (lastItem != null)
-        //            $(lastItem).removeClass('active');
-            
-        //        lastItem = $(this);
-            
-        //        $("#vista").html('<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>');
-        //        $.get(url).done(function (data){
-        //            $('#vista').html(data);
-        //        });
-        //    });
-        //});
-
         window.addEventListener('DOMContentLoaded', (event) => {
             const vista = document.getElementById('vista');
 
@@ -105,54 +76,41 @@
             }
         });
 
+        let order = "";
     
         function updateView(){
-            const cont = document.getElementById('contenido');
-            const dataUrl = cont.dataset.url;
-    
-            cont.innerHTML = '<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>';
-            fetch(dataUrl)
-            .then(res => res.text())
-            .then(body => {
-                cont.innerHTML = body;
-            });
+            //const cont = document.getElementById('contenido');
+            const contenidosAcargar = document.getElementsByClassName("to-load");
+            
+            for (let i = 0; i < contenidosAcargar.length; i++){
+                const dataUrl = contenidosAcargar[i].dataset.url;
+                
+                contenidosAcargar[i].innerHTML = '<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>';
+                fetch(dataUrl)
+                .then(res => res.text())
+                .then(body => {
+                    contenidosAcargar[i].innerHTML = body;
+                    
+                    const buscador = document.getElementById("busqueda");
+                    
+                    if(buscador != null)
+                        buscador.addEventListener('input', (event) => actualizarTabla("tablaEmpleadores", 1, order));
+                });
+            }
+            
+            // const dataUrl = cont.dataset.url;
+            //
+            // cont.innerHTML = '<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>';
+            // fetch(dataUrl)
+            // .then(res => res.text())
+            // .then(body => {
+            //     cont.innerHTML = body;
+            //    
+            //     document.getElementById("busqueda").addEventListener('input', (event) => actualizar(1, order));
+            // });
         }
-        
-        // function buscar(){
-        //     var url = "@Url.Action("GetEmpleadores")?busqueda=" + document.getElementById("busqueda").value;
-        //    
-        //     const cont = document.getElementById('contenido');
-        //
-        //     cont.innerHTML = '<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>';
-        //     fetch(url)
-        //     .then(res => res.text())
-        //     .then(body => {
-        //         cont.innerHTML = body;
-        //     });
-        // }
-        
-        let order = "";
-        
-        // function ordenar(orden){
-        //    
-        //     order = orden;
-        //     const busqueda = document.getElementById("busqueda").value;
-        //     const filtroActual = "@ViewData["Busqueda"]";
-        //    
-        //     //var url = "@Url.Action("GetEmpleadores")?ordenTabla=" + orden;
-        //     var url = "@Url.Action("GetEmpleadores")?" + `ordenTabla=${orden}&busqueda=${busqueda}&filtroActual=${filtroActual}`;
-        //    
-        //     const cont = document.getElementById('contenido');
-        //
-        //     cont.innerHTML = '<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>';
-        //     fetch(url)
-        //     .then(res => res.text())
-        //     .then(body => {
-        //         cont.innerHTML = body;
-        //     });
-        // }
-        //
-        function actualizar(pagina = 1, ordenTabla = null){
+
+        function actualizarTabla(idTabla, pagina = 1, ordenTabla = null){
             
             //const orden = "@ViewData["OrdenActual"]";
             const orden = ordenTabla === null ? order : ordenTabla;
@@ -162,7 +120,7 @@
             
             var url = "@Url.Action("GetEmpleadores")?" + `ordenTabla=${orden}&busqueda=${busqueda}&filtroActual=${filtroActual}&pagina=${pagina}`;
             
-            const cont = document.getElementById('contenido');
+            const cont = document.getElementById(idTabla);
         
             cont.innerHTML = '<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>';
             fetch(url)
@@ -173,9 +131,3 @@
         }
     </script>
 }
-
-@* <script> *@
-@*     window.addEventListener('DOMContentLoaded', (event) => { *@
-@*     document.getElementById("main-view").scrollIntoView({block:"start"}); *@
-@*     }); *@
-@* </script> *@

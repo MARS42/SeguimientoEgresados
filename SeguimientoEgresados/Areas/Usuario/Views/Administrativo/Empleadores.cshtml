@@ -1,15 +1,15 @@
 ﻿@model IEnumerable<Empresa>
 
 <div class="container-fluid animate__animated animate__fadeIn">
-    <form>
-        <div class="form-actions no-color">
-            <p>
-                Buscar: <input id="busqueda" type="text" name="busqueda" />
-                <input type="button" value="Search" class="btn btn-default" onclick='actualizar()'/> |
-                <a asp-action="Index">Listar todos</a>
-            </p>
+    <div class="row justify-content-center">
+        <div class="col-12 d-flex justify-content-center align-items-center">
+            <div class="form-floating w-50">
+                <input type="text" class="form-control" id="busqueda" name="busqueda" placeholder="Buscar">
+                <label for="floatingInput"><i class="fa-solid fa-magnifying-glass"></i></label>
+            </div>
+            <a class="text-primary text-decoration-none manita" onclick='actualizarTabla("tablaEmpleadores", 1)'><i class="fa-solid fa-trash mx-2"></i>Borrar filtros</a>
         </div>
-    </form>
+    </div>
 
-    <div id="contenido" data-url="@Url.Action("GetEmpleadores")"></div>
+    <div id="tablaEmpleadores" class="to-load table-responsive" data-url="@Url.Action("GetEmpleadores")"></div>
 </div>

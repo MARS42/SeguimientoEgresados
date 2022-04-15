@@ -3,12 +3,12 @@
 <table class="table table-hover">
     <thead>
         <tr>
-            <th scope="col"><a class="text-primary text-decoration-none manita" onclick='actualizar(1, "@ViewData["NombreSort"]")'>Nombre</a></th>
-            <th scope="col"><a class="text-primary text-decoration-none manita" onclick='actualizar(1, "@ViewData["RepSort"]")'>Representante</a></th>
+            <th scope="col"><a class="text-primary text-decoration-none manita" onclick='actualizarTabla("tablaEmpleadores", 1, "@ViewData["NombreSort"]")'>Nombre</a></th>
+            <th scope="col"><a class="text-primary text-decoration-none manita" onclick='actualizarTabla("tablaEmpleadores", 1, "@ViewData["RepSort"]")'>Representante</a></th>
             <th scope="col">RFC</th>
             <th scope="col">Correo</th>
             <th scope="col">Teléfono</th>
-            <th scope="col"><a class="text-primary text-decoration-none manita" onclick='actualizar(1, "@ViewData["RegSort"]")'>Registro</a></th>
+            <th scope="col"><a class="text-primary text-decoration-none manita" onclick='actualizarTabla("tablaEmpleadores", 1, "@ViewData["RegSort"]")'>Registro</a></th>
         </tr>
     </thead>
     <tbody>
@@ -32,10 +32,10 @@
 }
 
 <a class="btn @prevDisabled"
-   onclick="actualizar(@(Model.PageIndex - 1))">
+   onclick="actualizarTabla('tablaEmpleadores', @(Model.PageIndex - 1))">
     Anterior
 </a>
 <a class="btn @nextDisabled"
-   onclick="actualizar(@(Model.PageIndex + 1))">
+   onclick="actualizarTabla('tablaEmpleadores', @(Model.PageIndex + 1))">
     Siguiente
 </a>
