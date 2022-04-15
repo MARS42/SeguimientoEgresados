@@ -6,3 +6,115 @@
 <div class="container m-4">
     <h2>@ViewBag.Title</h2>
 </div>
+
+<div class="container p-4">
+    <div class="row">
+        <div class="col-12 d-flex justify-content-between align-items-center">
+            <h4>Vacantes publicadas</h4>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalNuevaVacante">Publicar nuevo</button>
+        </div>
+        <div class="col-12 table-responsive">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Título</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Publicación</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Nuevo empleo</td>
+                    <td>Se solicita ingeniero</td>
+                    <td>Ayer</td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal nueva vacante -->
+<div class="modal fade" id="modalNuevaVacante" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel"><i class="fa-solid fa-briefcase mx-2"></i>Publicar nueva vacante</h5>
+                @* <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> *@
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control"placeholder="Título del empleo">
+                                <label class="text-primary" for="floatingInput"><i class="fa-solid fa-heading mx-2"></i>Título</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating mb-3">
+                                <textarea class="form-control" placeholder="Escriba la descripción del empleo" id="floatingTextarea" style="height: 200px"></textarea>
+                                <label for="floatingTextarea"><i class="fa-solid fa-circle-question mx-2"></i>Descripción</label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            @* <div class="form-floating mb-3"> *@
+                            @*     <input type="text" class="form-control"placeholder="Funciones"> *@
+                            @*     <label for="floatingInput"><i class="fa-solid fa-briefcase mx-2"></i>Funciones</label> *@
+                            @* </div> *@
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title"><i class="fa-solid fa-briefcase mx-2"></i>Funciones</h5>
+                                    <div class="d-flex flex-column align-items-center">
+                                        <div class="input-group mb-2">
+                                            <input type="text" class="form-control" placeholder="Función o actividad">
+                                            <button class="btn btn-outline-danger" type="button" id="button-addon2">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
+                                        </div>
+                                        <a class="text-primary text-decoration-none manita"><i class="fa-solid fa-circle-plus mx-2"></i>Agregar función o actividad</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title"><i class="fa-solid fa-brain mx-2"></i>Requisitos</h5>
+                                    <div class="d-flex flex-column align-items-center">
+                                        <div class="input-group mb-2">
+                                            <select class="input-group-text bg-light">
+                                                <option selected>Requisito</option>
+                                                <option value="1">Experiencia</option>
+                                                <option value="2">Idioma</option>
+                                                <option value="3">Habilidad</option>
+                                                <option value="3">Conocimiento</option>
+                                            </select>
+                                            <input type="text" class="form-control" placeholder="Requisito">
+                                            <button class="btn btn-outline-danger" type="button" id="button-addon2">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
+                                        </div>
+                                        <a class="text-primary text-decoration-none manita"><i class="fa-solid fa-circle-plus mx-2"></i>Agregar requisito</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating">
+                                <input type="text" class="form-control"placeholder="Oferta">
+                                <label for="floatingInput"><i class="fa-solid fa-hand-holding-dollar mx-2"></i>Oferta</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Understood</button>
+            </div>
+        </div>
+    </div>
+</div>
