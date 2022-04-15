@@ -1,19 +1,39 @@
-﻿@model IEnumerable<Egresado>
+﻿@model SeguimientoEgresados.Utils.ListaPaginada<EgresadoViewModel>
 
-<table class="table">
+<table class="table table-hover animate__animated animate__fadeIn">
     <thead>
-        <tr>
-            <th scope="col">Número de control</th>
-            <th scope="col">Fecha de egreso</th>
-        </tr>
+    <tr>
+        <th scope="col"><a class="text-primary text-decoration-none manita" onclick='actualizarTabla("tablaEgresados", 1, "@ViewData["NombreSort"]")'>Nombre</a></th>
+        <th scope="col"><a class="text-primary text-decoration-none manita" onclick='actualizarTabla("tablaEgresados", 1, "@ViewData["RepSort"]")'>No. Control</a></th>
+        <th scope="col">Carrera</th>
+        <th scope="col">Correo</th>
+        <th scope="col">Fecha de registro</th>
+    </tr>
     </thead>
     <tbody>
-        @foreach (Egresado e in Model)
-        {
-            <tr>
-                <td>@e.NControl</td>
-                <td>@e.FechaEgreso</td>
-            </tr>
-        }
+    @foreach (var e in Model)
+    {
+        <tr class="manita">
+            <td>@e.NombreCompleto</td>
+            <td>@e.NoControl</td>
+            <td>@e.Carrera</td>
+            <td>@e.Correo</td>
+            <td>@e.FechaRegistro</td>
+        </tr>
+    }
     </tbody>
 </table>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "btn-secondary disabled" : "btn-primary";
+    var nextDisabled = !Model.HasNextPage ? "btn-secondary disabled" : "btn-primary";
+}
+
+<a class="btn @prevDisabled"
+   onclick="actualizarTabla('tablaEgresados', @(Model.PageIndex - 1))">
+    Anterior
+</a>
+<a class="btn @nextDisabled"
+   onclick="actualizarTabla('tablaEgresados', @(Model.PageIndex + 1))">
+    Siguiente
+</a>

@@ -1,14 +1,15 @@
-﻿
+﻿@model IEnumerable<Egresado>
+
 <div class="container-fluid animate__animated animate__fadeIn">
-    <form>
-        <div class="form-actions no-color">
-            <p>
-                Buscar: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
-                <input type="submit" value="Search" class="btn btn-default" /> |
-                <a asp-action="Index">Lista completa</a>
-            </p>
+    <div class="row justify-content-center">
+        <div class="col-12 d-flex justify-content-center align-items-center">
+            <div class="form-floating w-50">
+                <input type="text" class="form-control" id="busqueda" name="busqueda" placeholder="Buscar" data-tabla="tablaEgresados">
+                <label for="floatingInput"><i class="fa-solid fa-magnifying-glass"></i></label>
+            </div>
+            <a class="text-primary text-decoration-none manita" onclick='actualizarTabla("tablaEmpleadores", 1)'><i class="fa-solid fa-trash mx-2"></i>Borrar filtros</a>
         </div>
-    </form>
+    </div>
     
-    <div id="contenido" class="to-load table-responsive" data-url="@Url.Action("GetEgresados")"></div>
+    <div id="tablaEgresados" class="to-load table-responsive" data-url="@Url.Action("GetEgresados")"></div>
 </div>

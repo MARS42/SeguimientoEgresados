@@ -93,8 +93,12 @@
                     
                     const buscador = document.getElementById("busqueda");
                     
-                    if(buscador != null)
-                        buscador.addEventListener('input', (event) => actualizarTabla("tablaEmpleadores", 1, order));
+                    order = "";
+                    
+                    if(buscador != null){
+                        
+                        buscador.addEventListener('input', (event) => actualizarTabla(buscador.dataset.tabla, 1, order));
+                    }
                 });
             }
             
@@ -118,10 +122,10 @@
             const busqueda = document.getElementById("busqueda").value;
             const filtroActual = "@ViewData["Busqueda"]";
             
-            var url = "@Url.Action("GetEmpleadores")?" + `ordenTabla=${orden}&busqueda=${busqueda}&filtroActual=${filtroActual}&pagina=${pagina}`;
-            
             const cont = document.getElementById(idTabla);
-        
+            const action = cont.dataset.url;
+            const url = action + "?" + `ordenTabla=${orden}&busqueda=${busqueda}&filtroActual=${filtroActual}&pagina=${pagina}`;
+                    
             cont.innerHTML = '<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>';
             fetch(url)
             .then(res => res.text())

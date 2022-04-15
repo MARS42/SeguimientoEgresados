@@ -71,9 +71,50 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             return RedirectToAction("Index", "Inicio", new { area="" });
         }
 
-        public async Task<IActionResult> GetEgresados()
+        public async Task<IActionResult> GetEgresados(string ordenTabla, string busqueda, string filtroActual, int? pagina)
         {
-            return PartialView("_GetEgresados", await _context.Egresados.ToListAsync());
+            ViewData["OrdenActual"] = ordenTabla;
+            ViewData["NombreSort"] = String.IsNullOrEmpty(ordenTabla) ? "nombre_desc" : "";
+            ViewData["RepSort"] = ordenTabla == "rep_desc" ? "rep_asc" : "fecha_desc";
+            ViewData["RegSort"] = ordenTabla == "fecha_desc" ? "fecha_asc" : "fecha_desc";
+            
+            if (busqueda != null)
+            {
+                pagina = 1;
+            }
+            else
+            {
+                busqueda = filtroActual;
+            }
+            
+            ViewData["Busqueda"] = busqueda;
+            
+            var query =
+                from egresado in _context.Egresados
+                join usuario in _context.Usuarios on egresado.IdUsuario equals usuario.Id into matches
+                from match in matches.DefaultIfEmpty()
+                select new EgresadoViewModel(match.Id, egresado.Id)
+                {
+                    Nombre = match.Nombre,
+                    Ape1 = match.ApellidoPaterno,
+                    Ape2 = match.ApellidoMaterno,
+                    Correo = match.Email,
+                    NoControl = egresado.NControl,
+                    FechaRegistro = match.Fecha,
+                    Carrera = _context.Carreras.Where(c => c.Id.Equals(egresado.IdCarrera)).FirstOrDefault().Nombre
+                };
+            
+            if (!string.IsNullOrEmpty(busqueda))
+            {
+                query = query.Where(e => e.Nombre.Contains(busqueda)
+                                         || e.Ape1.Contains(busqueda)
+                                         || e.Ape2.Contains(busqueda)
+                                         || e.Correo.Contains(busqueda)
+                                         || e.Carrera.Contains(busqueda));
+            }
+            
+            int pageSize = 1;
+            return PartialView("_GetEgresados",  await ListaPaginada<EgresadoViewModel>.CreateAsync(query.AsNoTracking(), pagina ?? 1, pageSize));
         }
 
         public async Task<IActionResult> GetEmpleadores(string ordenTabla, string busqueda, string filtroActual, int? pagina)
