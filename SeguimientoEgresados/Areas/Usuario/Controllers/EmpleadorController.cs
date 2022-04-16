@@ -172,8 +172,29 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
         }
         
         [HttpPost]
-        public IActionResult NuevaVacante(VacanteViewModel model)
+        public async Task<IActionResult> NuevaVacante(VacanteViewModel model)
         {
+            var usuario = await GetUsuario();
+            var empresa = await _context.Empresas.FirstOrDefaultAsync(e => e.IdUsuario.Equals(usuario.Id));
+
+            if (empresa == null)
+                return NotFound();
+            
+            Vacante vacante = new Vacante()
+            {
+                Titulo = model.Titulo,
+                Descripcion = model.Descripcion,
+                Funciones = model.Funciones,
+                Requisitos = model.Requisitos,
+                Ofertas = model.Ofertas,
+                TipoContrato = model.TipoContrato,
+                Modalidad = model.Modalidad,
+                Horario = model.Horario,
+                IdEmpresa = empresa.Id
+            };
+
+            await _context.Vacantes.AddAsync(vacante);
+            await _context.SaveChangesAsync();
             
             return Json(model);
         }

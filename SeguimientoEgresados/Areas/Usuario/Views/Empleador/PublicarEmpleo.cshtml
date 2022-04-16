@@ -46,6 +46,7 @@
     let listaFunciones = [];
     let listaOfertas = [];
     
+    let modalVacante;
     const contModal = document.getElementById("contenedorModal");
     const btnNuevo = document.getElementById("nuevaVacante");
     
@@ -56,7 +57,7 @@
         .then(body => body.text())
         .then(html => {
             contModal.innerHTML = html;
-            const modalVacante = new bootstrap.Modal(document.getElementById('modalNuevaVacante'));
+            modalVacante = new bootstrap.Modal(document.getElementById('modalNuevaVacante'));
             modalVacante.show();
             configForm();
         });
@@ -97,7 +98,7 @@
                     <option >Habilidad</option>
                     <option >Conocimiento</option>
                 </select>
-                <input type="text" class="requisito form-control" placeholder="Requisito" value="${listaRequisitos.length}">
+                <input type="text" class="requisito form-control" placeholder="Requisito">
                 <button class="btn btn-outline-danger" type="button" id="button-addon2" onclick="borrarRequisito(this, ${listaRequisitos.length})">
                     <i class="fa-solid fa-trash"></i>
                 </button>
@@ -190,7 +191,10 @@
         fetch(url + "?" + params, {
             method: 'POST'
         }).then(response => response.json())
-        .then(data => console.log(data));
+        .then(data => {
+            //const modalVacante = new bootstrap.Modal(document.getElementById('modalNuevaVacante'));
+            modalVacante.toggle();
+        });
     }
     
     </script>

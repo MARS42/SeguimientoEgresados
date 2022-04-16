@@ -456,7 +456,6 @@ namespace SeguimientoEgresados.Models
                     .HasColumnName("modalidad");
 
                 entity.Property(e => e.Ofertas)
-                    .HasMaxLength(1)
                     .IsUnicode(false)
                     .HasColumnName("ofertas");
 
