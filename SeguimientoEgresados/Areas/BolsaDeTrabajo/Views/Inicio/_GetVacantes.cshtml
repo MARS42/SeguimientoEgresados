@@ -1,0 +1,49 @@
+﻿@using SeguimientoEgresados.Models.ViewModels
+@model SeguimientoEgresados.Utils.ListaPaginada<VerVacanteViewModel>
+
+@foreach (VerVacanteViewModel vacante in Model)
+{
+    <div class="col-12 mb-3 animate__animated animate__faster animate__fadeIn">
+        <div class="card">
+            <div class="card-header">
+                @(vacante.NombreEmpresa)
+                <i class="fa-regular fa-star float-end"></i>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">@vacante.Titulo</h5>
+                <p class="card-text">@vacante.Descripcion</p>
+                <div class="row justify-content-between text-wrap">
+                    <nav class="col-12 col-md-auto" style="--bs-breadcrumb-divider: '';" aria-label="breadcrumb">
+                        <ol class="breadcrumb text-secondary fs-6">
+                            <li class="breadcrumb-item"><i class="fa-solid fa-handshake-simple mx-2"></i>@vacante.TipoContrato</li>
+                            <li class="breadcrumb-item"><i class="fa-solid fa-person mx-2"></i>@vacante.Modalidad</li>
+                            <li class="breadcrumb-item"><i class="fa-solid fa-clock mx-2"></i>@vacante.Horario</li>
+                        </ol>
+                    </nav>
+                    <nav class="col-12 col-md-auto" style="--bs-breadcrumb-divider: '';" aria-label="breadcrumb">
+                        <ol class="breadcrumb text-success fs-6 fw-bold">
+                            <li class="ofertas breadcrumb-item text-wrap" data-datos="@vacante.Ofertas"><i class="fa-solid fa-circle-dollar-to-slot fa-xl mx-2"></i></li>
+                        </ol>
+                    </nav>
+                </div>
+                <a href="#" class="btn btn-outline-primary float-end">Ver más detalles<i class="fa-solid fa-arrow-up-right-from-square mx-2"></i></a>
+            </div>
+        </div>
+    </div>
+}
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "btn-secondary disabled" : "btn-primary";
+    var nextDisabled = !Model.HasNextPage ? "btn-secondary disabled" : "btn-primary";
+}
+
+<div class="col-12 d-flex justify-content-end">
+    <a class="btn @prevDisabled mx-2"
+       onclick="actualizarTabla('vacantes', @(Model.PageIndex - 1))">
+        Anterior
+    </a>
+    <a class="btn @nextDisabled"
+       onclick="actualizarTabla('vacantes', @(Model.PageIndex + 1))">
+        Siguiente
+    </a>
+</div>

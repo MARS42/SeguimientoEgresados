@@ -46,7 +46,7 @@ function clickActionBtn(btn) {
 function headerHeight(){
     return document.getElementById("header").offsetHeight;
 }
-
-document.addEventListener('scroll', (e) => {
-    console.log(headerHeight())
-})
+//
+// document.addEventListener('scroll', (e) => {
+//     console.log(headerHeight())
+// })
