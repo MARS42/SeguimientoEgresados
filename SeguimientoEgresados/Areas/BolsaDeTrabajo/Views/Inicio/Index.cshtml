@@ -2,4 +2,44 @@
     ViewBag.Title = "Bolsa de trabajo";
 }
 
-<h2>Bolsa de trabajo</h2>
+<div class="container border mt-4 p-4">
+    <h2>Bolsa de trabajo</h2>
+    <div class="row">
+        <div class="col-12 mb-3 d-flex justify-content-center align-items-center">
+            <div class="form-floating w-50">
+                <input type="text" class="form-control" id="busqueda" name="busqueda" placeholder="Buscar" data-tabla="tablaEmpleadores">
+                <label for="busqueda"><i class="fa-solid fa-magnifying-glass mx-2"></i>Buscar vacantes</label>
+            </div>
+            <a class="text-primary text-decoration-none manita" onclick=''><i class="fa-solid fa-trash mx-2"></i>Borrar filtros</a>
+        </div>
+        @for(int i = 0; i < 10; i++){
+        <div class="col-12 mb-3">
+            <div class="card">
+                <div class="card-header">
+                    Nombre empresa
+                    <i class="fa-regular fa-star float-end"></i>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Título vacante</h5>
+                    <p class="card-text">Descripción de la vacante. We can fire triggers after a SQL statement to perform a specific task. A trigger is a set of SQL statements defined to perform a specific task that you can fire after a certain event. In this tutorial, we will discuss SQL Server trigger after insert with a few examples.</p>
+                    <div class="row justify-content-between text-wrap">
+                        <nav class="col-12 col-md-auto" style="--bs-breadcrumb-divider: '';" aria-label="breadcrumb">
+                            <ol class="breadcrumb text-secondary fs-6">
+                                <li class="breadcrumb-item"><i class="fa-solid fa-handshake-simple mx-2"></i>Temporal</li>
+                                <li class="breadcrumb-item"><i class="fa-solid fa-person mx-2"></i>En línea</li>
+                                <li class="breadcrumb-item"><i class="fa-solid fa-clock mx-2"></i>Lunes a viernes, 8:00 AM - 4:PM</li>
+                            </ol>
+                        </nav>
+                        <nav class="col-12 col-md-auto" style="--bs-breadcrumb-divider: '';" aria-label="breadcrumb">
+                            <ol class="breadcrumb text-success fs-6 fw-bold">
+                                <li class="breadcrumb-item text-wrap"><i class="fa-solid fa-circle-dollar-to-slot fa-xl mx-2"></i>8000 mensuales, seguro, vales de despensa.</li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <a href="#" class="btn btn-outline-primary float-end">Ver más detalles<i class="fa-solid fa-arrow-up-right-from-square mx-2"></i></a>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+</div>
