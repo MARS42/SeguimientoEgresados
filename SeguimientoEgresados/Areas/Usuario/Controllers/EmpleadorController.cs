@@ -104,6 +104,9 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             //Models.Usuario? user = HttpContext.Session.Get<Models.Usuario>("User");
             var user = await GetUsuario();
             await _notificaciones.VerificarCuestionario(User, HttpContext, ViewData, true);
+            
+            
+            
             return View();
         }
         
@@ -190,13 +193,22 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
                 TipoContrato = model.TipoContrato,
                 Modalidad = model.Modalidad,
                 Horario = model.Horario,
-                IdEmpresa = empresa.Id
+                IdEmpresa = empresa.Id,
+                Fecha = DateTime.Now
             };
 
             await _context.Vacantes.AddAsync(vacante);
             await _context.SaveChangesAsync();
             
             return Json(model);
+        }
+
+        public async Task<IActionResult> GetVacantes()
+        {
+            var usuario = await GetUsuario();
+            var empresa = await _context.Empresas.FirstOrDefaultAsync(e => e.IdUsuario.Equals(usuario.Id));
+            var query = from vacante in _context.Vacantes where vacante.IdEmpresa.Equals(empresa.Id) select vacante;
+            return PartialView("_TablaVacantes", await query.ToListAsync());
         }
         
         private async Task<Models.Usuario?> GetUsuario()

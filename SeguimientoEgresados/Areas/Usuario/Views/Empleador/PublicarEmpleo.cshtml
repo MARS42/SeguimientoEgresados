@@ -13,26 +13,7 @@
             <h4>Vacantes publicadas</h4>
             <button id="nuevaVacante" class="btn btn-primary" data-url="@Url.Action("NuevaVacante")">Publicar nuevo<i class="fa-solid fa-signs-post mx-2"></i></button>
         </div>
-        <div class="col-12 table-responsive">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col">Título</th>
-                    <th scope="col">Descripción</th>
-                    <th scope="col">Publicación</th>
-                    <th scope="col">Acciones</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>Nuevo empleo</td>
-                    <td>Se solicita ingeniero</td>
-                    <td>Ayer</td>
-                    <td></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+        <div id="tablaVacantes" class="to-load table-responsive row col-12 justify-content-center" data-url="@Url.Action("GetVacantes")"></div>
     </div>
 </div>
 
@@ -49,6 +30,10 @@
     let modalVacante;
     const contModal = document.getElementById("contenedorModal");
     const btnNuevo = document.getElementById("nuevaVacante");
+    
+    window.addEventListener('DOMContentLoaded', (event) => {
+        actualizarTabla();
+    });
     
     btnNuevo.addEventListener('click', (event) =>{
         const url = event.target.dataset.url;
@@ -194,8 +179,22 @@
         .then(data => {
             //const modalVacante = new bootstrap.Modal(document.getElementById('modalNuevaVacante'));
             modalVacante.toggle();
+            actualizarTabla();
         });
     }
     
+    function actualizarTabla(){
+
+        const cont = document.getElementById("tablaVacantes");
+        const url = cont.dataset.url;
+
+        cont.innerHTML = '<div class="col-12 p-4 d-flex justify-content-center"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></div>';
+        
+        fetch(url)
+        .then(res => res.text())
+        .then(body => {
+            cont.innerHTML = body;
+        });
+    }
     </script>
 }
