@@ -28,16 +28,16 @@ namespace SeguimientoEgresados.Models
         public virtual DbSet<RolOperacion> RolOperacions { get; set; } = null!;
         public virtual DbSet<Role> Roles { get; set; } = null!;
         public virtual DbSet<Usuario> Usuarios { get; set; } = null!;
+        public virtual DbSet<Vacante> Vacantes { get; set; } = null!;
 
-//        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//        {
-//            if (!optionsBuilder.IsConfigured)
-//            {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-
-//                optionsBuilder.UseSqlServer("Server=localhost;Database=SeguimientoEgresados;User=SA;Password=3549355sql!");
-//            }
-//        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Server=seguimiento-egresados-itc.database.windows.net;Database=SeguimientoEgresados;User=SE;Password=3549355sql!");
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -425,6 +425,59 @@ namespace SeguimientoEgresados.Models
                     .HasForeignKey(d => d.IdRol)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("Usuarios_Roles_id_fk");
+            });
+
+            modelBuilder.Entity<Vacante>(entity =>
+            {
+                entity.HasIndex(e => e.Id, "Vacantes_id_uindex")
+                    .IsUnique();
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Descripcion)
+                    .IsUnicode(false)
+                    .HasColumnName("descripcion");
+
+                entity.Property(e => e.Fecha).HasColumnName("fecha");
+
+                entity.Property(e => e.Funciones)
+                    .IsUnicode(false)
+                    .HasColumnName("funciones");
+
+                entity.Property(e => e.Horario)
+                    .IsUnicode(false)
+                    .HasColumnName("horario");
+
+                entity.Property(e => e.IdEmpresa).HasColumnName("id_empresa");
+
+                entity.Property(e => e.Modalidad)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("modalidad");
+
+                entity.Property(e => e.Ofertas)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("ofertas");
+
+                entity.Property(e => e.Requisitos)
+                    .IsUnicode(false)
+                    .HasColumnName("requisitos");
+
+                entity.Property(e => e.TipoContrato)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("tipo_contrato");
+
+                entity.Property(e => e.Titulo)
+                    .IsUnicode(false)
+                    .HasColumnName("titulo");
+
+                entity.HasOne(d => d.IdEmpresaNavigation)
+                    .WithMany(p => p.Vacantes)
+                    .HasForeignKey(d => d.IdEmpresa)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("Vacantes_Empresas_id_fk");
             });
 
             OnModelCreatingPartial(modelBuilder);

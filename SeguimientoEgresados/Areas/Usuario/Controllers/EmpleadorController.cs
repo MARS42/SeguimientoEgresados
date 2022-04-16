@@ -171,6 +171,13 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             return PartialView("_NuevaVacante");
         }
         
+        [HttpPost]
+        public IActionResult NuevaVacante(VacanteViewModel model)
+        {
+            
+            return Json(model);
+        }
+        
         private async Task<Models.Usuario?> GetUsuario()
         {
             var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;

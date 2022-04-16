@@ -58,6 +58,7 @@
             contModal.innerHTML = html;
             const modalVacante = new bootstrap.Modal(document.getElementById('modalNuevaVacante'));
             modalVacante.show();
+            configForm();
         });
     });
     
@@ -68,7 +69,7 @@
       nodoRequisito.addEventListener('animationend', (event) => event.target.classList.remove('animate__animated', "animate__slideInDown", "animate__faster"))
       nodoRequisito.classList.add("input-group", "mb-2", "animate__animated", "animate__slideInDown", "animate__faster");
       nodoRequisito.innerHTML = `
-            <input type="text" class="form-control" placeholder="Función o actividad">
+            <input type="text" name="Funciones" class="funcion form-control" placeholder="Función o actividad">
             <button class="btn btn-outline-danger" type="button" id="button-addon2" onclick="borrarFuncion(this, ${listaRequisitos.length})">
                 <i class="fa-solid fa-trash"></i>
             </button>
@@ -89,14 +90,14 @@
         nodoRequisito.addEventListener('animationend', (event) => event.target.classList.remove('animate__animated', "animate__slideInDown", "animate__faster"))
         nodoRequisito.classList.add("input-group", "mb-2", "animate__animated", "animate__slideInDown", "animate__faster");
         nodoRequisito.innerHTML = `
-                <select class="input-group-text bg-light">
+                <select class="catRequisito input-group-text bg-light">
                     <option selected>Requisito</option>
-                    <option value="1">Experiencia</option>
-                    <option value="2">Idioma</option>
-                    <option value="3">Habilidad</option>
-                    <option value="3">Conocimiento</option>
+                    <option >Experiencia</option>
+                    <option >Idioma</option>
+                    <option >Habilidad</option>
+                    <option >Conocimiento</option>
                 </select>
-                <input type="text" class="form-control" placeholder="Requisito" value="${listaRequisitos.length}">
+                <input type="text" class="requisito form-control" placeholder="Requisito" value="${listaRequisitos.length}">
                 <button class="btn btn-outline-danger" type="button" id="button-addon2" onclick="borrarRequisito(this, ${listaRequisitos.length})">
                     <i class="fa-solid fa-trash"></i>
                 </button>
@@ -118,7 +119,7 @@
         nodoRequisito.classList.add("col-12", "col-lg-6", "animate__animated", "animate__slideInDown", "animate__faster");
         nodoRequisito.innerHTML = `
         <div class="input-group mb-2">
-            <input type="text" class="form-control" placeholder="Oferta, salario, bono, benficio, etc.">
+            <input type="text" class="oferta form-control" placeholder="Oferta, salario, bono, benficio, etc.">
             <button class="btn btn-outline-danger" type="button" id="button-addon2" onclick="borrarOferta(this, ${listaRequisitos.length})">
                 <i class="fa-solid fa-trash"></i>
             </button>
@@ -154,6 +155,42 @@
         listaRequisitos = [];
         listaFunciones = [];
         listaOfertas = [];
+    }
+    
+    function configForm(){
+        document.querySelector('form').addEventListener('submit', evt => {
+           evt.preventDefault();
+           const data = Object.fromEntries(new FormData(evt.target));
+           
+           const funcs = document.getElementsByClassName("funcion");
+           let funcArray = [];
+           for (let i = 0; i < funcs.length; i++)
+               funcArray.push(funcs[i].value);
+           
+           const catsRequis = document.getElementsByClassName("catRequisito");
+           const requis = document.getElementsByClassName("requisito");
+           let requisArray = [];
+           for (let i = 0; i < catsRequis.length; i++)
+               requisArray.push([catsRequis[i].value, requis[i].value]);
+           
+           const offers = document.getElementsByClassName("oferta");
+           let offerArray = [];
+           for (let i = 0; i < offers.length; i++)
+                offerArray.push(offers[i].value);
+           
+           data["Funciones"] = JSON.stringify(funcArray);
+           data["Requisitos"] = JSON.stringify(requisArray);
+           data["Ofertas"] = JSON.stringify(offerArray);
+           publicar(evt.target.dataset.url, data);
+        });
+    }
+    
+    function publicar(url, data){
+        const params = new URLSearchParams(data).toString();
+        fetch(url + "?" + params, {
+            method: 'POST'
+        }).then(response => response.json())
+        .then(data => console.log(data));
     }
     
     </script>

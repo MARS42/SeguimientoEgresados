@@ -5,6 +5,11 @@ namespace SeguimientoEgresados.Models
 {
     public partial class Empresa
     {
+        public Empresa()
+        {
+            Vacantes = new HashSet<Vacante>();
+        }
+
         public int Id { get; set; }
         public string Nombre { get; set; } = null!;
         public string Rfc { get; set; } = null!;
@@ -21,5 +26,6 @@ namespace SeguimientoEgresados.Models
         public int IdUsuario { get; set; }
 
         public virtual Usuario IdUsuarioNavigation { get; set; } = null!;
+        public virtual ICollection<Vacante> Vacantes { get; set; }
     }
 }
