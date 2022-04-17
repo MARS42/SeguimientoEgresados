@@ -20,12 +20,14 @@
         </div>
         <div id="vacantes" data-url="@Url.Action("GetVacantes")"></div>
     </div>
+    <div id="contenedorModal"></div>
 </div>
 
 @section Scripts
 {
     <script>
             let order = "";
+            let modalVacante;
             
             window.addEventListener('DOMContentLoaded', (event) => {
                 actualizarTabla("vacantes", 1);
@@ -68,6 +70,32 @@
                     const obj = JSON.parse(parseable.dataset.datos);
                     console.log(obj);
                 }
+            }
+            
+            function verDetalles(vacante){
+                const url = vacante.dataset.url;
+                fetch(url)
+                .then(body => body.text())
+                .then(html => {
+                    contenedorModal.innerHTML = html;
+                    
+                    const funcs = document.getElementById("detallesFunciones");
+                    const funcsAr = JSON.parse(funcs.dataset.datos);
+                    funcs.innerHTML += "<li>" + funcsAr.join('</li><li>') + "</li>";
+                    
+                    const reqs = document.getElementById("detallesRequisitos");
+                    const reqssAr = JSON.parse(reqs.dataset.datos);
+                    console.log(reqssAr);
+                    reqs.innerHTML += "<li>" + reqssAr.join('</li><li>') + "</li>";
+                    
+                    const offers = document.getElementById("detallesOfertas");
+                    const offersAr = JSON.parse(offers.dataset.datos);
+                    offers.innerHTML += "<li>" + offersAr.join('</li><li>') + "</li>";
+                    
+                    modalVacante = new bootstrap.Modal(document.getElementById('modalVerDetalles'));
+                    modalVacante.show();
+                });
+                
             }
     </script>
 }

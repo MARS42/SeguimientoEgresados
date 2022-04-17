@@ -1,0 +1,51 @@
+﻿@model SeguimientoEgresados.Models.ViewModels.VerVacanteViewModel
+
+<!-- Modal -->
+<div class="modal fade" id="modalVerDetalles" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white text-center">
+        <h4 class="modal-title">@Html.DisplayFor(m => m.Titulo) por @Html.DisplayFor(m => m.NombreEmpresa)</h4>
+        <button type="button" class="btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-12">
+            <h6 class="text-primary"><i class="fa-solid fa-circle-question me-2"></i>Descripción</h6>
+            @Html.DisplayFor(m => m.Descripcion)
+          </div>
+          <hr class="invisible"/>
+          <div class="col-12 col-lg-6">
+            <h6 class="text-primary"><i class="fa-solid fa-briefcase me-2"></i>Funciones y actividades</h6>
+            <ul id="detallesFunciones" data-datos="@Model.Funciones"></ul>
+          </div>
+          <div class="col-12 col-lg-6">
+            <h6 class="text-primary"><i class="fa-solid fa-brain me-2"></i>Requerimientos</h6>
+            <ul id="detallesRequisitos" data-datos="@Model.Requisitos"></ul>
+          </div>
+          <hr class="invisible"/>
+          <div class="col-12 col-lg-4">
+            <h6 class="text-primary"><i class="fa-solid fa-handshake-simple me-2"></i>Tipo de contrato</h6>
+            <p>@Html.DisplayFor(m => m.TipoContrato)</p>
+          </div>
+          <div class="col-12 col-lg-4">
+            <h6 class="text-primary"><i class="fa-solid fa-person me-2"></i>Modalidad</h6>
+            <p>@Html.DisplayFor(m => m.Modalidad)</p>
+          </div>
+          <div class="col-12 col-lg-4">
+            <h6 class="text-primary"><i class="fa-solid fa-clock me-2"></i>Horario</h6>
+            <p>@Html.DisplayFor(m => m.Horario)</p>
+          </div>
+          <hr class="invisible"/>
+          <div class="col-12">
+            <h6 class="text-success"><i class="fa-solid fa-hand-holding-dollar me-2"></i>Oferta</h6>
+            <ul id="detallesOfertas" data-datos="@Model.Ofertas"></ul>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-primary">Postularse<i class="fa-solid fa-hand-point-up mx-2"></i></button>
+      </div>
+    </div>
+  </div>
+</div> 

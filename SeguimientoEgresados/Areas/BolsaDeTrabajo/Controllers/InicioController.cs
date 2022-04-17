@@ -49,9 +49,6 @@ namespace SeguimientoEgresados.Areas.BolsaDeTrabajo.Controllers
             ViewData["Busqueda"] = busqueda;
 
             var query =
-                // from empresa in _context.Empresas
-                // join vacante in _context.Vacantes on empresa.Id equals vacante.IdEmpresa into vacantes
-                // from match in vacantes.DefaultIfEmpty()
                 from vacante in _context.Vacantes
                 join empresa in _context.Empresas on vacante.IdEmpresa equals empresa.Id into vacantesEmpresa
                 from vacanteEmpresa in vacantesEmpresa.DefaultIfEmpty()
@@ -105,6 +102,30 @@ namespace SeguimientoEgresados.Areas.BolsaDeTrabajo.Controllers
             
             int pageSize = 10;
             return PartialView("_GetVacantes",  await ListaPaginada<VerVacanteViewModel>.CreateAsync(query.AsNoTracking(), pagina ?? 1, pageSize));
+        }
+
+        public async Task<IActionResult> VerDetallesVacante(int id)
+        {
+            var query =
+                from vacante in _context.Vacantes
+                join empresa in _context.Empresas on vacante.IdEmpresa equals empresa.Id into vacantesEmpresa
+                from vacanteEmpresa in vacantesEmpresa.DefaultIfEmpty()
+                where  vacante.Id.Equals(id)
+                select new VerVacanteViewModel()
+                {
+                    NombreEmpresa = vacanteEmpresa.Nombre,
+                    Titulo = vacante.Titulo,
+                    Descripcion = vacante.Descripcion,
+                    Funciones = vacante.Funciones,
+                    Requisitos = vacante.Requisitos,
+                    Ofertas = vacante.Ofertas,
+                    TipoContrato = vacante.TipoContrato,
+                    Modalidad = vacante.Modalidad,
+                    Horario = vacante.Horario,
+                    Fecha = vacante.Fecha,
+                    Id = vacante.Id
+                };
+            return PartialView("_DetallesVacante", await query.FirstOrDefaultAsync());
         }
     }
 }

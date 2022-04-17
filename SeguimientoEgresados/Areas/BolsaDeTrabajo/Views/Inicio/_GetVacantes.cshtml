@@ -21,12 +21,12 @@
                         </ol>
                     </nav>
                     <nav class="col-12 col-md-auto" style="--bs-breadcrumb-divider: '';" aria-label="breadcrumb">
-                        <ol class="breadcrumb text-success fs-6 fw-bold">
+                        <ol class="breadcrumb text-success fs-6">
                             <li class="ofertas breadcrumb-item text-wrap" data-datos="@vacante.Ofertas"><i class="fa-solid fa-circle-dollar-to-slot fa-xl mx-2"></i></li>
                         </ol>
                     </nav>
                 </div>
-                <a href="#" class="btn btn-outline-primary float-end">Ver más detalles<i class="fa-solid fa-arrow-up-right-from-square mx-2"></i></a>
+                <a onclick="verDetalles(this)" class="btn btn-primary float-end" data-url="@Url.Action("VerDetallesVacante", new { id = vacante.Id })">Ver más detalles<i class="fa-solid fa-arrow-up-right-from-square mx-2"></i></a>
             </div>
         </div>
     </div>
