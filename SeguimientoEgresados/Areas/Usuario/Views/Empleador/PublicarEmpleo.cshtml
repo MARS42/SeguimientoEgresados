@@ -196,5 +196,15 @@
             cont.innerHTML = body;
         });
     }
+    
+    function eliminarVacante(vacante){
+        const url = "@Url.Action("EliminarVacante")";
+        
+        fetch(url + "?id=" + vacante.dataset.id, { method: 'POST' })
+        .then(res => res.ok)
+        .then(data => {
+           actualizarTabla(); 
+        });
+    }
     </script>
 }

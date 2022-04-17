@@ -210,6 +210,23 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             var query = from vacante in _context.Vacantes where vacante.IdEmpresa.Equals(empresa.Id) select vacante;
             return PartialView("_TablaVacantes", await query.ToListAsync());
         }
+
+        [HttpPost]
+        public async Task<IActionResult> EliminarVacante(int id)
+        {
+            var usuario = await GetUsuario();
+            var empresa = await _context.Empresas.FirstOrDefaultAsync(e => e.IdUsuario.Equals(usuario.Id));
+
+            var vacante = await _context.Vacantes.FirstOrDefaultAsync(v => v.Id.Equals(id));
+
+            if (empresa.Id != vacante.IdEmpresa)
+                return Json("Error");
+            
+            _context.Vacantes.Remove(vacante);
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
         
         private async Task<Models.Usuario?> GetUsuario()
         {

@@ -17,7 +17,7 @@
             <td>@(v.Titulo)</td>
             <td>@(v.Descripcion)</td>
             <td>@(v.Fecha)</td>
-            <td>@(v.Modalidad)</td>
+            <td><button class="btn btn-outline-danger" onclick="clickActionBtn(this); eliminarVacante(this);" data-id="@v.Id"><i class="fa-solid fa-trash"></i></button></td>
         </tr>
     }
     </tbody>
