@@ -38,13 +38,16 @@ builder.Services.AddDbContext<SeguimientoEgresadosContext>(options =>
         Password = builder.Configuration.GetSection("DBPassword").Value,
     };
 
+    
     var connectionString = connectionBuilder.ConnectionString;
-    Console.WriteLine("Connection: " + connectionString);
+    
+    //Console.WriteLine("Connection: " + connectionString);
     //Console.WriteLine("Google: " + builder.Configuration.GetSection("AppSettings:GoogleClientId").ToString());
 
     options.UseSqlServer(connectionString);
 });
 
+builder.Services.Configure<CloudinaryOptions>(builder.Configuration.GetSection("Cloudinary"));
 builder.Services.AddScoped<IGoogleSheetsService, GoogleSheetsService>();
 builder.Services.AddScoped<INotificacionesService, NotificacionesService>();
 

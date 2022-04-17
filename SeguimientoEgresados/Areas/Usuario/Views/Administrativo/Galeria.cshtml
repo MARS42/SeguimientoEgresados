@@ -1,0 +1,36 @@
+﻿@model SubirImagenViewModel
+
+<div class="container-fluid animate__animated animate__fadeIn">
+    <h3>Galería</h3>
+    <div class="row justify-content-center">
+        <div class="col-12 mb-3 d-flex justify-content-center align-items-center">
+            <form asp-action="SubirImagen" method="post" ecotype="multipart/form-data" id="upload-form">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-floating mb-3">
+                            <input asp-for="Titulo" class="form-control display-3" placeholder="Título de la imagen">
+                            <label asp-for="Titulo"><i class="fa-solid fa-image mx-2"></i>Título o nombre de la imagen</label>
+                        </div>
+                        <span asp-validation-for="Titulo"></span>
+                    </div>
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <label asp-for="Imagen" class="form-label"><i class="fa-solid fa-image mx-2"></i>Seleccione la imagen</label>
+                            <input asp-for="Imagen" class="form-control" id="formFile">
+                        </div>
+                        <span asp-validation-for="Imagen"></span>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-floating mb-3">
+                            <input asp-for="Descripcion" class="form-control display-3" placeholder="Descripción de la imagen">
+                            <label asp-for="Descripcion"><i class="fa-solid fa-image mx-2"></i>Descripción de la imagen</label>
+                        </div>
+                        <span asp-validation-for="Descripcion"></span>
+                    </div>
+                    <input type="submit" class="btn btn-primary"/>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

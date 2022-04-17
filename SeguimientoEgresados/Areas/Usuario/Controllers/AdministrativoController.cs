@@ -7,8 +7,10 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using SeguimientoEgresados.Models;
 using SeguimientoEgresados.Models.ViewModels;
+using SeguimientoEgresados.Services;
 using SeguimientoEgresados.Utils;
 
 namespace SeguimientoEgresados.Areas.Usuario.Controllers
@@ -18,10 +20,12 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
     public class AdministrativoController : Controller
     {
         private readonly SeguimientoEgresadosContext _context;
+        private readonly IOptions<CloudinaryOptions> _config;
 
-        public AdministrativoController(SeguimientoEgresadosContext context)
+        public AdministrativoController(SeguimientoEgresadosContext context, IOptions<CloudinaryOptions> config)
         {
             _context = context;
+            _config = config;
         }
         
         public async Task<IActionResult> Index()
@@ -49,6 +53,12 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
         {
             ViewData["SidebarItem"] = 3;
             return PartialView(await _context.Empresas.ToListAsync());
+        }
+        
+        public async Task<IActionResult> Galeria()
+        {
+            await new CloudinaryService(_config).SubirImagen();
+            return PartialView();
         }
         
         public async Task<IActionResult> CambiosPassword()
@@ -194,6 +204,11 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
                 select empresa.Nombre;
 
             return Json(await query.ToListAsync());
+        }
+
+        public async Task<IActionResult> SubirImagen(SubirImagenViewModel model)
+        {
+            return Ok();
         }
     }
 }
