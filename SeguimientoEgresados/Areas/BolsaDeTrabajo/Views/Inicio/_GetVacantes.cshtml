@@ -1,6 +1,13 @@
 ﻿@using SeguimientoEgresados.Models.ViewModels
 @model SeguimientoEgresados.Utils.ListaPaginada<VerVacanteViewModel>
 
+@if (Model.Count <= 0)
+{
+    <div class="col-12 mb-3 p-4 animate__animated animate__faster animate__fadeIn">
+        <h5 class="text-center text-muted"><i class="fa-solid fa-xl fa-magnifying-glass mx-2"></i>Sin resultados</h5>
+    </div>
+}
+
 @foreach (VerVacanteViewModel vacante in Model)
 {
     <div class="col-12 mb-3 animate__animated animate__faster animate__fadeIn">

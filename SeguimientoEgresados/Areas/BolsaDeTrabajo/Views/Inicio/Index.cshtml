@@ -16,7 +16,7 @@
                 <input type="text" class="form-control" id="busqueda" name="busqueda" placeholder="Buscar" data-tabla="tablaEmpleadores">
                 <label for="busqueda"><i class="fa-solid fa-magnifying-glass mx-2"></i>Buscar vacantes</label>
             </div>
-            <a class="text-primary text-decoration-none manita" onclick=''><i class="fa-solid fa-trash mx-2"></i>Borrar filtros</a>
+            <a class="text-primary text-decoration-none manita" onclick='borrarFiltros()'><i class="fa-solid fa-trash mx-2"></i>Borrar filtros</a>
         </div>
         <div id="vacantes" data-url="@Url.Action("GetVacantes")"></div>
     </div>
@@ -31,6 +31,10 @@
             
             window.addEventListener('DOMContentLoaded', (event) => {
                 actualizarTabla("vacantes", 1);
+                
+                document.getElementById("busqueda").addEventListener('input' , evt => {
+                    actualizarTabla("vacantes", 1, order);
+                });
             });
     
             function actualizarTabla(idTabla, pagina = 1, ordenTabla = null){
@@ -85,8 +89,9 @@
                     
                     const reqs = document.getElementById("detallesRequisitos");
                     const reqssAr = JSON.parse(reqs.dataset.datos);
-                    console.log(reqssAr);
-                    reqs.innerHTML += "<li>" + reqssAr.join('</li><li>') + "</li>";
+                    const ar = []
+                    reqssAr.forEach(req => ar.push(req.join(": ")));
+                    reqs.innerHTML += "<li>" + ar.join('</li><li>') + "</li>";
                     
                     const offers = document.getElementById("detallesOfertas");
                     const offersAr = JSON.parse(offers.dataset.datos);
@@ -96,6 +101,12 @@
                     modalVacante.show();
                 });
                 
+            }
+            
+            function borrarFiltros(){
+                order = "";
+                document.getElementById("busqueda").value = "";
+                actualizarTabla("vacantes", 1, order);
             }
     </script>
 }

@@ -43,7 +43,7 @@ namespace SeguimientoEgresados.Areas.BolsaDeTrabajo.Controllers
             }
             else
             {
-                busqueda = filtroActual;
+                //busqueda = filtroActual;
             }
             
             ViewData["Busqueda"] = busqueda;
