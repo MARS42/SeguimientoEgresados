@@ -38,6 +38,7 @@
 
 @section Scripts
 {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script>
         window.addEventListener('DOMContentLoaded', (event) => {
             const vista = document.getElementById('vista');
@@ -121,6 +122,44 @@
                 cont.classList.add('table-responsive');
                 cont.innerHTML = body;
             });
+        }
+        
+        const timer = ms => new Promise(res => setTimeout(res, ms));
+        
+        async function previsualizarImagenes(imagenes){
+            const imgs = imagenes.files;
+            const contenedor = document.getElementById("previews");
+            
+            for (let i = 0; i < imgs.length; i++){
+                const img = imgs[i];
+                console.log(img);
+                
+                const prev = document.createElement("div");
+                prev.classList.add("col-12", "col-md-6", "col-lg-4", "animate__animated", "animate__faster", "animate__zoomIn");
+                
+                const imgElement = document.createElement("img");
+                imgElement.classList.add("img-fluid", "rounded", "card-shadow");
+                imgElement.src = window.URL.createObjectURL(img);
+                
+                prev.appendChild(imgElement);
+                
+                prev.innerHTML += `
+                <hr class="invisible"/>
+                <div class="my-3">
+                  <input name="nombresImgs" type="text" class="form-control form-control-sm" placeholder="Título" value="${img.name}">
+                </div>
+                <div class="mb-3">
+                  <input name="descImgs" type="text" class="form-control form-control-sm" placeholder="(Opcional) Descripción">
+                </div>
+                <div class="mb-3">
+                    <i class="col-sm-2 col-form-label fa-solid fa-tag me-2"></i>
+                  <input name="tagsImgs" type="text" class="form-control form-control-sm" placeholder="(Opcional) Tags, ej. Grupo 1 ISC, Mecatrónica, Grupo 4 Gestión, etc.">
+                </div>
+                `;
+                
+                contenedor.appendChild(prev);
+                await timer(200);
+            }
         }
     </script>
 }

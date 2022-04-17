@@ -4,28 +4,36 @@
     <h3>Galería</h3>
     <div class="row justify-content-center">
         <div class="col-12 mb-3 d-flex justify-content-center align-items-center">
-            <form asp-action="SubirImagen" method="post" ecotype="multipart/form-data" id="upload-form">
+            <form asp-action="SubirImagen" method="post" enctype="multipart/form-data" id="upload-form">
                 <div class="row">
                     <div class="col-12">
                         <div class="form-floating mb-3">
-                            <input asp-for="Titulo" class="form-control display-3" placeholder="Título de la imagen">
-                            <label asp-for="Titulo"><i class="fa-solid fa-image mx-2"></i>Título o nombre de la imagen</label>
+                            <input asp-for="Titulo" class="form-control display-3" placeholder="Categoría o nombre de las imagenes">
+                            <label asp-for="Titulo"><i class="fa-solid fa-image mx-2"></i>Categoría o nombre de las imagenes</label>
                         </div>
                         <span asp-validation-for="Titulo"></span>
                     </div>
                     <div class="col-12">
-                        <div class="mb-3">
-                            <label asp-for="Imagen" class="form-label"><i class="fa-solid fa-image mx-2"></i>Seleccione la imagen</label>
-                            <input asp-for="Imagen" class="form-control" id="formFile">
-                        </div>
-                        <span asp-validation-for="Imagen"></span>
-                    </div>
-                    <div class="col-12">
                         <div class="form-floating mb-3">
-                            <input asp-for="Descripcion" class="form-control display-3" placeholder="Descripción de la imagen">
-                            <label asp-for="Descripcion"><i class="fa-solid fa-image mx-2"></i>Descripción de la imagen</label>
+                            <textarea  asp-for="Descripcion" class="form-control display-3" placeholder="Descripción general de las imagenes"></textarea>
+                            <label asp-for="Descripcion"><i class="fa-solid fa-image mx-2"></i>Descripción general de las imagenes</label>
                         </div>
                         <span asp-validation-for="Descripcion"></span>
+                    </div>
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <i class="col-sm-2 col-form-label fa-solid fa-tag me-2"></i>
+                            <input asp-for="Tags" type="text" class="form-control form-control-sm" placeholder="Tags, ej. Egresados, graduación, ceremonia, reunión, etc.">
+                        </div>
+                        <span asp-validation-for="Tags"></span>
+                    </div>
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <label for="imagenes" class="form-label"><i class="fa-solid fa-image mx-2"></i>Arrastre o seleccione la imagen</label>
+                            <input name="imagenes" type="file" class="form-control" id="formFile" multiple onchange="previsualizarImagenes(this)">
+                        </div>
+                    </div>
+                    <div id="previews" class="col-12 row">
                     </div>
                     <input type="submit" class="btn btn-primary"/>
                 </div>
@@ -33,4 +41,3 @@
         </div>
     </div>
 </div>
-

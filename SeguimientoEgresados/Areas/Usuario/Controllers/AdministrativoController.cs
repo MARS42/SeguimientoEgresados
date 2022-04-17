@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -20,12 +21,14 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
     public class AdministrativoController : Controller
     {
         private readonly SeguimientoEgresadosContext _context;
+        private readonly ICloudinaryService _cloudinary;
         private readonly IOptions<CloudinaryOptions> _config;
 
-        public AdministrativoController(SeguimientoEgresadosContext context, IOptions<CloudinaryOptions> config)
+        public AdministrativoController(SeguimientoEgresadosContext context, IOptions<CloudinaryOptions> config, ICloudinaryService cloudinary)
         {
             _context = context;
             _config = config;
+            _cloudinary = cloudinary;
         }
         
         public async Task<IActionResult> Index()
@@ -57,7 +60,6 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
         
         public async Task<IActionResult> Galeria()
         {
-            await new CloudinaryService(_config).SubirImagen();
             return PartialView();
         }
         
@@ -206,8 +208,48 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             return Json(await query.ToListAsync());
         }
 
-        public async Task<IActionResult> SubirImagen(SubirImagenViewModel model)
+        [HttpPost]
+        public async Task<IActionResult> SubirImagen(SubirImagenViewModel model, List<IFormFile> imagenes, List<string> nombresImgs, List<string> descImgs, List<string> tagsImgs)
         {
+            DateTime creacion = DateTime.Now;
+
+            var galeria = await _context.Galeria.FirstOrDefaultAsync(g => g.Nombre.Equals(model.Titulo));
+
+            if (galeria == null)
+            {
+                galeria = new Galerium()
+                {
+                    Nombre = model.Titulo,
+                    Descripcion = model.Descripcion,
+                    Fecha = creacion
+                };
+                await _context.Galeria.AddAsync(galeria);
+                await _context.SaveChangesAsync();
+            }
+
+            galeria = await _context.Galeria.FirstOrDefaultAsync(g => g.Nombre.Equals(model.Titulo));
+            int i = 0;
+
+            string folder = galeria!.Nombre;
+            string subfolder = creacion.ToString("yyyy-MM-dd hh:mm:ss");
+            
+            foreach (IFormFile formFile in imagenes)
+            {
+                string url = await _cloudinary.SubirImagen(formFile, folder, subfolder);
+                ImagenGalerium imagen = new ImagenGalerium()
+                {
+                    Nombre = nombresImgs[i],
+                    Descripcion = string.IsNullOrEmpty(descImgs[i]) ? "Sin descripción" : descImgs[i],
+                    Fecha = creacion,
+                    Url = url,
+                    IdAlbum = galeria.Id
+                };
+                
+                await _context.ImagenGaleria.AddAsync(imagen);
+                i++;
+            }
+
+            await _context.SaveChangesAsync();
             return Ok();
         }
     }

@@ -129,3 +129,11 @@ body {
   cursor: pointer;
 }
 
+.card-shadow{
+  /*box-shadow: 1px 12px 12px -4px rgba(0,0,0,0.46);*/
+  /*-webkit-box-shadow: 1px 12px 12px -4px rgba(0,0,0,0.46);*/
+  /*-moz-box-shadow: 1px 12px 12px -4px rgba(0,0,0,0.46);*/
+
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
