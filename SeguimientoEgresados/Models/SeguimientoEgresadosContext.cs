@@ -21,12 +21,15 @@ namespace SeguimientoEgresados.Models
         public virtual DbSet<Egresado> Egresados { get; set; } = null!;
         public virtual DbSet<Empresa> Empresas { get; set; } = null!;
         public virtual DbSet<EstadosCivile> EstadosCiviles { get; set; } = null!;
+        public virtual DbSet<Galerium> Galeria { get; set; } = null!;
         public virtual DbSet<Genero> Generos { get; set; } = null!;
+        public virtual DbSet<ImagenGalerium> ImagenGaleria { get; set; } = null!;
         public virtual DbSet<IntervalosCuestionario> IntervalosCuestionarios { get; set; } = null!;
         public virtual DbSet<Modulo> Modulos { get; set; } = null!;
         public virtual DbSet<Operacione> Operaciones { get; set; } = null!;
         public virtual DbSet<RolOperacion> RolOperacions { get; set; } = null!;
         public virtual DbSet<Role> Roles { get; set; } = null!;
+        public virtual DbSet<TagImagen> TagImagens { get; set; } = null!;
         public virtual DbSet<Usuario> Usuarios { get; set; } = null!;
         public virtual DbSet<Vacante> Vacantes { get; set; } = null!;
 
@@ -262,6 +265,25 @@ namespace SeguimientoEgresados.Models
                     .HasColumnName("nombre");
             });
 
+            modelBuilder.Entity<Galerium>(entity =>
+            {
+                entity.HasIndex(e => e.Id, "Galeria_id_uindex")
+                    .IsUnique();
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Descripcion)
+                    .IsUnicode(false)
+                    .HasColumnName("descripcion");
+
+                entity.Property(e => e.Fecha).HasColumnName("fecha");
+
+                entity.Property(e => e.Nombre)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("nombre");
+            });
+
             modelBuilder.Entity<Genero>(entity =>
             {
                 entity.HasIndex(e => e.Id, "Generos_id_uindex")
@@ -273,6 +295,36 @@ namespace SeguimientoEgresados.Models
                     .HasMaxLength(20)
                     .IsUnicode(false)
                     .HasColumnName("nombre");
+            });
+
+            modelBuilder.Entity<ImagenGalerium>(entity =>
+            {
+                entity.HasIndex(e => e.Id, "ImagenGaleria_id_uindex")
+                    .IsUnique();
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Descripcion)
+                    .IsUnicode(false)
+                    .HasColumnName("descripcion");
+
+                entity.Property(e => e.Fecha).HasColumnName("fecha");
+
+                entity.Property(e => e.IdAlbum).HasColumnName("id_album");
+
+                entity.Property(e => e.Nombre)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("nombre");
+
+                entity.Property(e => e.Url)
+                    .IsUnicode(false)
+                    .HasColumnName("url");
+
+                entity.HasOne(d => d.IdAlbumNavigation)
+                    .WithMany(p => p.ImagenGaleria)
+                    .HasForeignKey(d => d.IdAlbum)
+                    .HasConstraintName("ImagenGaleria_Galeria_id_fk");
             });
 
             modelBuilder.Entity<IntervalosCuestionario>(entity =>
@@ -370,6 +422,28 @@ namespace SeguimientoEgresados.Models
                     .HasMaxLength(64)
                     .IsUnicode(false)
                     .HasColumnName("nombre");
+            });
+
+            modelBuilder.Entity<TagImagen>(entity =>
+            {
+                entity.ToTable("TagImagen");
+
+                entity.HasIndex(e => e.Id, "TagImagen_id_uindex")
+                    .IsUnique();
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Descripcion)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("descripcion");
+
+                entity.Property(e => e.IdImagen).HasColumnName("id_imagen");
+
+                entity.HasOne(d => d.IdImagenNavigation)
+                    .WithMany(p => p.TagImagens)
+                    .HasForeignKey(d => d.IdImagen)
+                    .HasConstraintName("TagImagen_ImagenGaleria_id_fk");
             });
 
             modelBuilder.Entity<Usuario>(entity =>
