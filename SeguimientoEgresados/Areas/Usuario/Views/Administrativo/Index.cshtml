@@ -40,6 +40,14 @@
 {
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script>
+    
+        // $(function (){
+        //
+        //     $('#vista').on('DOMSubtreeModified', function(){
+        //       console.log('changed');
+        //     });
+        // });
+    
         window.addEventListener('DOMContentLoaded', (event) => {
             const vista = document.getElementById('vista');
     
@@ -93,7 +101,6 @@
                     const buscador = document.getElementById("busqueda");
     
                     order = "";
-    
                     if(buscador != null){
     
                         buscador.addEventListener('input', (event) => actualizarTabla(buscador.dataset.tabla, 1, order));
@@ -136,27 +143,33 @@
                 
                 const prev = document.createElement("div");
                 prev.classList.add("col-12", "col-md-6", "col-lg-4", "animate__animated", "animate__faster", "animate__zoomIn");
+                const bg = document.createElement("div");
+                bg.classList.add("border", "rounded", "mx-1", "my-2", "p-3", "bg-light");
+               
                 
                 const imgElement = document.createElement("img");
-                imgElement.classList.add("img-fluid", "rounded", "card-shadow");
+                imgElement.classList.add("img-fluid", "rounded", "border");
                 imgElement.src = window.URL.createObjectURL(img);
                 
-                prev.appendChild(imgElement);
+                bg.appendChild(imgElement);
                 
-                prev.innerHTML += `
+                bg.innerHTML += `
                 <hr class="invisible"/>
-                <div class="my-3">
+                <div class="my-3 d-flex align-items-center">
+                    <i class="fa-solid fa-heading me-2"></i>
                   <input name="nombresImgs" type="text" class="form-control form-control-sm" placeholder="Título" value="${img.name}">
                 </div>
-                <div class="mb-3">
-                  <input name="descImgs" type="text" class="form-control form-control-sm" placeholder="(Opcional) Descripción">
+                <div class="mb-3 d-flex align-items-center">
+                  <i class="fa-solid fa-comment me-2"></i>
+                  <textarea name="descImgs" type="text" class="form-control form-control-sm" placeholder="(Opcional) Descripción"></textarea>
                 </div>
-                <div class="mb-3">
-                    <i class="col-sm-2 col-form-label fa-solid fa-tag me-2"></i>
-                  <input name="tagsImgs" type="text" class="form-control form-control-sm" placeholder="(Opcional) Tags, ej. Grupo 1 ISC, Mecatrónica, Grupo 4 Gestión, etc.">
+                <div class="mb-3 d-flex align-items-center">
+                    <i class="fa-solid fa-tag me-2"></i>
+                    <input name="tagsImgs" type="text" class="form-control form-control-sm" placeholder="(Opcional) Tags, ej. Grupo 1 ISC, Mecatrónica, Grupo 4 Gestión, etc.">
                 </div>
                 `;
                 
+                prev.appendChild(bg);
                 contenedor.appendChild(prev);
                 await timer(200);
             }

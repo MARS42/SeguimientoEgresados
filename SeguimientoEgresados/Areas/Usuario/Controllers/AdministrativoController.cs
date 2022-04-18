@@ -225,9 +225,9 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
                 };
                 await _context.Galeria.AddAsync(galeria);
                 await _context.SaveChangesAsync();
+                galeria = await _context.Galeria.FirstOrDefaultAsync(g => g.Nombre.Equals(model.Titulo));
             }
-
-            galeria = await _context.Galeria.FirstOrDefaultAsync(g => g.Nombre.Equals(model.Titulo));
+            
             int i = 0;
 
             string folder = galeria!.Nombre;
@@ -251,6 +251,14 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
 
             await _context.SaveChangesAsync();
             return Ok();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetGaleriaNombre(string term)
+        {
+            Console.Write("seraching: " + term);
+            var query = from galeria in _context.Galeria where galeria.Nombre.Contains(term) select galeria.Nombre;
+            return Json(await query.ToListAsync());
         }
     }
 }
