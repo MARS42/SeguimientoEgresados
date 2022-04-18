@@ -48,7 +48,7 @@ namespace SeguimientoEgresados.Areas.Galeria.Controllers
         public async Task<IActionResult> _VerAlbum(int id)
         {
             var album = await _db.Galeria.FirstOrDefaultAsync(g => g.Id.Equals(id));
-            return PartialView(album);
+            return View(album);
         }
     }
 }

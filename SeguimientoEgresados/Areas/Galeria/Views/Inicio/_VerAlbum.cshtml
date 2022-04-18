@@ -1,38 +1,25 @@
 ﻿@model Galerium
 
 @{
-    //Layout = "_LayoutScripts";
+    Layout = "_LayoutScripts";
 }
 @* <link rel="stylesheet" href="~/lib/fontawesome-free-6.1.1-web/css/all.min.css"/> *@
 @* <script src="~/lib/fontawesome-free-6.1.1-web/js/all.min.js"></script> *@
 @* <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/> *@
 @* <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/> *@
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<link rel="stylesheet" href="~/lib/jquery-ui-1.13.1/jquery-ui.min.css"/>
-<script src="~/lib/jquery-ui-1.13.1/jquery-ui.min.js"></script>
-
-<link rel="stylesheet" href="~/lib/fotorama-4.6.4/fotorama.css"/>
-<script src="~/lib/fotorama-4.6.4/fotorama.js"></script>
+@* <script src="~/lib/jquery/dist/jquery.min.js"></script> *@
+@* <link rel="stylesheet" href="~/lib/jquery-ui-1.13.1/jquery-ui.min.css"/> *@
+@* <script src="~/lib/jquery-ui-1.13.1/jquery-ui.min.js"></script> *@
+@* *@
+@* <link rel="stylesheet" href="~/lib/fotorama-4.6.4/fotorama.css"/> *@
+@* <script src="~/lib/fotorama-4.6.4/fotorama.js"></script> *@
 @* <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/> *@
 @* <link rel="stylesheet" href="~/SeguimientoEgresados.styles.css" asp-append-version="true"/> *@
 
-<div class="modal fade" id="modalVerAlbum" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header d-flex flex-column align-items-start text-break">
-                <h5 class="modal-title" id="exampleModalLabel">@(Model.Nombre)</h5>
-                <p>@(Model.Descripcion)</p>
-            </div>
-            <div class="modal-body">
-                @await Html.PartialAsync("_VisorGaleria")
-            </div>
-            @* <div class="modal-footer"> *@
-            @*   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> *@
-            @*   <button type="button" class="btn btn-primary">Save changes</button> *@
-            @* </div> *@
-        </div>
-    </div>
-</div>
-
 @* <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script> *@
 @* <script src="~/js/site.js" asp-append-version="true"></script> *@
+
+<div class="fotorama animate__animated animate__faster animate__fadeIn" data-nav="thumbs" data-allowfullscreen="native" data-width="100%" data-height="100%">
+    <a href="https://s.fotorama.io/1.jpg"><img src="https://s.fotorama.io/1.jpg"></a>
+    <a href="https://s.fotorama.io/2.jpg"><img src="https://s.fotorama.io/2.jpg"></a>
+</div>

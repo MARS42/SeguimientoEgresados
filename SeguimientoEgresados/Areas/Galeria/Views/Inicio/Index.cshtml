@@ -21,8 +21,28 @@
   </div>
 </div>
 
-<div id="modalAlbum"></div>
-<iframe id="marco" height="1000" width="1000"></iframe>
+<div id="modalAlbum">
+  <div class="modal fade" id="modalVerAlbum" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl modal-dialog-centered">
+          <div class="modal-content  modal-dialog-scrollable">
+              <div class="modal-header d-flex flex-column align-items-start text-break">
+                  <h5 class="modal-title" id="exampleModalLabel">Titulo</h5>
+                  <p>Descripcion</p>
+              </div>
+              <div class="modal-body ratio ratio-16x9">
+                <iframe id="iframeVerAlbum">
+                  <div class="col-12 p-4 d-flex justify-content-center"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></div>
+                </iframe>
+              </div>
+              @* <div class="modal-footer"> *@
+              @*   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> *@
+              @*   <button type="button" class="btn btn-primary">Save changes</button> *@
+              @* </div> *@
+          </div>
+      </div>
+  </div>
+
+</div>
 
 @section Scripts
 {
@@ -32,6 +52,12 @@
   
     window.addEventListener('DOMContentLoaded', (event) => {
       const data = JSON.parse('@Json.Serialize(Model)');
+      const iframe = document.getElementById('iframeVerAlbum');
+      iframe.addEventListener('load', function () {    
+        console.log("show");
+          modal = modal == null ? new bootstrap.Modal(document.getElementById("modalVerAlbum")) : modal;
+          modal.show();
+      });
       generarAlbumes(data);
     });
     
@@ -55,7 +81,7 @@
       }
     }
     
-    function verAlbum(id){
+    async function verAlbum(id){
       console.log(id);
       // $.ajax({
       //     url: "@Url.Action("_VerAlbum")",
@@ -72,16 +98,16 @@
       //     }
       // });
       //
+      const iframe = document.getElementById('iframeVerAlbum');
+      iframe.src = "about:blank";
+       iframe.src = "@Url.Action("_VerAlbum")?id=" + id;
       
-      document.getElementById('marco').src = "@Url.Action("_VerAlbum")?id=" + id;
       // fetch("@Url.Action("_VerAlbum")?id=" + id)
       // .then(response => response.text())
       // .then(html => {
       //   var parser = new DOMParser();
       //   var doc = parser.parseFromString(html, 'text/html');
       //   //document.getElementById('modalAlbum').appendChild(doc);
-      //   modal = new bootstrap.Modal(document.getElementById('modalVerAlbum'));
-      //   modal.show();
       // });
     }
 

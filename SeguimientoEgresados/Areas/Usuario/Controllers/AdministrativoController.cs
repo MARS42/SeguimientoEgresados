@@ -235,7 +235,9 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             
             foreach (IFormFile formFile in imagenes)
             {
-                string url = await _cloudinary.SubirImagen(formFile, folder, subfolder);
+                string[] urls = await _cloudinary.SubirImagen(formFile, folder, subfolder);
+                string url = urls[0];
+                string url_thum = urls[1];
                 ImagenGalerium imagen = new ImagenGalerium()
                 {
                     Nombre = nombresImgs[i],

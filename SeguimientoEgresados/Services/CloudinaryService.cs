@@ -20,7 +20,7 @@ public class CloudinaryService : ICloudinaryService
         Console.WriteLine("cloud:" + _cloudinary);
     }
     
-    public async Task<string> SubirImagen(IFormFile model, string folder = "default", string subfolder = "")
+    public async Task<string[]> SubirImagen(IFormFile model, string folder = "default", string subfolder = "")
     {
         //Console.WriteLine("file: "+model.Imagen.ToString());
         try
@@ -47,12 +47,21 @@ public class CloudinaryService : ICloudinaryService
                 File = new FileDescription(imagePath),
                 Folder = $"{folder}/{subfolder}"
             };
+            
+            var uploadParamsThumbnail = new ImageUploadParams()
+     
+            {
+                File = new FileDescription(imagePath),
+                Folder = $"{folder}/{subfolder}/Thumbnails",
+                Transformation = new Transformation().Width(64).Height(64).Crop("thumb")
+            };
             // pass the new ImageUploadParams object to the UploadAsync method of the Cloudinary Api
      
      
             var uploadResult = await _cloudinary.UploadAsync(@uploadParams);
+            var uploadThumbnailResult = await _cloudinary.UploadAsync(@uploadParamsThumbnail);
 
-            return uploadResult.SecureUrl.AbsoluteUri;
+            return new [] { uploadResult.SecureUrl.AbsoluteUri, uploadThumbnailResult.SecureUrl.AbsoluteUri };
         }
         catch (Exception ex)
         {

@@ -2,5 +2,5 @@
 
 public interface ICloudinaryService
 {
-    public Task<string> SubirImagen(IFormFile model, string folder = "default", string subfolder = "");
+    public Task<string[]> SubirImagen(IFormFile model, string folder = "default", string subfolder = "");
 }
