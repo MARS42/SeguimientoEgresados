@@ -26,6 +26,11 @@ html {
   border-color: #1A386A;
 }
 
+.fotorama__thumb-border{
+  /*border-color: #1A386A;*/
+  /*background-color: #1A386A;*/
+}
+
 html {
   position: relative;
   min-height: 100%;

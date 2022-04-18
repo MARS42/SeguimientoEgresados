@@ -4,7 +4,14 @@
     Layout = "_LayoutScripts";
 }
 
-<div id="fotorama" class="fotorama animate__animated animate__delay-1s animate__faster animate__fadeIn" data-auto="false" data-nav="thumbs" data-allowfullscreen="native" data-width="100%" data-height="100%">
+<div id="fotorama" class="fotorama animate__animated animate__faster animate__fadeIn"
+     data-auto="false"
+     data-nav="thumbs"
+     data-allowfullscreen="native"
+     data-width="100%" data-height="100%"
+     data-loop="false"
+     data-fit="contain"
+     data-transition="dissolve">
 </div>
 
 @section Scripts{
@@ -21,9 +28,23 @@
     
     async function crearFotorama(imgs)
     {
-        const data = [];
-        imgs.map((foto) => data.push({ img: foto["url"], thumb: foto["urlThumb"] }));
-         $('#fotorama').fotorama({ data: data });
+        // const data = [];
+        // imgs.map((foto) => data.push({ img: foto["url"], thumb: foto["urlThumb"] }));
+        //  $('#fotorama').fotorama({
+        //     data: data
+        //   });
+        //console.log(imgs);
+        const fotorama = document.getElementById("fotorama");
+        for (let i = 0; i < imgs.length; i++){
+            const foto = imgs[i];
+            const item = document.createElement("a");
+            item.href = foto["url"];
+            item.dataset.thumb = foto["urlThumb"];
+            item.dataset.caption= foto["nombre"] + ": " + foto["descripcion"];
+            fotorama.appendChild(item);
+            //await timer(200);
+        }
+        $('#fotorama').fotorama();
     }
     </script>
 }

@@ -26,12 +26,11 @@
       <div class="modal-dialog modal-xl modal-dialog-centered">
           <div class="modal-content  modal-dialog-scrollable">
               <div class="modal-header d-flex flex-column align-items-start text-break bg-dark text-light">
-                  <h5 class="modal-title" id="exampleModalLabel">Titulo</h5>
-                  <p>Descripcion</p>
+                  <h5 class="modal-title" id="tituloModal">Titulo</h5>
+                  <p id="descModal">Descripcion</p>
               </div>
               <div class="modal-body ratio ratio-16x9">
                 <iframe id="iframeVerAlbum">
-                  <div class="col-12 p-4 d-flex justify-content-center"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></div>
                 </iframe>
               </div>
               @* <div class="modal-footer"> *@
@@ -49,6 +48,7 @@
   <script>
   
     let modal;
+    let blocked;
   
     window.addEventListener('DOMContentLoaded', (event) => {
       const data = JSON.parse('@Json.Serialize(Model)');
@@ -56,6 +56,10 @@
       iframe.addEventListener('load', function () {    
           modal = modal == null ? new bootstrap.Modal(document.getElementById("modalVerAlbum")) : modal;
           modal.show();
+          openedGallery.firstElementChild.classList.remove("opacity-50");
+          openedGallery.removeChild(openedGallery.lastElementChild);
+          
+          blocked = false;
       });
       generarAlbumes(data);
     });
@@ -65,9 +69,10 @@
       for(let i = 0; i < data.length; i++){
         const galeria = data[i];
         const tarjeta = document.createElement("div");
-        tarjeta.classList.add("col-12", "col-md-6", "col-lg-4", "my-2", "animate__animated", "animate__faster", "animate__fadeIn");
+        tarjeta.id = "gid-" +galeria.id;
+        tarjeta.classList.add("col-12", "col-md-6", "col-lg-4", "my-1", "animate__animated", "animate__faster", "animate__fadeIn", "position-relative");
         tarjeta.innerHTML += `
-            <div class="card manita ver-galeria" onclick="verAlbum(${galeria.id})">
+            <div class="card manita ver-galeria" data-id="${galeria.id}" data-nombre="${galeria.nombre}" data-desc="${galeria.descripcion}" onclick="verAlbum(this)">
               <img src="${galeria.miniaturaUrl}" class="card-img-top miniatura-galeria border-bottom" alt="...">
               <div class="card-body miniatura-galeria-desc">
                 <h5 class="card-title">${galeria.nombre}</h5>
@@ -80,10 +85,27 @@
       }
     }
     
-    async function verAlbum(id){
+    let openedGallery;
+    async function verAlbum(element){
+      
+      if(blocked)
+        return;
+      
+      blocked = true;
+      
+      document.getElementById('tituloModal').innerHTML = element.dataset.nombre;
+      document.getElementById('descModal').innerHTML = element.dataset.desc;
+      
+      const carga = document.createElement("div");
+      carga.classList.add("position-absolute", "top-50", "start-50", "translate-middle");
+      carga.innerHTML = '<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>';
+      element.classList.add("opacity-50");
+      openedGallery = document.getElementById('gid-' + element.dataset.id);
+      openedGallery.appendChild(carga);
+      
       const iframe = document.getElementById('iframeVerAlbum');
       iframe.src = "about:blank";
-      iframe.src = "@Url.Action("_VerAlbum")?id=" + id;
+      iframe.src = "@Url.Action("_VerAlbum")?id=" + element.dataset.id;
     }
 
   </script>

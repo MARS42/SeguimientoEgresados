@@ -10,6 +10,9 @@ document.addEventListener("DOMContentLoaded", function(){
     window.addEventListener('scroll', function() {
 
         const bannerLogos = document.getElementById('bannerLogos');
+        if(bannerLogos == null)
+            return;
+        
         const bannerLogosHeight = bannerLogos.offsetHeight;
         if (window.scrollY > bannerLogosHeight) {
             // add padding top to show content behind navbar
