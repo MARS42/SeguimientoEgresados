@@ -25,7 +25,7 @@
   <div class="modal fade" id="modalVerAlbum" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-xl modal-dialog-centered">
           <div class="modal-content  modal-dialog-scrollable">
-              <div class="modal-header d-flex flex-column align-items-start text-break">
+              <div class="modal-header d-flex flex-column align-items-start text-break bg-dark text-light">
                   <h5 class="modal-title" id="exampleModalLabel">Titulo</h5>
                   <p>Descripcion</p>
               </div>
@@ -54,7 +54,6 @@
       const data = JSON.parse('@Json.Serialize(Model)');
       const iframe = document.getElementById('iframeVerAlbum');
       iframe.addEventListener('load', function () {    
-        console.log("show");
           modal = modal == null ? new bootstrap.Modal(document.getElementById("modalVerAlbum")) : modal;
           modal.show();
       });
@@ -82,33 +81,9 @@
     }
     
     async function verAlbum(id){
-      console.log(id);
-      // $.ajax({
-      //     url: "@Url.Action("_VerAlbum")",
-      //     type: "get",
-      //     data: { "id": id },
-      //     success: function (data) {
-      //         //Do Something
-      //         $("#modalAlbum").html(data);
-      //                 modal = new bootstrap.Modal(document.getElementById('modalVerAlbum'));
-      //                 modal.show();
-      //     },
-      //     error: function (xhr) {
-      //         //Do Something to handle error
-      //     }
-      // });
-      //
       const iframe = document.getElementById('iframeVerAlbum');
       iframe.src = "about:blank";
-       iframe.src = "@Url.Action("_VerAlbum")?id=" + id;
-      
-      // fetch("@Url.Action("_VerAlbum")?id=" + id)
-      // .then(response => response.text())
-      // .then(html => {
-      //   var parser = new DOMParser();
-      //   var doc = parser.parseFromString(html, 'text/html');
-      //   //document.getElementById('modalAlbum').appendChild(doc);
-      // });
+      iframe.src = "@Url.Action("_VerAlbum")?id=" + id;
     }
 
   </script>

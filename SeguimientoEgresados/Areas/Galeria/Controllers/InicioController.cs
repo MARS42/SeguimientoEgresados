@@ -50,5 +50,12 @@ namespace SeguimientoEgresados.Areas.Galeria.Controllers
             var album = await _db.Galeria.FirstOrDefaultAsync(g => g.Id.Equals(id));
             return View(album);
         }
+
+        public async Task<IActionResult> GetImagenes(int idGaleria)
+        {
+            var query = from img in _db.ImagenGaleria where img.IdAlbum.Equals(idGaleria) select img;
+
+            return Json(await query.AsNoTracking().ToListAsync());
+        }
     }
 }

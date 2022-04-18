@@ -53,7 +53,7 @@ public class CloudinaryService : ICloudinaryService
             {
                 File = new FileDescription(imagePath),
                 Folder = $"{folder}/{subfolder}/Thumbnails",
-                Transformation = new Transformation().Width(64).Height(64).Crop("thumb")
+                Transformation = new Transformation().AspectRatio("1.0").Width(64).Height(64).Crop("fill")
             };
             // pass the new ImageUploadParams object to the UploadAsync method of the Cloudinary Api
      
