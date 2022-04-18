@@ -498,6 +498,10 @@ namespace SeguimientoEgresados.Models
 
                 entity.Property(e => e.Salt).HasColumnName("salt");
 
+                entity.Property(e => e.UrlImg)
+                    .IsUnicode(false)
+                    .HasColumnName("url_img");
+
                 entity.HasOne(d => d.IdRolNavigation)
                     .WithMany(p => p.Usuarios)
                     .HasForeignKey(d => d.IdRol)
