@@ -3,6 +3,8 @@
 
 // Write your JavaScript code.
 
+const timer = ms => new Promise(res => setTimeout(res, ms));
+
 document.addEventListener("DOMContentLoaded", function(){
 
     window.addEventListener('scroll', function() {

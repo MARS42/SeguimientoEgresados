@@ -1,6 +1,89 @@
+@using SeguimientoEgresados.Models.ViewModels
+@using System.Text.Json
+@model IEnumerable<VerAlbumViewModel>
+
 @{
     ViewBag.Title = "Galería";
+  string jsonAlbum = "";
     //Layout = "_Layout";
 }
 
-<h2>Galería</h2>
+<div class="container border mt-4 p-4">
+  <h2>Galería</h2>
+  <div id="albumes" class="row">
+    <div class="col-12">
+      @* <div class="fotorama" data-width="80%" data-ratio="800/600"> *@
+      @*   <img src="https://res.cloudinary.com/seguimiento-egresados-itc/image/upload/v1650253658/Egresados/2022-04-17%2010:47:33/tsyuel1r5kcqeh1nvruu.png"> *@
+      @*   <img src="https://res.cloudinary.com/seguimiento-egresados-itc/image/upload/v1650253657/Egresados/2022-04-17%2010:47:33/zklz3zdvoocepuwdwgeh.png" alt="..."> *@
+      @*   <img src="https://s.fotorama.io/2.jpg"> *@
+      @* </div> *@
+    </div>
+  </div>
+</div>
+
+<div id="modalAlbum"></div>
+<iframe id="marco" height="1000" width="1000"></iframe>
+
+@section Scripts
+{
+  <script>
+  
+    let modal;
+  
+    window.addEventListener('DOMContentLoaded', (event) => {
+      const data = JSON.parse('@Json.Serialize(Model)');
+      generarAlbumes(data);
+    });
+    
+    async function generarAlbumes(data){
+      const contenedor = document.getElementById("albumes");
+      for(let i = 0; i < data.length; i++){
+        const galeria = data[i];
+        const tarjeta = document.createElement("div");
+        tarjeta.classList.add("col-12", "col-md-6", "col-lg-4", "my-2", "animate__animated", "animate__faster", "animate__fadeIn");
+        tarjeta.innerHTML += `
+            <div class="card manita ver-galeria" onclick="verAlbum(${galeria.id})">
+              <img src="${galeria.miniaturaUrl}" class="card-img-top miniatura-galeria border-bottom" alt="...">
+              <div class="card-body miniatura-galeria-desc">
+                <h5 class="card-title">${galeria.nombre}</h5>
+                <p class="card-text">${galeria.descripcion}</p>
+              </div>
+            </div>
+        `;
+        contenedor.appendChild(tarjeta);
+        await timer(200);
+      }
+    }
+    
+    function verAlbum(id){
+      console.log(id);
+      // $.ajax({
+      //     url: "@Url.Action("_VerAlbum")",
+      //     type: "get",
+      //     data: { "id": id },
+      //     success: function (data) {
+      //         //Do Something
+      //         $("#modalAlbum").html(data);
+      //                 modal = new bootstrap.Modal(document.getElementById('modalVerAlbum'));
+      //                 modal.show();
+      //     },
+      //     error: function (xhr) {
+      //         //Do Something to handle error
+      //     }
+      // });
+      //
+      
+      document.getElementById('marco').src = "@Url.Action("_VerAlbum")?id=" + id;
+      // fetch("@Url.Action("_VerAlbum")?id=" + id)
+      // .then(response => response.text())
+      // .then(html => {
+      //   var parser = new DOMParser();
+      //   var doc = parser.parseFromString(html, 'text/html');
+      //   //document.getElementById('modalAlbum').appendChild(doc);
+      //   modal = new bootstrap.Modal(document.getElementById('modalVerAlbum'));
+      //   modal.show();
+      // });
+    }
+
+  </script>
+}
