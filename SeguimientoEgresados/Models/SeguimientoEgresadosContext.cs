@@ -321,6 +321,10 @@ namespace SeguimientoEgresados.Models
                     .IsUnicode(false)
                     .HasColumnName("url");
 
+                entity.Property(e => e.UrlThumb)
+                    .IsUnicode(false)
+                    .HasColumnName("url_thumb");
+
                 entity.HasOne(d => d.IdAlbumNavigation)
                     .WithMany(p => p.ImagenGaleria)
                     .HasForeignKey(d => d.IdAlbum)

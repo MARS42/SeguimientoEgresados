@@ -244,6 +244,7 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
                     Descripcion = string.IsNullOrEmpty(descImgs[i]) ? "Sin descripción" : descImgs[i],
                     Fecha = creacion,
                     Url = url,
+                    UrlThumb = url_thum,
                     IdAlbum = galeria.Id
                 };
                 
