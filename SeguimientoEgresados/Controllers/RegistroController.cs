@@ -9,17 +9,20 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using SeguimientoEgresados.Models;
 using SeguimientoEgresados.Models.ViewModels;
+using SeguimientoEgresados.Services;
 using SeguimientoEgresados.Utils;
 
 namespace SeguimientoEgresados.Controllers
 {
     public class RegistroController : Controller
     {
-        private SeguimientoEgresadosContext _context;
+        private readonly SeguimientoEgresadosContext _context;
+        private readonly ICloudinaryService _cloudinary;
         
-        public RegistroController(SeguimientoEgresadosContext context)
+        public RegistroController(SeguimientoEgresadosContext context, ICloudinaryService _cloudinary)
         {
             this._context = context;
+            this._cloudinary = _cloudinary;
         }
         public IActionResult Index()
         {
@@ -60,13 +63,19 @@ namespace SeguimientoEgresados.Controllers
             var email = new SqlParameter("@email", model.Email);
             var password = new SqlParameter("@password", model.Password);
             var id_rol = new SqlParameter("@id_rol", 4);
+            
+            var url_img = new SqlParameter("@url_img", "No URL");
+            
+            
             var id_generado = new SqlParameter("@id_generado", SqlDbType.Int)
             {
                 Direction = ParameterDirection.Output
             };
             
-            await _context.Database.ExecuteSqlRawAsync("exec AgregarUsuario @nombre, @apellido_paterno, @apellido_materno, @email, @password, @id_rol,@id_generado out", nombres, ap1, ap2, email, password, id_rol, id_generado);
+            await _context.Database.ExecuteSqlRawAsync("exec AgregarUsuario @nombre, @apellido_paterno, @apellido_materno, @email, @password, @id_rol, @url_img, @id_generado out", nombres, ap1, ap2, email, password, id_rol,url_img, id_generado);
 
+            Console.WriteLine("Usuario agregado id: " + id_generado.Value);
+            
             var egresado = new Egresado()
             {
                 Colonia = model.Colonia,
@@ -102,7 +111,7 @@ namespace SeguimientoEgresados.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Empleador(RegistroEmpleadorViewModel model)
+        public async Task<IActionResult> Empleador(RegistroEmpleadorViewModel model, IFormFile? imgperfil)
         {
             if (!ModelState.IsValid)
                 return View(model);
@@ -113,12 +122,24 @@ namespace SeguimientoEgresados.Controllers
             var email = new SqlParameter("@email", model.Email);
             var password = new SqlParameter("@password", model.Password);
             var id_rol = new SqlParameter("@id_rol", 5);
+            SqlParameter url_img;
+            
+            if (imgperfil != null)
+            {
+                string url = await _cloudinary.SubirImagenUsuario(imgperfil, model.Email);
+                url_img = new SqlParameter("@url_img", url);
+            }
+            else
+            {
+                url_img = new SqlParameter("@url_img", "");
+            }
+            
             var id_generado = new SqlParameter("@id_generado", SqlDbType.Int)
             {
                 Direction = ParameterDirection.Output
             };
             
-            var newUser = await _context.Database.ExecuteSqlRawAsync("exec AgregarUsuario @nombre, @apellido_paterno, @apellido_materno, @email, @password, @id_rol,@id_generado out", nombres, ap1, ap2, email, password, id_rol, id_generado);
+            var newUser = await _context.Database.ExecuteSqlRawAsync("exec AgregarUsuario @nombre, @apellido_paterno, @apellido_materno, @email, @password, @id_rol,@url_img,@id_generado out", nombres, ap1, ap2, email, password, id_rol, url_img,id_generado);
             
             Console.WriteLine("Usuario agregado id: " + id_generado.Value);
 
@@ -138,12 +159,15 @@ namespace SeguimientoEgresados.Controllers
                 Telefono = model.Telefono,
                 Website = model.Website,
                 CorreoEmpresa = model.EmailEmpresa,
-                RazonSocial = model.RazonSocial
+                RazonSocial = model.RazonSocial,
+                Descripcion = model.Descripcion
             };
 
             await _context.Empresas.AddAsync(empresa);
             await _context.SaveChangesAsync();
-            
+
+            var user = await _context.Usuarios.FirstOrDefaultAsync(u => u.Id.Equals(id_generado));
+
             //return RedirectToAction("Index", "Acceso", new { Email = model.Email, Password = model.Password });
             return RedirectToActionPreserveMethod("Index", "Acceso",
                 new AccesoViewModel() {Email = model.Email, Password = model.Password});

@@ -6,6 +6,7 @@ public class RegistroEmpleadorViewModel
 {
     [Required]
     public string Nombres { get; set; }
+    
     [Required]
     public string ApellidoPaterno { get; set; }
     [Required]
@@ -16,6 +17,9 @@ public class RegistroEmpleadorViewModel
     public string Password { get; set; }
     [Required]
     public string NombreEmpresa { get; set; }
+    
+    public string Descripcion { get; set; }
+    
     [Required]
     public string RFC { get; set; }
     [Required]

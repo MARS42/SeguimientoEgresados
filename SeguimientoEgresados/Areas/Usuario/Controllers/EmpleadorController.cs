@@ -96,6 +96,7 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             empresa.Website = model.Website;
             empresa.CorreoEmpresa = model.CorreoEmpresa;
             empresa.Telefono = model.Telefono;
+            empresa.Descripcion = model.Descripcion;
 
             if (imgperfil != null)
             {

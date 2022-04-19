@@ -36,6 +36,13 @@
                                     </div>
                                     <div class="col-12">
                                         <div class="form-floating mb-3">
+                                            <textarea asp-for="Descripcion" class="form-control" placeholder="Descripción general de la empresa" ></textarea>
+                                            <label asp-for="Descripcion">Descripción general de la empresa</label>
+                                        </div>
+                                        <span asp-validation-for="Descripcion"></span>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-floating mb-3">
                                             <input asp-for="Rfc" type="text" class="form-control" placeholder="RFC">
                                             <label asp-for="Rfc"><i class="fa-solid fa-id-card mx-2"></i>RFC</label>
                                         </div>

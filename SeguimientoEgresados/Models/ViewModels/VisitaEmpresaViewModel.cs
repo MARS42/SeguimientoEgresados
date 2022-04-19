@@ -15,6 +15,8 @@ public class VisitaEmpresaViewModel
     
     public string Website { get; set; }
     
+    public bool Convenio { get; set; }
+    
     public string LogoImagen { get; set; }
     
     public string NombreRep { get; set; }

@@ -77,12 +77,13 @@
         for(let i = 0; i < empresas.length; i++){
             
             const empresa = empresas[i];
-            console.log(empresa);
             const col = document.createElement("div");
             col.classList.add("col-12", "col-lg-6");
             
             const card = document.createElement("div");
             card.classList.add("empleador", "card", "mb-3", "animate__animated", "animate__faster", "animate__fadeIn");
+            
+            const convenioBadge = empresa["convenio"] ? '<strong class="text-warning" data-bs-toggle="tooltip" data-bs-placement="right" title="Convenio"><i class="fa-solid fa-certificate ms-2"></i></strong>' : '';
             
             card.innerHTML = `
                 <div class="row g-0">
@@ -91,7 +92,7 @@
                     </div>
                     <div class="col-md-7">
                         <div class="card-body  rounded m-2">
-                            <h5 class="card-title text-primary">${empresa["nombre"]}<strong class="text-warning" data-bs-toggle="tooltip" data-bs-placement="right" title="Convenio"><i class="fa-solid fa-certificate ms-2"></i></strong></h5>
+                            <h5 class="card-title text-primary">${empresa["nombre"]}${convenioBadge}</h5>
                             <p class="card-text mb-1 miniatura-galeria-desc">${empresa["descripcion"]}</p>
                             <p class="card-text m-0"><small><i class="fa-solid fa-id-card me-2"></i>RFC: ${empresa["rfc"]}</small></p>
                             <p class="card-text m-0"><small><i class="fa-solid fa-envelope me-2"></i>${empresa["correo"]}</small></p>

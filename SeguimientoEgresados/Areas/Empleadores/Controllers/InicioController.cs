@@ -32,7 +32,7 @@ namespace SeguimientoEgresados.Areas.Empleadores.Controllers
                 select new VisitaEmpresaViewModel(empresaUsuario.Id, empresa.Id)
                 {
                     Nombre = empresa.Nombre,
-                    Descripcion = "",
+                    Descripcion = empresa.Descripcion,
                     Correo = empresa.CorreoEmpresa,
                     Telefono = empresa.Telefono,
                     Website = empresa.Website,
@@ -41,7 +41,8 @@ namespace SeguimientoEgresados.Areas.Empleadores.Controllers
                     NombreRep = empresaUsuario.Nombre,
                     Ape1Rep = empresaUsuario.ApellidoPaterno,
                     Ape2Rep = empresaUsuario.ApellidoMaterno,
-                    LogoImagen = empresaUsuario.UrlImg
+                    LogoImagen = empresaUsuario.UrlImg,
+                    Convenio = empresa.IdConvenio != null
                 };
 
             query = query.OrderBy(e => e.Nombre);
