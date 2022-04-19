@@ -12,7 +12,7 @@
 <div class="container p-4">
     <div class="row">
         <div class="col-12">
-            <form asp-action="MiEmpresa" method="POST" class="card">
+            <form asp-action="MiEmpresa" method="POST" class="card" enctype="multipart/form-data">
                 <div class="card-body">
                     <h4 class="card-title">Modifique los datos su empresa</h4>
                     <div class="container-fluid my-3">
@@ -26,6 +26,13 @@
                                             <label asp-for="Nombre"><i class="fa-solid fa-building mx-2"></i>Nombre de la empresa</label>
                                         </div>
                                         <span asp-validation-for="Nombre"></span>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="mb-3 d-flex justify-content-evenly align-items-center">
+                                            <img id="prevImg" src="@ViewData["imgPerfil"]" class="rounded border" height="128" alt="Imagen o logo de la empresa"/>
+                                            <button type="button" class="btn btn-outline-secondary" onclick="document.getElementById('imgperfil').click()"><i class="fa-solid fa-image me-2"></i>Imagen o logo de la empresa</button>
+                                            <input name="imgperfil" id="imgperfil" type="file" accept="image/*" class="form-control d-none" onchange="previsualizarImagen(this)">
+                                        </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-floating mb-3">
@@ -120,6 +127,18 @@
         </div>
     </div>
 </div>
+
+@section Scripts
+{
+    <script>
+    async function previsualizarImagen(imagenes){
+        const imgs = imagenes.files;
+        const img = imgs[0];
+        const imgElement = document.getElementById("prevImg");
+        imgElement.src = window.URL.createObjectURL(img);
+    }
+    </script>
+}
 
 @* <script src="~/js/registroEmpleador.js"></script> *@
 @* <script src="~/js/redimensionarStacks.js"></script> *@

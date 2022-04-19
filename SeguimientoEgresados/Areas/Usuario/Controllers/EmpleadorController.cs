@@ -22,13 +22,15 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
     {
         private SeguimientoEgresadosContext _context;
         private IGoogleSheetsService googleSheets;
+        private ICloudinaryService _cloudinary;
         private readonly INotificacionesService _notificaciones;
 
-        public EmpleadorController(SeguimientoEgresadosContext context, IGoogleSheetsService googleSheets, INotificacionesService notificaciones)
+        public EmpleadorController(SeguimientoEgresadosContext context, IGoogleSheetsService googleSheets, INotificacionesService notificaciones, ICloudinaryService cloudinary)
         {
             _context = context;
             this.googleSheets = googleSheets;
             _notificaciones = notificaciones;
+            _cloudinary = cloudinary;
         }
         
         public async Task<IActionResult> Index()
@@ -66,6 +68,8 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             //Models.Usuario? user = HttpContext.Session.Get<Models.Usuario>("User");
             var user = await GetUsuario();
             var empresa = await _context.Empresas.FirstOrDefaultAsync(e => e.IdUsuario.Equals(user!.Id));
+
+            ViewData["imgPerfil"] = user.UrlImg;
             
             Console.WriteLine($"User id: {user.Id}, empresa id: {empresa.Nombre}");
             await _notificaciones.VerificarCuestionario(User, HttpContext, ViewData, true);
@@ -74,7 +78,7 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> MiEmpresa(Empresa model)
+        public async Task<IActionResult> MiEmpresa(Empresa model, IFormFile? imgperfil)
         {
             //Models.Usuario? user = HttpContext.Session.Get<Models.Usuario>("User");
             var user = await GetUsuario();
@@ -92,7 +96,14 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             empresa.Website = model.Website;
             empresa.CorreoEmpresa = model.CorreoEmpresa;
             empresa.Telefono = model.Telefono;
-            
+
+            if (imgperfil != null)
+            {
+                string url = await _cloudinary.SubirImagenUsuario(imgperfil, user.Email);
+                user.UrlImg = url;
+                _context.Entry(user).State = EntityState.Modified;
+            }
+
             _context.Entry(empresa).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             //return Ok(model);
@@ -104,8 +115,6 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             //Models.Usuario? user = HttpContext.Session.Get<Models.Usuario>("User");
             var user = await GetUsuario();
             await _notificaciones.VerificarCuestionario(User, HttpContext, ViewData, true);
-            
-            
             
             return View();
         }

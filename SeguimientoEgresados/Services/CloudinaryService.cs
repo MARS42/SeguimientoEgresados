@@ -1,5 +1,6 @@
 ﻿using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
 using SeguimientoEgresados.Models.ViewModels;
 
@@ -20,6 +21,7 @@ public class CloudinaryService : ICloudinaryService
         Console.WriteLine("cloud:" + _cloudinary);
     }
     
+    [Authorize(Roles = "Administrador,Moderador,Capturista")]
     public async Task<string[]> SubirImagen(IFormFile model, string folder = "default", string subfolder = "")
     {
         //Console.WriteLine("file: "+model.Imagen.ToString());
@@ -62,6 +64,41 @@ public class CloudinaryService : ICloudinaryService
             var uploadThumbnailResult = await _cloudinary.UploadAsync(@uploadParamsThumbnail);
 
             return new [] { uploadResult.SecureUrl.AbsoluteUri, uploadThumbnailResult.SecureUrl.AbsoluteUri };
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            return null;
+        }
+    }
+
+    [Authorize(Roles = "Egresado,Empleador,Administrador,Moderador,Capturista")]
+    public async Task<string> SubirImagenUsuario(IFormFile img, string usuario)
+    {
+        try
+        {
+            byte[] bytes;
+            using (var memoryStream = new MemoryStream())
+            {
+                await img.CopyToAsync(memoryStream);
+                bytes = memoryStream.ToArray();
+            }
+            string base64 = Convert.ToBase64String(bytes);
+     
+     
+            var prefix = @"data:image/png;base64,";
+            var imagePath = prefix + base64;
+
+            var uploadParams = new ImageUploadParams()
+     
+            {
+                File = new FileDescription(imagePath),
+                Folder = $"_ProfilePhotos/{usuario}"
+            };
+            
+            var uploadResult = await _cloudinary.UploadAsync(@uploadParams);
+
+            return uploadResult.SecureUrl.AbsoluteUri;
         }
         catch (Exception ex)
         {
