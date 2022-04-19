@@ -539,6 +539,12 @@ namespace SeguimientoEgresados.Models
                     .IsUnicode(false)
                     .HasColumnName("url_img");
 
+                entity.Property(e => e.Verificado)
+                    .HasMaxLength(1024)
+                    .IsUnicode(false)
+                    .HasColumnName("verificado")
+                    .HasDefaultValueSql("('false')");
+
                 entity.HasOne(d => d.IdRolNavigation)
                     .WithMany(p => p.Usuarios)
                     .HasForeignKey(d => d.IdRol)

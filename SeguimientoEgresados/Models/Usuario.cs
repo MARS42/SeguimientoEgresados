@@ -23,6 +23,7 @@ namespace SeguimientoEgresados.Models
         public byte[]? Password512 { get; set; }
         public Guid? Salt { get; set; }
         public string? UrlImg { get; set; }
+        public string? Verificado { get; set; }
 
         public virtual Role IdRolNavigation { get; set; } = null!;
         public virtual ICollection<Cuestionario> Cuestionarios { get; set; }
