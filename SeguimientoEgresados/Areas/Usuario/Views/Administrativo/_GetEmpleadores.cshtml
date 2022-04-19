@@ -3,19 +3,33 @@
 <div class="col-12">
     <table class="table table-hover animate__animated animate__fadeIn animate__faster">
         <thead>
-            <tr>
-                <th scope="col"><a class="text-primary text-decoration-none manita" onclick='actualizarTabla("tablaEmpleadores", 1, "@ViewData["NombreSort"]")'>Nombre</a></th>
-                <th scope="col"><a class="text-primary text-decoration-none manita" onclick='actualizarTabla("tablaEmpleadores", 1, "@ViewData["RepSort"]")'>Representante</a></th>
-                <th scope="col">RFC</th>
-                <th scope="col">Correo</th>
-                <th scope="col">Teléfono</th>
-                <th scope="col"><a class="text-primary text-decoration-none manita" onclick='actualizarTabla("tablaEmpleadores", 1, "@ViewData["RegSort"]")'>Registro</a></th>
-            </tr>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col"><a class="text-primary text-decoration-none manita" onclick='actualizarTabla("tablaEmpleadores", 1, "@ViewData["NombreSort"]")'>Nombre</a></th>
+            <th scope="col"><a class="text-primary text-decoration-none manita" onclick='actualizarTabla("tablaEmpleadores", 1, "@ViewData["RepSort"]")'>Representante</a></th>
+            <th scope="col">RFC</th>
+            <th scope="col">Correo</th>
+            <th scope="col">Teléfono</th>
+            <th scope="col"><a class="text-primary text-decoration-none manita" onclick='actualizarTabla("tablaEmpleadores", 1, "@ViewData["RegSort"]")'>Registro</a></th>
+        </tr>
         </thead>
         <tbody>
             @foreach (var e in Model)
             {
-                <tr class="manita">
+                <tr class="manita @(!e.Verificado ? "fw-bold" : "")" onclick="abrirEmpleador(@e.idEmpresa)">
+                    <td>
+                        @if (!e.Verificado)
+                        {
+                            <strong class="text-danger"><i class='fa-solid fa-clock mx-2'></i></strong>
+                        }
+                        else
+                        {
+                            if (e.Convenio)
+                            {
+                                <strong class="text-warning"><i class="fa-solid fa-certificate mx-2"></i></strong>
+                            }
+                        }
+                    </td>
                     <td>@e.Nombre</td>
                     <td>@e.Representante</td>
                     <td>@e.Rfc</td>

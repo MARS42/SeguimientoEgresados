@@ -13,6 +13,9 @@ public class EmpresaViewModel
     public string NombreRep { get; set; }
     public string Ape1Rep { get; set; }
     public string Ape2Rep { get; set; }
+
+    public bool Verificado { get; set; }
+    public bool Convenio { get; set; }
     
     public string Representante
     {

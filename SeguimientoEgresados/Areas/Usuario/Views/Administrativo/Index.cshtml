@@ -115,10 +115,11 @@
             order = orden;
             const busqueda = document.getElementById("busqueda").value;
             const filtroActual = "@ViewData["Busqueda"]";
+            const verificados = document.getElementById("verificados").checked;
     
             const cont = document.getElementById(idTabla);
             const action = cont.dataset.url;
-            const url = action + "?" + `ordenTabla=${orden}&busqueda=${busqueda}&filtroActual=${filtroActual}&pagina=${pagina}`;
+            const url = action + "?" + `ordenTabla=${orden}&busqueda=${busqueda}&filtroActual=${filtroActual}&pagina=${pagina}&verificados=${verificados}`;
     
             cont.classList.remove('table-responsive');
             cont.innerHTML = '<div class="col-12 p-4 d-flex justify-content-center"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></div>';
@@ -171,6 +172,41 @@
                 contenedor.appendChild(prev);
                 await timer(200);
             }
+        }
+        
+        let modalVerificarEmpleador;
+        function abrirEmpleador(id){
+            const url = "@Url.Action("_VerificarEmpleador")?id=" + id;
+            fetch(url)
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById("modalEmpleador").innerHTML = html;
+                
+                document.getElementById('verEmp').addEventListener('submit', evt => {
+                   evt.preventDefault();
+                   
+                   verificarEmpleador(evt.target.dataset.id, evt.target.dataset.url);
+                });
+                
+                modalVerificarEmpleador = new bootstrap.Modal(document.getElementById('modalVerificarEmpleador'));
+                modalVerificarEmpleador.show();
+            });
+        }
+        
+        function verificarEmpleador(id, url){
+            if (url === ""){
+                modalVerificarEmpleador.toggle();
+                return;
+            }
+            
+            url += "?id=" + id;
+            
+            fetch(url, { method: 'POST' })
+            .then(res => res.ok)
+            .then(data => {
+                modalVerificarEmpleador.toggle();
+               actualizarTabla("tablaEmpleadores", 1); 
+            });
         }
     </script>
 }

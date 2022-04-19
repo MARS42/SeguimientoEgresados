@@ -29,6 +29,7 @@ namespace SeguimientoEgresados.Areas.Empleadores.Controllers
                 from empresa in _db.Empresas
                 join usuario in _db.Usuarios on empresa.IdUsuario equals usuario.Id into empresasUsuario
                 from empresaUsuario in empresasUsuario.DefaultIfEmpty()
+                where empresaUsuario.Verificado != null && empresaUsuario.Verificado.Equals("true")
                 select new VisitaEmpresaViewModel(empresaUsuario.Id, empresa.Id)
                 {
                     Nombre = empresa.Nombre,

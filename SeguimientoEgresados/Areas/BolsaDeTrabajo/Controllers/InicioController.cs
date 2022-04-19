@@ -54,6 +54,7 @@ namespace SeguimientoEgresados.Areas.BolsaDeTrabajo.Controllers
                     from vacanteEmpresa in vacantesEmpresa.DefaultIfEmpty()
                     join usuario in _context.Usuarios on vacanteEmpresa.IdUsuario equals usuario.Id into usuariosVacanteEmpresa
                     from usuarioVacanteEmpresa in usuariosVacanteEmpresa.DefaultIfEmpty()
+                    where usuarioVacanteEmpresa.Verificado != null && usuarioVacanteEmpresa.Verificado.Equals("true")
                     select new VerVacanteViewModel()
                     {
                         NombreEmpresa = vacanteEmpresa.Nombre,

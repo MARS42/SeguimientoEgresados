@@ -129,7 +129,7 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             return PartialView("_GetEgresados",  await ListaPaginada<EgresadoViewModel>.CreateAsync(query.AsNoTracking(), pagina ?? 1, pageSize));
         }
 
-        public async Task<IActionResult> GetEmpleadores(string ordenTabla, string busqueda, string filtroActual, int? pagina)
+        public async Task<IActionResult> GetEmpleadores(string ordenTabla, string busqueda, string filtroActual, int? pagina, bool? verificados)
         {
             ViewData["OrdenActual"] = ordenTabla;
             ViewData["NombreSort"] = String.IsNullOrEmpty(ordenTabla) ? "nombre_desc" : "";
@@ -145,24 +145,52 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
                 busqueda = filtroActual;
             }
             
+            Console.WriteLine("ver: " + verificados);
             ViewData["Busqueda"] = busqueda;
-            
-            var query =
-                from empresa in _context.Empresas
-                join usuario in _context.Usuarios on empresa.IdUsuario equals usuario.Id into matches
-                from match in matches.DefaultIfEmpty()
-                select new EmpresaViewModel(match.Id, empresa.Id)
-                {
-                    Nombre = empresa.Nombre,
-                    Correo = empresa.CorreoEmpresa,
-                    Rfc = empresa.Rfc,
-                    Telefono = empresa.Telefono,
-                    NombreRep = match.Nombre,
-                    Ape1Rep = match.ApellidoPaterno,
-                    Ape2Rep = match.ApellidoMaterno,
-                    FechaRegistro = match.Fecha,
-                    
-                };
+
+            IQueryable<EmpresaViewModel> query;
+
+            if (verificados is null or false)
+            {
+                query =
+                    from empresa in _context.Empresas
+                    join usuario in _context.Usuarios on empresa.IdUsuario equals usuario.Id into matches
+                    from match in matches.DefaultIfEmpty()
+                    select new EmpresaViewModel(match.Id, empresa.Id)
+                    {
+                        Nombre = empresa.Nombre,
+                        Correo = empresa.CorreoEmpresa,
+                        Rfc = empresa.Rfc,
+                        Telefono = empresa.Telefono,
+                        NombreRep = match.Nombre,
+                        Ape1Rep = match.ApellidoPaterno,
+                        Ape2Rep = match.ApellidoMaterno,
+                        FechaRegistro = match.Fecha,
+                        Verificado = match.Verificado != null && match.Verificado.Equals("true"),
+                        Convenio = empresa.IdConvenio != null
+                    };
+            }
+            else
+            {
+                query =
+                    from empresa in _context.Empresas
+                    join usuario in _context.Usuarios on empresa.IdUsuario equals usuario.Id into matches
+                    from match in matches.DefaultIfEmpty()
+                    where match.Verificado == null || match.Verificado.Equals("false")
+                    select new EmpresaViewModel(match.Id, empresa.Id)
+                    {
+                        Nombre = empresa.Nombre,
+                        Correo = empresa.CorreoEmpresa,
+                        Rfc = empresa.Rfc,
+                        Telefono = empresa.Telefono,
+                        NombreRep = match.Nombre,
+                        Ape1Rep = match.ApellidoPaterno,
+                        Ape2Rep = match.ApellidoMaterno,
+                        FechaRegistro = match.Fecha,
+                        Verificado = false,
+                        Convenio = empresa.IdConvenio != null
+                    };
+            }
             
             if (!string.IsNullOrEmpty(busqueda))
             {
@@ -191,12 +219,36 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
                     query = query.OrderBy(e => e.Representante);
                     break;
                 default:
-                    query = query.OrderBy(e => e.Nombre);
+                    query = query.OrderByDescending(e => e.FechaRegistro);
                     break;
             }
             
-            int pageSize = 3;
+            int pageSize = 20;
             return PartialView("_GetEmpleadores",  await ListaPaginada<EmpresaViewModel>.CreateAsync(query.AsNoTracking(), pagina ?? 1, pageSize));
+        }
+
+        public async Task<IActionResult> _GetEmpleadoresNoVerificados(int? pagina)
+        {
+            var query =
+                from empresa in _context.Empresas
+                join usuario in _context.Usuarios on empresa.IdUsuario equals usuario.Id into matches
+                from match in matches.DefaultIfEmpty()
+                where match.Verificado == null || !match.Verificado.Equals("true")
+                select new EmpresaViewModel(match.Id, empresa.Id)
+                {
+                    Nombre = empresa.Nombre,
+                    Correo = empresa.CorreoEmpresa,
+                    Rfc = empresa.Rfc,
+                    Telefono = empresa.Telefono,
+                    NombreRep = match.Nombre,
+                    Ape1Rep = match.ApellidoPaterno,
+                    Ape2Rep = match.ApellidoMaterno,
+                    FechaRegistro = match.Fecha,
+                    Verificado = false
+                };
+            
+            int pageSize = 10;
+            return PartialView(await ListaPaginada<EmpresaViewModel>.CreateAsync(query.AsNoTracking(), pagina ?? 1, pageSize));
         }
 
         public async Task<IActionResult> BusquedaEmpleadores(string term)
@@ -208,6 +260,83 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             return Json(await query.ToListAsync());
         }
 
+        public bool UsuarioVerificado(Models.Usuario usuario)
+        {
+            return usuario.Verificado != null && usuario.Verificado.Equals("true");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> _VerificarEmpleador(int id)
+        {
+            var query =
+                from empresa in _context.Empresas
+                join usuario in _context.Usuarios on empresa.IdUsuario equals usuario.Id into matches
+                from match in matches.DefaultIfEmpty()
+                where empresa.Id == id
+                select new EmpresaViewModel(match.Id, empresa.Id)
+                {
+                    Nombre = empresa.Nombre,
+                    Correo = empresa.CorreoEmpresa,
+                    Rfc = empresa.Rfc,
+                    Telefono = empresa.Telefono,
+                    NombreRep = match.Nombre,
+                    Ape1Rep = match.ApellidoPaterno,
+                    Ape2Rep = match.ApellidoMaterno,
+                    FechaRegistro = match.Fecha,
+                    Verificado = match.Verificado != null && match.Verificado.Equals("true"),
+                    Convenio = empresa.IdConvenio != null
+                };
+
+            return PartialView(await query.AsNoTracking().FirstOrDefaultAsync());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> _VerificarEmpleador(string id)
+        {
+            int _id = int.Parse(id);
+            var query =
+                from empresa in _context.Empresas
+                join usuario in _context.Usuarios on empresa.IdUsuario equals usuario.Id into matches
+                from match in matches.DefaultIfEmpty()
+                where empresa.Id == _id
+                select match;
+
+            var user = await query.FirstOrDefaultAsync();
+            user.Verificado = "true";
+            _context.Entry(user).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            
+            return Ok();
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> _FirmarConvenio(int id)
+        {
+            Convenio convenio = new Convenio()
+            {
+                IdEmpresa = id,
+            };
+
+            await _context.Convenios.AddAsync(convenio);
+            await _context.SaveChangesAsync();
+            
+            var query =
+                from empresa in _context.Empresas
+                join usuario in _context.Usuarios on empresa.IdUsuario equals usuario.Id into matches
+                from match in matches.DefaultIfEmpty()
+                where empresa.Id == id
+                select empresa;
+            
+            var empresaConv = await query.FirstOrDefaultAsync();
+            empresaConv.IdConvenio = convenio.Id;
+            _context.Entry(empresaConv).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            
+            Console.WriteLine("conv " + id);
+            return Ok();
+        }
+
+        
         [HttpPost]
         public async Task<IActionResult> SubirImagen(SubirImagenViewModel model, List<IFormFile> imagenes, List<string> nombresImgs, List<string> descImgs, List<string> tagsImgs)
         {

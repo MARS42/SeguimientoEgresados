@@ -1,0 +1,41 @@
+﻿@model EmpresaViewModel
+
+<!-- Modal nueva vacante -->
+<div class="modal fade" id="modalVerificarEmpleador" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+        <form class="modal-content" id="verEmp" data-id="@Model.idEmpresa"
+              data-url="@(!Model.Verificado ? Url.Action("_VerificarEmpleador") : (Model.Convenio ? "" : Url.Action("_FirmarConvenio")))">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">
+                    <i class="fa-solid fa-briefcase mx-2"></i>
+                    @(!Model.Verificado ? "Verificar empleador" : (Model.Convenio ? "" : "Realizar convenio") )
+                </h5>
+                @* <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> *@
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            @if (!Model.Verificado)
+                            {
+                                <p>¿Verificar empleador?</p> 
+                            }
+                            else
+                            {
+                                if (!Model.Convenio)
+                                {
+                                    <p>¿Firmar convenido con empleador?</p>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary" onclick="clickActionBtn(this)">Verificar<i class="fa-solid fa-circle-check ms-2"></i></button>
+            </div>
+        </form>
+    </div>
+</div>
+

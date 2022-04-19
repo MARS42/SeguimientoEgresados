@@ -9,6 +9,15 @@
             </div>
             <a class="text-primary text-decoration-none manita" onclick='actualizarTabla("tablaEmpleadores", 1)'><i class="fa-solid fa-trash mx-2"></i>Borrar filtros</a>
         </div>
+        <div class="col-12">
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="verificados" onchange='actualizarTabla("tablaEmpleadores", 1)'>
+                <label class="form-check-label" for="flexSwitchCheckDefault">Solo no verificados</label>
+            </div>
+        </div>
         <div id="tablaEmpleadores" class="to-load table-responsive row col-12 justify-content-center" data-url="@Url.Action("GetEmpleadores")"></div>
+        @* <div id="tablaEmpleadoresNV" class="to-load table-responsive row col-12 justify-content-center" data-url="@Url.Action("_GetEmpleadoresNoVerificados")"></div> *@
     </div>
 </div>
+
+<div id="modalEmpleador"></div>
