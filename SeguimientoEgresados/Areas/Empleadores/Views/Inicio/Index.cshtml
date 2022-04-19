@@ -1,9 +1,123 @@
+@model IEnumerable<VisitaEmpresaViewModel>
 
 @{
     ViewData["Title"] = "Empleadores";
 }
 
-<h1>Inicio Empleadores</h1>
+<div class="container border rounded mt-4 p-4">
+    <h2>Empleadores</h2>
+    <div class="container">
+        <p>
+            El empleador es un autónomo o sociedad que hace un contrato de trabajo.<br/>
+            En el seguimiento de egresados del <strong>Instituto Tecnológico de Cuautla</strong> hay empleadores que tienen un <strong class="text-warning">convenio <i class="fa-solid fa-certificate"></i></strong> con la institución que brindan <strong>vacantes</strong> para los egresados de la casa de estudios.<br/>
+            Por otro lado, también hay empleadores que sin tener un convenio, pueden anunciar los puestos disponibles en sus empresas, siempre con la opción de formar un <strong>convenio</strong> con el ITC.
+        </p>
+    </div>
+    <div id="cont" class="row">
+        @* <div class="col-12 col-lg-6"> *@
+        @*     <div class="empleador card mb-3 animate__animated animate__faster animate__fadeIn"> *@
+        @*         <div class="row g-0"> *@
+        @*             <div class="col-md-5 ps-2 d-flex align-items-center"> *@
+        @*                 <img src="https://res.cloudinary.com/seguimiento-egresados-itc/image/upload/v1650328387/_ProfilePhotos/msjred42%40gmail.com/rjspy4azpulucbsea7yd.jpg" class="miniatura-emp rounded" alt="..."> *@
+        @*             </div> *@
+        @*             <div class="col-md-7"> *@
+        @*                 <div class="card-body  rounded m-2"> *@
+        @*                     <h5 class="card-title text-primary">Nombre<strong class="text-warning" data-bs-toggle="tooltip" data-bs-placement="right" title="Convenio"><i class="fa-solid fa-certificate ms-2"></i></strong></h5> *@
+        @*                     <p class="card-text mb-1 miniatura-galeria-desc">Descripción empresa</p> *@
+        @*                     <p class="card-text m-0"><small><i class="fa-solid fa-id-card me-2"></i>RFC</small></p> *@
+        @*                     <p class="card-text m-0"><small><i class="fa-solid fa-envelope me-2"></i>Email</small></p> *@
+        @*                     <p class="card-text m-0"><small><i class="fa-solid fa-phone me-2"></i>Teléfono</small></p> *@
+        @*                     <a href="#" class="card-text m-0 text-decoration-none"><small><i class="fa-solid fa-earth-americas me-2"></i>Website</small></a> *@
+        @*                     <p class="card-text text-end"> *@
+        @*                         <small class="text-muted">Representante</small> *@
+        @*                     </p> *@
+        @*                 </div> *@
+        @*             </div> *@
+        @*         </div> *@
+        @*     </div> *@
+        @* </div> *@
+        @* <div class="col-12 col-lg-6"> *@
+        @*     <div class="empleador card mb-3"> *@
+        @*         <div class="row g-0"> *@
+        @*             <div class="col-md-5 ps-2 d-flex align-items-center"> *@
+        @*                 <img src="https://res.cloudinary.com/seguimiento-egresados-itc/image/upload/v1650331718/_ProfilePhotos/18680166%40cuautla.tecnm.mx/chryyczwrvi9nxvditp5.png" class="miniatura-emp rounded" alt="..."> *@
+        @*             </div> *@
+        @*             <div class="col-md-7"> *@
+        @*                 <div class="card-body  rounded m-2"> *@
+        @*                     <h5 class="card-title">Card title<strong class="text-warning" data-bs-toggle="tooltip" data-bs-placement="right" title="Convenio"><i class="fa-solid fa-certificate ms-2"></i></strong></h5> *@
+        @*                     <p class="card-text mb-1 miniatura-galeria-desc">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer. This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p> *@
+        @*                     <p class="card-text m-0"><small><i class="fa-solid fa-id-card me-2"></i>RFC</small></p> *@
+        @*                     <p class="card-text m-0"><small><i class="fa-solid fa-envelope me-2"></i>Email</small></p> *@
+        @*                     <p class="card-text m-0"><small><i class="fa-solid fa-phone me-2"></i>Teléfono</small></p> *@
+        @*                     <a class="card-text m-0 card-text m-0 text-decoration-none"><small><i class="fa-solid fa-earth-americas me-2"></i>Website</small></a> *@
+        @*                     <p class="card-text text-end"> *@
+        @*                         <small class="text-muted">Representante</small> *@
+        @*                     </p> *@
+        @*                 </div> *@
+        @*             </div> *@
+        @*         </div> *@
+        @*     </div> *@
+        @* </div> *@
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+        
+        const empresas = JSON.parse('@Json.Serialize(Model)');
+        init(empresas); 
+    });
+    
+    async function init(empresas)
+    {
+        const contenedor = document.getElementById("cont");
+          
+        for(let i = 0; i < empresas.length; i++){
+            
+            const empresa = empresas[i];
+            console.log(empresa);
+            const col = document.createElement("div");
+            col.classList.add("col-12", "col-lg-6");
+            
+            const card = document.createElement("div");
+            card.classList.add("empleador", "card", "mb-3", "animate__animated", "animate__faster", "animate__fadeIn");
+            
+            card.innerHTML = `
+                <div class="row g-0">
+                    <div class="col-md-5 ps-2 d-flex align-items-center">
+                        <img src="${empresa["logoImagen"]}" class="miniatura-emp rounded" alt="...">
+                    </div>
+                    <div class="col-md-7">
+                        <div class="card-body  rounded m-2">
+                            <h5 class="card-title text-primary">${empresa["nombre"]}<strong class="text-warning" data-bs-toggle="tooltip" data-bs-placement="right" title="Convenio"><i class="fa-solid fa-certificate ms-2"></i></strong></h5>
+                            <p class="card-text mb-1 miniatura-galeria-desc">${empresa["descripcion"]}</p>
+                            <p class="card-text m-0"><small><i class="fa-solid fa-id-card me-2"></i>RFC: ${empresa["rfc"]}</small></p>
+                            <p class="card-text m-0"><small><i class="fa-solid fa-envelope me-2"></i>${empresa["correo"]}</small></p>
+                            <p class="card-text m-0"><small><i class="fa-solid fa-phone me-2"></i>${empresa["telefono"]}</small></p>
+                            <a href="${empresa["website"]}" target="_blank" class="card-text m-0 text-decoration-none"><small><i class="fa-solid fa-earth-americas me-2"></i>${empresa["website"]}</small></a>
+                            <p class="card-text text-end">
+                                <small class="text-muted">${empresa["representante"]}</small>
+                            </p>
+                        </div>
+                    </div>
+                </div>  
+            `;
+            
+            col.appendChild(card);
+            contenedor.appendChild(col);
+            
+            await timer(150);
+        }
+        
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        });
+    }
+    </script>
+}
 
 @* <a class="nav-link" asp-area="" asp-controller="Inicio" asp-action="Index"> *@
 @*     <div class="btn btn-info">Inicio</div> *@
