@@ -25,6 +25,10 @@ public class NotificacionesService : INotificacionesService
         
         var email = claimsPrincipal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
         var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Email.Equals(email));
+
+        if (usuario.Verificado == null || usuario.Verificado.Equals("false"))
+            return null;
+        
         Cuestionario? cuestionario = await _context.Cuestionarios.FirstOrDefaultAsync(c => c.IdUsuario.Equals(usuario.Id));
         
         if (cuestionario == null)

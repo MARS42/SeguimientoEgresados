@@ -65,6 +65,7 @@ namespace SeguimientoEgresados.Controllers
             var id_rol = new SqlParameter("@id_rol", 4);
             
             var url_img = new SqlParameter("@url_img", "No URL");
+            var verificado = new SqlParameter("@verificado", "true");
             
             
             var id_generado = new SqlParameter("@id_generado", SqlDbType.Int)
@@ -72,7 +73,7 @@ namespace SeguimientoEgresados.Controllers
                 Direction = ParameterDirection.Output
             };
             
-            await _context.Database.ExecuteSqlRawAsync("exec AgregarUsuario @nombre, @apellido_paterno, @apellido_materno, @email, @password, @id_rol, @url_img, @id_generado out", nombres, ap1, ap2, email, password, id_rol,url_img, id_generado);
+            await _context.Database.ExecuteSqlRawAsync("exec AgregarUsuario @nombre, @apellido_paterno, @apellido_materno, @email, @password, @id_rol, @url_img, @verificado, @id_generado out", nombres, ap1, ap2, email, password, id_rol,url_img,verificado, id_generado);
 
             Console.WriteLine("Usuario agregado id: " + id_generado.Value);
             
@@ -133,13 +134,14 @@ namespace SeguimientoEgresados.Controllers
             {
                 url_img = new SqlParameter("@url_img", "");
             }
+            var verificado = new SqlParameter("@verificado", "false");
             
             var id_generado = new SqlParameter("@id_generado", SqlDbType.Int)
             {
                 Direction = ParameterDirection.Output
             };
             
-            var newUser = await _context.Database.ExecuteSqlRawAsync("exec AgregarUsuario @nombre, @apellido_paterno, @apellido_materno, @email, @password, @id_rol,@url_img,@id_generado out", nombres, ap1, ap2, email, password, id_rol, url_img,id_generado);
+            var newUser = await _context.Database.ExecuteSqlRawAsync("exec AgregarUsuario @nombre, @apellido_paterno, @apellido_materno, @email, @password, @id_rol,@url_img, @verificado,@id_generado out", nombres, ap1, ap2, email, password, id_rol, url_img,verificado,id_generado);
             
             Console.WriteLine("Usuario agregado id: " + id_generado.Value);
 

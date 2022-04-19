@@ -42,8 +42,12 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             //Console.WriteLine("cues: " + cuestionario);
             //ViewData["Cuestionario"] = cuestionario;
             await _notificaciones.VerificarCuestionario(User, HttpContext, ViewData, true);
+            var user = await GetUsuario();
 
-            return View(await GetUsuario());
+            if (user.EstaVerificado())
+                return View();
+            else
+                return RedirectToAction("VerificarCuenta");
         }
         
         [HttpPost]
@@ -67,6 +71,10 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
         {
             //Models.Usuario? user = HttpContext.Session.Get<Models.Usuario>("User");
             var user = await GetUsuario();
+            
+            if (!user.EstaVerificado())
+                return RedirectToAction("VerificarCuenta");
+            
             var empresa = await _context.Empresas.FirstOrDefaultAsync(e => e.IdUsuario.Equals(user!.Id));
 
             ViewData["imgPerfil"] = user.UrlImg;
@@ -115,6 +123,10 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
         {
             //Models.Usuario? user = HttpContext.Session.Get<Models.Usuario>("User");
             var user = await GetUsuario();
+            
+            if (!user.EstaVerificado())
+                return RedirectToAction("VerificarCuenta");
+            
             await _notificaciones.VerificarCuestionario(User, HttpContext, ViewData, true);
             
             return View();
@@ -125,6 +137,10 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
         {
             //Models.Usuario? user = HttpContext.Session.Get<Models.Usuario>("User");
             var user = await GetUsuario();
+            
+            if (!user.EstaVerificado())
+                return RedirectToAction("VerificarCuenta");
+            
             var empresa = await _context.Empresas.FirstOrDefaultAsync(e => e.IdUsuario.Equals(user!.Id));
             var cuestionario = await _context.Cuestionarios.FirstOrDefaultAsync(c => c.IdUsuario.Equals(empresa!.IdUsuario));
 
@@ -248,6 +264,11 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
         {
             await HttpContext.SignOutAsync();
             return RedirectToAction("Index", "Inicio", new { area="" });
+        }
+
+        public IActionResult VerificarCuenta()
+        {
+            return View();
         }
 
         private bool InsertarCuestionario(string sheetsResponse)
