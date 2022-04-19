@@ -49,23 +49,46 @@ namespace SeguimientoEgresados.Areas.BolsaDeTrabajo.Controllers
             ViewData["Busqueda"] = busqueda;
 
             var query =
-                from vacante in _context.Vacantes
-                join empresa in _context.Empresas on vacante.IdEmpresa equals empresa.Id into vacantesEmpresa
-                from vacanteEmpresa in vacantesEmpresa.DefaultIfEmpty()
-                select new VerVacanteViewModel()
-                {
-                    NombreEmpresa = vacanteEmpresa.Nombre,
-                    Titulo = vacante.Titulo,
-                    Descripcion = vacante.Descripcion,
-                    Funciones = vacante.Funciones,
-                    Requisitos = vacante.Requisitos,
-                    Ofertas = vacante.Ofertas,
-                    TipoContrato = vacante.TipoContrato,
-                    Modalidad = vacante.Modalidad,
-                    Horario = vacante.Horario,
-                    Fecha = vacante.Fecha,
-                    Id = vacante.Id
-                };
+                    from vacante in _context.Vacantes
+                    join empresa in _context.Empresas on vacante.IdEmpresa equals empresa.Id into vacantesEmpresa
+                    from vacanteEmpresa in vacantesEmpresa.DefaultIfEmpty()
+                    join usuario in _context.Usuarios on vacanteEmpresa.IdUsuario equals usuario.Id into usuariosVacanteEmpresa
+                    from usuarioVacanteEmpresa in usuariosVacanteEmpresa.DefaultIfEmpty()
+                    select new VerVacanteViewModel()
+                    {
+                        NombreEmpresa = vacanteEmpresa.Nombre,
+                        Titulo = vacante.Titulo,
+                        Descripcion = vacante.Descripcion,
+                        Funciones = vacante.Funciones,
+                        Requisitos = vacante.Requisitos,
+                        Ofertas = vacante.Ofertas,
+                        TipoContrato = vacante.TipoContrato,
+                        Modalidad = vacante.Modalidad,
+                        Horario = vacante.Horario,
+                        Fecha = vacante.Fecha,
+                        Id = vacante.Id,
+                        LogoEmpresa = usuarioVacanteEmpresa.UrlImg
+                    };
+
+            // var query =
+            //     from vacante in _context.Vacantes
+            //     join empresa in _context.Empresas on vacante.IdEmpresa equals empresa.Id into vacantesEmpresa
+            //     from vacanteEmpresa in vacantesEmpresa.DefaultIfEmpty()
+            //     select new VerVacanteViewModel()
+            //     {
+            //         NombreEmpresa = vacanteEmpresa.Nombre,
+            //         Titulo = vacante.Titulo,
+            //         Descripcion = vacante.Descripcion,
+            //         Funciones = vacante.Funciones,
+            //         Requisitos = vacante.Requisitos,
+            //         Ofertas = vacante.Ofertas,
+            //         TipoContrato = vacante.TipoContrato,
+            //         Modalidad = vacante.Modalidad,
+            //         Horario = vacante.Horario,
+            //         Fecha = vacante.Fecha,
+            //         Id = vacante.Id,
+            //         LogoEmpresa = _context.Usuarios.FirstOrDefault(u => u.Id.Equals(vacanteEmpresa.IdUsuario))?.UrlImg
+            //     };
             
             
             if (!string.IsNullOrEmpty(busqueda))
@@ -99,7 +122,7 @@ namespace SeguimientoEgresados.Areas.BolsaDeTrabajo.Controllers
                     query = query.OrderBy(e => e.Titulo);
                     break;
             }
-            
+
             int pageSize = 10;
             return PartialView("_GetVacantes",  await ListaPaginada<VerVacanteViewModel>.CreateAsync(query.AsNoTracking(), pagina ?? 1, pageSize));
         }
