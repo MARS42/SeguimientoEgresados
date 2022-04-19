@@ -7,6 +7,7 @@ namespace SeguimientoEgresados.Models
     {
         public Empresa()
         {
+            Convenios = new HashSet<Convenio>();
             Vacantes = new HashSet<Vacante>();
         }
 
@@ -24,8 +25,12 @@ namespace SeguimientoEgresados.Models
         public string Telefono { get; set; } = null!;
         public string? Website { get; set; }
         public int IdUsuario { get; set; }
+        public int? IdConvenio { get; set; }
+        public string? Descripcion { get; set; }
 
+        public virtual Convenio? IdConvenioNavigation { get; set; }
         public virtual Usuario IdUsuarioNavigation { get; set; } = null!;
+        public virtual ICollection<Convenio> Convenios { get; set; }
         public virtual ICollection<Vacante> Vacantes { get; set; }
     }
 }

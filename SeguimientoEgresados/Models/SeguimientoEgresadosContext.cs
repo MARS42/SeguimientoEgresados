@@ -17,6 +17,7 @@ namespace SeguimientoEgresados.Models
         }
 
         public virtual DbSet<Carrera> Carreras { get; set; } = null!;
+        public virtual DbSet<Convenio> Convenios { get; set; } = null!;
         public virtual DbSet<Cuestionario> Cuestionarios { get; set; } = null!;
         public virtual DbSet<Egresado> Egresados { get; set; } = null!;
         public virtual DbSet<Empresa> Empresas { get; set; } = null!;
@@ -58,6 +59,29 @@ namespace SeguimientoEgresados.Models
                     .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("nombre");
+            });
+
+            modelBuilder.Entity<Convenio>(entity =>
+            {
+                entity.HasIndex(e => e.Id, "Convenios_id_uindex")
+                    .IsUnique();
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.IdEmpresa).HasColumnName("id_empresa");
+
+                entity.Property(e => e.Password)
+                    .HasMaxLength(64)
+                    .HasColumnName("password")
+                    .IsFixedLength();
+
+                entity.Property(e => e.Salt).HasColumnName("salt");
+
+                entity.HasOne(d => d.IdEmpresaNavigation)
+                    .WithMany(p => p.Convenios)
+                    .HasForeignKey(d => d.IdEmpresa)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("Convenios_Empresas_id_fk");
             });
 
             modelBuilder.Entity<Cuestionario>(entity =>
@@ -196,6 +220,12 @@ namespace SeguimientoEgresados.Models
 
                 entity.Property(e => e.Cp).HasColumnName("cp");
 
+                entity.Property(e => e.Descripcion)
+                    .HasMaxLength(512)
+                    .IsUnicode(false)
+                    .HasColumnName("descripcion")
+                    .HasDefaultValueSql("('Sin descripción')");
+
                 entity.Property(e => e.Domicilio)
                     .HasMaxLength(256)
                     .IsUnicode(false)
@@ -205,6 +235,8 @@ namespace SeguimientoEgresados.Models
                     .HasMaxLength(30)
                     .IsUnicode(false)
                     .HasColumnName("estado");
+
+                entity.Property(e => e.IdConvenio).HasColumnName("id_convenio");
 
                 entity.Property(e => e.IdUsuario).HasColumnName("id_usuario");
 
@@ -242,6 +274,11 @@ namespace SeguimientoEgresados.Models
                     .HasMaxLength(512)
                     .IsUnicode(false)
                     .HasColumnName("website");
+
+                entity.HasOne(d => d.IdConvenioNavigation)
+                    .WithMany(p => p.Empresas)
+                    .HasForeignKey(d => d.IdConvenio)
+                    .HasConstraintName("Empresas_Convenios_id_fk");
 
                 entity.HasOne(d => d.IdUsuarioNavigation)
                     .WithMany(p => p.Empresas)
