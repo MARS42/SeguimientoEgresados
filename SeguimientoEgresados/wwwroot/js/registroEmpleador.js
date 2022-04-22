@@ -3,7 +3,7 @@ let currentStep = 0;
 let lastStep = 0;
 
 document.querySelector('form').addEventListener('submit', evt => {
-    resizeStacks();
+    fixHeight();
 });
 
 for (let i = 0; i < steps.length; i++) {
@@ -54,4 +54,10 @@ function ActivateStep(index) {
         }
     }
     lastStep = index;
+}
+
+async function fixHeight(){
+    await timer(300);
+    resizeStacks();
+    console.log("fixed");
 }
