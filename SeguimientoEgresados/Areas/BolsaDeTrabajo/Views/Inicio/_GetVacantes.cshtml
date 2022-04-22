@@ -15,6 +15,9 @@
             <div class="card-header">
                 <img src="@vacante.LogoEmpresa" class="border border-3 rounded-circle" height="32" width="32" alt="Imagen de @vacante.NombreEmpresa"/>
                 @(vacante.NombreEmpresa)
+                @if(vacante.Convenio){
+                    <strong class="text-warning" data-bs-toggle="tooltip" data-bs-placement="right" title="Convenio"><i class="fa-solid fa-certificate ms-2"></i></strong>
+                }
                 <i class="fa-regular fa-star float-end"></i>
             </div>
             <div class="card-body">

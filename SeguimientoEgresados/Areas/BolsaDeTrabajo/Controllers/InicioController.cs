@@ -68,7 +68,8 @@ namespace SeguimientoEgresados.Areas.BolsaDeTrabajo.Controllers
                         Horario = vacante.Horario,
                         Fecha = vacante.Fecha,
                         Id = vacante.Id,
-                        LogoEmpresa = usuarioVacanteEmpresa.UrlImg
+                        LogoEmpresa = usuarioVacanteEmpresa.UrlImg,
+                        Convenio = vacanteEmpresa.IdConvenio != null
                     };
 
             // var query =
@@ -147,7 +148,9 @@ namespace SeguimientoEgresados.Areas.BolsaDeTrabajo.Controllers
                     Modalidad = vacante.Modalidad,
                     Horario = vacante.Horario,
                     Fecha = vacante.Fecha,
-                    Id = vacante.Id
+                    Id = vacante.Id,
+                    //LogoEmpresa = usuarioVacanteEmpresa.UrlImg,
+                    Convenio = vacanteEmpresa.IdConvenio != null
                 };
             return PartialView("_DetallesVacante", await query.FirstOrDefaultAsync());
         }

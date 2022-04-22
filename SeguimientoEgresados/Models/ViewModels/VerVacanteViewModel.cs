@@ -15,4 +15,6 @@ public class VerVacanteViewModel
     
     public string NombreEmpresa { get; set; } = null!;
     public string? LogoEmpresa { get; set; }
+
+    public bool Convenio { get; set; }
 }
