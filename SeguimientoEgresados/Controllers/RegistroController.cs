@@ -115,7 +115,10 @@ namespace SeguimientoEgresados.Controllers
         public async Task<IActionResult> Empleador(RegistroEmpleadorViewModel model, IFormFile? imgperfil)
         {
             if (!ModelState.IsValid)
+            {
+                Console.WriteLine("modelomal");
                 return View(model);
+            }
 
             var nombres = new SqlParameter("@nombre", model.Nombres);
             var ap1 = new SqlParameter("@apellido_paterno", model.ApellidoPaterno);

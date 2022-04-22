@@ -39,8 +39,16 @@ function resizeIframe(obj) {
     obj.style.height = obj.contentWindow.document.documentElement.scrollHeight + 'px';
 }
 
-function clickActionBtn(btn) {
-    console.log("click " + btn)
+async function clickActionBtn(btn) {
+
+    await timer(300);
+    
+    const errors1 = document.getElementsByClassName("input-validation-error");
+    const errors2 = document.getElementsByClassName("field-validation-error");
+    if(errors1.length > 0 || errors2.length > 0)
+        return;
+    
+    //console.log("click " + btn)
     //btn.disabled = true;
     btn.style.pointerEvents = "none";
     btn.style.cursor = "default";
