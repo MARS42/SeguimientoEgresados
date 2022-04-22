@@ -16,48 +16,49 @@
                             <div class="row justify-content-end">
                                 <h5>Datos de acceso</h5>
                                 @* Nombres *@
-                                <div class="col-12 col-lg-4">
-                                    <div class="form-floating mb-3">
+                                <div class="col-12 col-lg-4 mb-3">
+                                    <div class="form-floating">
                                         <input asp-for="Nombres" type="text" class="form-control display-3" placeholder="Nombre completo del representante">
                                         <label asp-for="Nombres"><i class="fa-solid fa-user-tie mx-2"></i>Nombre(s)</label>
                                     </div>
-                                    <span asp-validation-for="Nombres"></span>
+                                    <small><span asp-validation-for="Nombres" class="text-danger"></span></small>
                                 </div>
                                 @* Apellido paterno *@
-                                <div class="col-12 col-md-6 col-lg-4">
-                                    <div class="form-floating mb-3">
+                                <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                    <div class="form-floating">
                                         <input asp-for="ApellidoPaterno" type="text" class="form-control display-3" placeholder="Apellido 1">
                                         <label asp-for="ApellidoPaterno"><i class="fa-solid fa-user-tie mx-2"></i>A. paterno</label>
                                     </div>
-                                    <span asp-validation-for="ApellidoPaterno"></span>
+                                    <small><span asp-validation-for="ApellidoPaterno" class="text-danger"></span></small>
                                 </div>
                                 @* Apellido materno *@
-                                <div class="col-12 col-md-6 col-lg-4">
-                                    <div class="form-floating mb-3">
+                                <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                    <div class="form-floating">
                                         <input asp-for="ApellidoMaterno" type="text" class="form-control display-3" placeholder="Apellido 2">
                                         <label asp-for="ApellidoMaterno"><i class="fa-solid fa-user-tie mx-2"></i>A. materno</label>
                                     </div>
-                                    <span asp-validation-for="ApellidoMaterno"></span>
+                                    <small><span asp-validation-for="ApellidoMaterno" class="text-danger"></span></small>
                                 </div>
-                                <div class="col-12">
-                                    <div class="form-floating mb-3">
+                                <div class="col-12 mb-3">
+                                    <div class="form-floating">
                                         <input asp-for="Email" type="email" class="form-control display-3" placeholder="Correo electrónico">
                                         <label asp-for="Email"><i class="fa-solid fa-at mx-2"></i>Correo electrónico</label>
                                     </div>
-                                    <span asp-validation-for="Email"></span>
+                                    <small><span asp-validation-for="Email" class="text-danger"></span></small>
                                 </div>
-                                <div class="col-12">
-                                    <div class="form-floating mb-3">
+                                <div class="col-12 mb-3">
+                                    <div class="form-floating">
                                         <input asp-for="Password" type="password" class="form-control display-3" placeholder="Contraseña">
                                         <label asp-for="Password"><i class="fa-solid fa-lock mx-2"></i>Contraseña</label>
                                     </div>
-                                    <span asp-validation-for="Password"></span>
+                                    <small><span asp-validation-for="Password" class="text-danger"></span></small>
                                 </div>
-                                <div class="col-12">
-                                    <div class="form-floating mb-3">
-                                        <input type="password" class="form-control display-3" placeholder="Confirmar contraseña">
-                                        <label><i class="fa-solid fa-lock mx-2"></i>Confirmar contraseña</label>
+                                <div class="col-12 mb-3">
+                                    <div class="form-floating">
+                                        <input asp-for="ConfirmPassword" type="password" class="form-control display-3" placeholder="Confirmar contraseña">
+                                        <label asp-for="ConfirmPassword"><i class="fa-solid fa-lock mx-2"></i>Confirmar contraseña</label>
                                     </div>
+                                    <small><span asp-validation-for="ConfirmPassword" class="text-danger"></span></small>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-5 col-xl-4">
                                     <button type="button" data-step="0" data-stepmode="next" class="stepBtn btn btn-primary w-100">Siguiente<i class="fa-solid fa-angle-right mx-2"></i></button>
@@ -69,107 +70,107 @@
                         <div class="col-12 col-md-8 col-lg-7 col-xl-6">
                             <div class="row justify-content-end">
                                 <h5>Datos de la empresa</h5>
-                                <div class="col-12">
-                                    <div class="form-floating mb-3">
+                                <div class="col-12 mb-3">
+                                    <div class="form-floating">
                                         <input asp-for="NombreEmpresa" type="text" class="form-control display-3" placeholder="Nombre de la empresa">
                                         <label asp-for="NombreEmpresa"><i class="fa-solid fa-building mx-2"></i>Nombre de la empresa</label>
                                     </div>
-                                    <span asp-validation-for="NombreEmpresa"></span>
+                                    <small><span asp-validation-for="NombreEmpresa" class="text-danger"></span></small>
                                 </div>
-                                <div class="col-12">
-                                    <div class="mb-3 d-flex justify-content-evenly align-items-center">
+                                <div class="col-12 mb-3">
+                                    <div class="d-flex justify-content-evenly align-items-center">
                                         <img id="prevImg" src="" class="rounded border" height="128" alt="Imagen o logo de la empresa"/>
                                         <button type="button" class="btn btn-outline-secondary" onclick="document.getElementById('imgperfil').click()"><i class="fa-solid fa-image me-2"></i>Imagen o logo de la empresa</button>
                                         <input name="imgperfil" id="imgperfil" type="file" accept="image/*" class="form-control d-none" onchange="previsualizarImagen(this)">
                                     </div>
                                 </div>
-                                <div class="col-12">
-                                    <div class="form-floating mb-3">
+                                <div class="col-12 mb-3">
+                                    <div class="form-floating">
                                         <textarea asp-for="Descripcion" class="form-control" placeholder="Descripción general de la empresa" ></textarea>
                                         <label asp-for="Descripcion">Descripción general de la empresa</label>
                                     </div>
-                                    <span asp-validation-for="Descripcion"></span>
+                                    <small><span asp-validation-for="Descripcion" class="text-danger"></span></small>
                                 </div>
-                                <div class="col-12">
-                                    <div class="form-floating mb-3">
+                                <div class="col-12 mb-3">
+                                    <div class="form-floating">
                                         <input asp-for="RFC" type="text" class="form-control" placeholder="RFC">
                                         <label asp-for="RFC"><i class="fa-solid fa-id-card mx-2"></i>RFC</label>
                                     </div>
-                                    <span asp-validation-for="RFC"></span>
+                                    <small><span asp-validation-for="RFC" class="text-danger"></span></small>
                                 </div>
-                                <div class="col-12">
-                                    <div class="form-floating mb-3">
+                                <div class="col-12 mb-3">
+                                    <div class="form-floating">
                                         <input asp-for="RazonSocial" type="text" class="form-control" placeholder="Razón social">
                                         <label asp-for="RazonSocial"><i class="fa-solid fa-comment mx-2"></i>Razón social</label>
                                     </div>
-                                    <span asp-validation-for="RazonSocial"></span>
+                                    <small><span asp-validation-for="RazonSocial" class="text-danger"></span></small>
                                 </div>
-                                <div class="col-12">
-                                    <div class="form-floating mb-3">
+                                <div class="col-12 mb-3">
+                                    <div class="form-floating">
                                         <input asp-for="Domicilio" type="text" class="form-control" placeholder="Domicilio">
                                         <label asp-for="Domicilio"><i class="fa-solid fa-location-crosshairs mx-2"></i>Domicilio</label>
                                     </div>
-                                    <span asp-validation-for="Domicilio"></span>
+                                    <small><span asp-validation-for="Domicilio" class="text-danger"></span></small>
                                 </div>
                                 <div class="col-12 row m-0 p-0">
-                                    <div class="col-12 col-lg-6">
-                                        <div class="form-floating mb-3">
+                                    <div class="col-12 col-lg-6 mb-3">
+                                        <div class="form-floating">
                                             <input asp-for="Colonia" type="text" class="form-control" placeholder="Colonia">
                                             <label asp-for="Colonia"><i class="fa-solid fa-road mx-2"></i>Colonia</label>
                                         </div>
-                                        <span asp-validation-for="Colonia"></span>
+                                        <small><span asp-validation-for="Colonia" class="text-danger"></span></small>
                                     </div>
-                                    <div class="col-12 col-lg-6">
-                                        <div class="form-floating mb-3">
+                                    <div class="col-12 col-lg-6 mb-3">
+                                        <div class="form-floating">
                                             <input asp-for="CodigoPostal" type="text" class="form-control" placeholder="Código postal">
                                             <label asp-for="CodigoPostal"><i class="fa-solid fa-envelopes-bulk mx-2"></i>Código postal</label>
                                         </div>
-                                        <span asp-validation-for="CodigoPostal"></span>
+                                        <small><span asp-validation-for="CodigoPostal" class="text-danger"></span></small>
                                     </div>
                                 </div>
                                 <div class="col-12 row m-0 p-0">
-                                    <div class="col-12 col-lg-4">
-                                        <div class="form-floating mb-3">
+                                    <div class="col-12 col-lg-4 mb-3">
+                                        <div class="form-floating">
                                             <input asp-for="Pais" type="text" class="form-control" placeholder="Código País">
                                             <label asp-for="Pais"><i class="fa-solid fa-earth-africa mx-2"></i>País</label>
                                         </div>
-                                        <span asp-validation-for="Pais"></span>
+                                        <small><span asp-validation-for="Pais" class="text-danger"></span></small>
                                     </div>
-                                    <div class="col-12 col-lg-4">
-                                        <div class="form-floating mb-3">
+                                    <div class="col-12 col-lg-4 mb-3">
+                                        <div class="form-floating">
                                             <input asp-for="Estado" type="text" class="form-control" placeholder="Estado">
                                             <label asp-for="Estado">Estado</label>
                                         </div>
-                                        <span asp-validation-for="Estado"></span>
+                                        <small><span asp-validation-for="Estado" class="text-danger"></span></small>
                                     </div>
-                                    <div class="col-12 col-lg-4">
-                                        <div class="form-floating mb-3">
+                                    <div class="col-12 col-lg-4 mb-3">
+                                        <div class="form-floating">
                                             <input asp-for="Municipio" type="text" class="form-control" placeholder="Municipio">
                                             <label asp-for="Municipio">Municipio</label>
                                         </div>
-                                        <span asp-validation-for="Municipio"></span>
+                                        <small><span asp-validation-for="Municipio" class="text-danger"></span></small>
                                     </div>
                                 </div>
-                                <div class="col-12">
-                                    <div class="form-floating mb-3">
+                                <div class="col-12 mb-3">
+                                    <div class="form-floating">
                                         <input asp-for="EmailEmpresa" type="text" class="form-control" placeholder="Correo empresarial">
                                         <label asp-for="EmailEmpresa"><i class="fa-solid fa-envelopes-bulk mx-2"></i>Correo empresarial</label>
                                     </div>
-                                    <span asp-validation-for="EmailEmpresa"></span>
+                                    <small><span asp-validation-for="EmailEmpresa" class="text-danger"></span></small>
                                 </div>
-                                <div class="col-12">
-                                    <div class="form-floating mb-3">
+                                <div class="col-12 mb-3">
+                                    <div class="form-floating">
                                         <input asp-for="Telefono" type="text" class="form-control" placeholder="Teléfono">
                                         <label asp-for="Telefono"><i class="fa-solid fa-phone mx-2"></i>Teléfono</label>
                                     </div>
-                                    <span asp-validation-for="Telefono"></span>
+                                    <small><span asp-validation-for="Telefono" class="text-danger"></span></small>
                                 </div>
-                                <div class="col-12">
-                                    <div class="form-floating mb-3">
+                                <div class="col-12 mb-3">
+                                    <div class="form-floating">
                                         <input asp-for="Website" type="text" class="form-control" placeholder="P+agina web">
                                         <label asp-for="Website"><i class="fa-solid fa-globe mx-2"></i>Página web</label>
                                     </div>
-                                    <span asp-validation-for="Website"></span>
+                                    <small><span asp-validation-for="Website" class="text-danger"></span></small>
                                 </div>
                                 <div class="col-6 col-md-5 col-lg-5 col-xl-4">
                                     <button type="button" data-step="1" data-stepmode="prev" class="stepBtn btn btn-secondary w-100">Volver<i class="fa-solid fa-angle-right mx-2"></i></button>

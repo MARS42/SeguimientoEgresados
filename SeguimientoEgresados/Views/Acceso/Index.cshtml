@@ -42,20 +42,22 @@
                             @*     <div class="input-group-text"><i class="fa-solid fa-at"></i></div> *@
                             @*     <input class="form-control" type="email" name="User" id="Email"> *@
                             @* </div> *@
-                            <div class="form-floating mb-3">
-                                <input asp-for="Email" type="text" class="form-control display-3" placeholder="Nombre completo del representante">
-                                <label asp-for="Email"><i class="fa-solid fa-at mx-2"></i>Correo electrónico</label>
+                            <div class="mb-3">
+                                <div class="form-floating">
+                                    <input asp-for="Email" type="text" class="form-control display-3" placeholder="Nombre completo del representante">
+                                    <label asp-for="Email"><i class="fa-solid fa-at mx-2"></i>Correo electrónico</label>
+                                </div>
+                                <small><span class="text-danger" asp-validation-for="Email"></span></small>
                             </div>
-                            <span asp-validation-for="Email"></span>
                             @* <div class="input-group mb-3"> *@
                             @*     <div class="input-group-text"><i class="fa-solid fa-lock"></i></div> *@
                             @*     <input class="form-control" type="password" name="Pass" id="Password"> *@
                             @* </div> *@
-                            <div class="form-floating mb-3">
+                            <div class="form-floating">
                                 <input asp-for="Password" type="password" class="form-control display-3" placeholder="Contraseña">
                                 <label asp-for="Password"><i class="fa-solid fa-lock mx-2"></i>Contraseña</label>
                             </div>
-                            <span asp-validation-for="Password"></span>
+                            <small class="mb-3"><span class="text-danger" asp-validation-for="Password"></span></small>
                             <div class="form-check mb-3">
                                 <input class="form-check-input" type="checkbox" value="" name="recordar" id="flexCheckDefault">
                                 <label class="form-check-label" for="flexCheckDefault">Recordar</label>
