@@ -6,6 +6,21 @@ document.querySelector('form').addEventListener('submit', evt => {
     fixHeight();
 });
 
+var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+    return new bootstrap.Popover(popoverTriggerEl)
+})
+
+const cEmail = document.getElementById("cEmail");
+cEmail.addEventListener('input', evt => verificarEmail(evt.target));
+cEmail.addEventListener('change', evt => verificarEmailCompleto(evt.target));
+
+const popoverEmail = new bootstrap.Popover(cEmail, {
+    html: true,
+    content: '<p class="text-danger m-0 p-0"><i class="fa-solid fa-circle-exclamation me-2"></i>Email no disponile</p>',
+    trigger: 'manual'
+});
+
 for (let i = 0; i < steps.length; i++) {
     const step = steps[i];
     step.addEventListener("animationend", () => {
@@ -60,4 +75,56 @@ async function fixHeight(){
     await timer(300);
     resizeStacks();
     console.log("fixed");
+}
+
+function verificarEmail(campo){
+    
+    const email = campo.value;
+    const url = campo.dataset.url;
+    
+    if(email === '' || email === null || email.length % 4 !== 0) {
+        popoverEmail.hide();
+        return;
+    }
+    
+    fetch(`${url}?email=${email}`)
+        .then(response => response.json())
+        .then(json => {
+            const available = json.disponible;
+            console.log(available, json);
+            notificarVerificacion(available, campo);
+        });
+}
+
+function verificarEmailCompleto(campo){
+
+    const email = campo.value;
+    const url = campo.dataset.url;
+
+    if(email === '' || email === null) {
+        popoverEmail.hide();
+        return;
+    }
+    
+    fetch(`${url}?email=${email}`)
+        .then(response => response.json())
+        .then(json => {
+            const available = json.disponible;
+            console.log(available, json);
+            notificarVerificacion(available, campo);
+
+        });
+}
+
+function notificarVerificacion(available, campo){
+    if(available) {
+        campo.classList.remove('is-invalid');
+        document.getElementById('emailError').innerText += '';
+        popoverEmail.hide();
+    }
+    else {
+        campo.classList.add('is-invalid');
+        document.getElementById('emailError').innerText += 'Email no disponible';
+        popoverEmail.show();
+    }
 }

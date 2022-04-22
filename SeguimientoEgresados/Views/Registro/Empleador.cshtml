@@ -40,11 +40,11 @@
                                     <small><span asp-validation-for="ApellidoMaterno" class="text-danger"></span></small>
                                 </div>
                                 <div class="col-12 mb-3">
-                                    <div class="form-floating">
-                                        <input asp-for="Email" type="email" class="form-control display-3" placeholder="Correo electrónico">
+                                    <div class="form-floating" >
+                                        <input asp-for="Email" id="cEmail" type="email" class="form-control display-3" placeholder="Correo electrónico" data-url="@Url.Action("ComprobarEmail")">
                                         <label asp-for="Email"><i class="fa-solid fa-at mx-2"></i>Correo electrónico</label>
                                     </div>
-                                    <small><span asp-validation-for="Email" class="text-danger"></span></small>
+                                    <small><span id="emailError" asp-validation-for="Email" class="text-danger"></span></small>
                                 </div>
                                 <div class="col-12 mb-3">
                                     <div class="form-floating">

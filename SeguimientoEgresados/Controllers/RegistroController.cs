@@ -177,5 +177,13 @@ namespace SeguimientoEgresados.Controllers
             return RedirectToActionPreserveMethod("Index", "Acceso",
                 new AccesoViewModel() {Email = model.Email, Password = model.Password});
         }
+
+        [HttpGet]
+        public async Task<IActionResult> ComprobarEmail(string email)
+        {
+            var user = await _context.Usuarios.FirstOrDefaultAsync(u => u.Email.ToLower().Equals(email.ToLower().Trim()));
+
+            return Json(new { disponible = user == null });
+        }
     }
 }

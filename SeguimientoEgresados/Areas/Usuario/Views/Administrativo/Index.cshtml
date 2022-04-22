@@ -115,7 +115,8 @@
             order = orden;
             const busqueda = document.getElementById("busqueda").value;
             const filtroActual = "@ViewData["Busqueda"]";
-            const verificados = document.getElementById("verificados").checked;
+            const checkVerificados = document.getElementById("verificados");
+            const verificados = checkVerificados != null ? checkVerificados.checked : false;
     
             const cont = document.getElementById(idTabla);
             const action = cont.dataset.url;
