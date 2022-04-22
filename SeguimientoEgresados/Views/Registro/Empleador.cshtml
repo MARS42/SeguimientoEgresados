@@ -190,13 +190,14 @@
         </div>
     </form>
 </div>
-<script src="~/js/registroEmpleador.js"></script>
-<script src="~/js/redimensionarStacks.js"></script>
+
 @section Scripts
 {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <script src="~/js/registroEmpleador.js"></script>
+    <script src="~/js/redimensionarStacks.js"></script>
     <script>
     async function previsualizarImagen(imagenes){
         const imgs = imagenes.files;

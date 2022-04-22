@@ -2,6 +2,10 @@ const steps = document.getElementsByClassName("form-step");
 let currentStep = 0;
 let lastStep = 0;
 
+document.querySelector('form').addEventListener('submit', evt => {
+    resizeStacks();
+});
+
 for (let i = 0; i < steps.length; i++) {
     const step = steps[i];
     step.addEventListener("animationend", () => {
