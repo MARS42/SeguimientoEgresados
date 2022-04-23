@@ -39,4 +39,9 @@ public class RegistroEgresadoViewModel
     [Required(ErrorMessage = "Número de control requerido")] public string NoControl { get; set; }
     [Required] public int idCarrera { get; set; }
     [Required (ErrorMessage = "Fecha de egreso obligatoria")][DataType(DataType.Date, ErrorMessage = "Formato de fecha no válida")] public DateTime FechaEgreso { get; set; }
+    
+    [Required (ErrorMessage = "Fecha de inicio de ciclo escolar obligatoria")]
+    [DataType(DataType.Date, ErrorMessage = "Formato de fecha no válida")]
+    [DisplayFormat(DataFormatString = "{0:MM/yyyy}", ApplyFormatInEditMode = true)]
+    public DateTime FechaInicio{ get; set; }
 }

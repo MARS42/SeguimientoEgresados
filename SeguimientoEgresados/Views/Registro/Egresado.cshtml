@@ -222,10 +222,28 @@
                                 @* Fecha de egreso *@
                                 <div class="col-12 mb-3">
                                     <div class="form-floating">
-                                        <input asp-for="FechaEgreso" class="form-control display-3" placeholder="Fecha de egreso">
+                                        <input asp-for="FechaEgreso" id="fechaEgreso" class="form-control display-3" placeholder="Fecha de egreso">
                                         <label asp-for="FechaEgreso"><i class="fa-solid fa-calendar-day mx-2"></i>Fecha de egreso</label>
                                     </div>
-                                    <small><span asp-validation-for="FechaEgreso" class="text-danger"></span></small>
+                                    <small>
+                                        <span asp-validation-for="FechaEgreso" class="text-danger"></span>
+                                    </small>
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <div class="form-check form-switch mx-2">
+                                      <input class="form-check-input" type="checkbox" role="switch" id="semestreIrregular">
+                                      <label class="form-check-label" for="semestreIrregular" data-bs-toggle="tooltip" data-bs-placement="right" title="¿Cursaste más de 8 semestres tu carrera?">Semestres irregulares<i class="fa-solid fa-circle-info ms-2 text-primary"></i></label>
+                                    </div>
+                                </div>
+                                @* Fecha de inicio *@
+                                <div id="campoSemestreIrr" class="col-12 mb-3 animate__animated animate__faster animate__zoomOut">
+                                    <div class="form-floating">
+                                        <input asp-for="FechaInicio" id="fechaInicio" class="form-control display-3" placeholder="Fecha de inicio">
+                                        <label asp-for="FechaInicio"><i class="fa-solid fa-calendar-day mx-2"></i>Fecha de inicio de tu carrera</label>
+                                    </div>
+                                    <small>
+                                        <span asp-validation-for="FechaInicio" class="text-danger"></span>
+                                    </small>
                                 </div>
                                 @* Botón volver *@
                                 <div class="col-6 col-md-5 col-lg-5 col-xl-4">
@@ -255,4 +273,40 @@
     }
     <script src="~/js/registroEmpleador.js"></script>
     <script src="~/js/redimensionarStacks.js"></script>
+
+    <script>
+    const checkSemestreIrr = document.getElementById("semestreIrregular");
+    const campo = document.getElementById("campoSemestreIrr");
+    
+    const fechaEgreso = document.getElementById('fechaEgreso');
+    const fechaInicio = document.getElementById('fechaInicio');
+    
+    checkSemestreIrr.addEventListener('change', evt => {
+        const irregular = evt.target.checked;
+        
+        if(irregular){
+            campo.classList.remove("animate__zoomOut");
+            campo.classList.add("animate__zoomIn");
+        } else{
+            
+            const splitFecha = fechaEgreso.value.split('-');
+            const year = parseInt(splitFecha[0]) - 3;
+            splitFecha.splice(0, 1);
+            fechaInicio.value = year + '-' + splitFecha.join('-');
+            
+            campo.classList.remove("animate__zoomIn");
+            campo.classList.add("animate__zoomOut");
+        }
+    });
+    
+    fechaEgreso.addEventListener('change', evt => {
+        const splitFecha = fechaEgreso.value.split('-');
+        const year = parseInt(splitFecha[0]) - 3;
+        splitFecha.splice(0, 1);
+        fechaInicio.value = year + '-' + splitFecha.join('-');
+        console.log(fechaEgreso.value);
+        console.log(fechaInicio.value);
+    });
+    
+    </script>
 }
