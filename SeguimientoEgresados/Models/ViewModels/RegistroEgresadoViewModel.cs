@@ -42,6 +42,5 @@ public class RegistroEgresadoViewModel
     
     [Required (ErrorMessage = "Fecha de inicio de ciclo escolar obligatoria")]
     [DataType(DataType.Date, ErrorMessage = "Formato de fecha no válida")]
-    [DisplayFormat(DataFormatString = "{0:MM/yyyy}", ApplyFormatInEditMode = true)]
     public DateTime FechaInicio{ get; set; }
 }

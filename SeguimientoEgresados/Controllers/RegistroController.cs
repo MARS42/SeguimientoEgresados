@@ -57,6 +57,9 @@ namespace SeguimientoEgresados.Controllers
             if (!ModelState.IsValid)
                 return View(model);
             
+            if (await ExisteEmail(model.Email))
+                return View(model);
+            
             var nombres = new SqlParameter("@nombre", model.Nombres);
             var ap1 = new SqlParameter("@apellido_paterno", model.ApellidoPaterno);
             var ap2 = new SqlParameter("@apellido_materno", model.ApellidoMaterno);
@@ -95,7 +98,8 @@ namespace SeguimientoEgresados.Controllers
                 IdCarrera = model.idCarrera,
                 IdGenero = model.idGenero,
                 IdEstadoCivil = model.idEstadoCivil,
-                IdUsuario = Convert.ToInt32(id_generado.Value)
+                IdUsuario = Convert.ToInt32(id_generado.Value),
+                FechaInicio = model.FechaInicio
             };
 
             await _context.Egresados.AddAsync(egresado);
@@ -119,6 +123,9 @@ namespace SeguimientoEgresados.Controllers
                 Console.WriteLine("modelomal");
                 return View(model);
             }
+
+            if (await ExisteEmail(model.Email))
+                return View(model);
 
             var nombres = new SqlParameter("@nombre", model.Nombres);
             var ap1 = new SqlParameter("@apellido_paterno", model.ApellidoPaterno);
@@ -184,6 +191,12 @@ namespace SeguimientoEgresados.Controllers
             var user = await _context.Usuarios.FirstOrDefaultAsync(u => u.Email.ToLower().Equals(email.ToLower().Trim()));
 
             return Json(new { disponible = user == null });
+        }
+
+        public async Task<bool> ExisteEmail(string email)
+        {
+            var user = await _context.Usuarios.FirstOrDefaultAsync(u => u.Email.ToLower().Equals(email.ToLower().Trim()));
+            return user != null;
         }
     }
 }

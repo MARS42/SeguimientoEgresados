@@ -1,4 +1,4 @@
-@model Egresado
+@model RegistroEgresadoViewModel
 
 @{
     ViewBag.Title = "Mis datos";
@@ -24,19 +24,19 @@
                                     <div class="col-12 col-md-6">
                                         <div class="form-floating mb-3">
                                             @* <input asp-for="Genero" class="form-control display-3" placeholder="Género"> *@
-                                            <select asp-for="IdGenero" asp-items="ViewBag.Generos" class="form-select"></select>
-                                            <label asp-for="IdGenero"><i class="fa-solid fa-genderless mx-2"></i>Género</label>
+                                            <select asp-for="idGenero" asp-items="ViewBag.Generos" class="form-select"></select>
+                                            <label asp-for="idGenero"><i class="fa-solid fa-genderless mx-2"></i>Género</label>
                                         </div>
-                                        <span asp-validation-for="IdGenero"></span>
+                                        <span asp-validation-for="idGenero"></span>
                                     </div>
                                     @* Estado civil *@
                                     <div class="col-12 col-md-6">
                                         <div class="form-floating mb-3">
                                             @* <input asp-for="EstadoCivil" class="form-control" placeholder="Estado civil"> *@
-                                            <select asp-for="IdEstadoCivil" asp-items="ViewBag.EstadosCiviles" class="form-select"></select>
-                                            <label asp-for="IdEstadoCivil"><i class="fa-solid fa-heart mx-2"></i>Estado civil</label>
+                                            <select asp-for="idEstadoCivil" asp-items="ViewBag.EstadosCiviles" class="form-select"></select>
+                                            <label asp-for="idEstadoCivil"><i class="fa-solid fa-heart mx-2"></i>Estado civil</label>
                                         </div>
-                                        <span asp-validation-for="IdEstadoCivil"></span>
+                                        <span asp-validation-for="idEstadoCivil"></span>
                                     </div>
                                     <h5>Datos de nacimiento</h5>
                                     @* Datos nacimiento *@
@@ -91,10 +91,10 @@
                                         </div>
                                         <div class="col-12 col-lg-6">
                                             <div class="form-floating mb-3">
-                                                <input asp-for="Cp" class="form-control" placeholder="Código postal">
-                                                <label asp-for="Cp"><i class="fa-solid fa-envelopes-bulk mx-2"></i>Código postal</label>
+                                                <input asp-for="CodigoPostal" class="form-control" placeholder="Código postal">
+                                                <label asp-for="CodigoPostal"><i class="fa-solid fa-envelopes-bulk mx-2"></i>Código postal</label>
                                             </div>
-                                            <span asp-validation-for="Cp"></span>
+                                            <span asp-validation-for="CodigoPostal"></span>
                                         </div>
                                     </div>
                                     @* País, estado y municipío *@
@@ -143,19 +143,27 @@
                                     @* No. control *@
                                     <div class="col-12">
                                         <div class="form-floating mb-3">
-                                            <input asp-for="NControl" class="form-control display-3" placeholder="Número de control">
-                                            <label asp-for="NControl"><i class="fa-solid fa-id-card mx-2"></i>Número de control</label>
+                                            <input asp-for="NoControl" class="form-control display-3" placeholder="Número de control">
+                                            <label asp-for="NoControl"><i class="fa-solid fa-id-card mx-2"></i>Número de control</label>
                                         </div>
-                                        <span asp-validation-for="NControl"></span>
+                                        <span asp-validation-for="NoControl"></span>
                                     </div>
                                     @* Carrera *@
                                     <div class="col-12">
                                         <div class="form-floating mb-3">
                                             @* <input asp-for="Carrera" class="form-control display-3" placeholder="Carrera"> *@
-                                            <select asp-for="IdCarrera" asp-items="ViewBag.Carreras" class="form-select"></select>
-                                            <label asp-for="IdCarrera"><i class="fa-solid fa-graduation-cap mx-2"></i>Carrera</label>
+                                            <select asp-for="idCarrera" asp-items="ViewBag.Carreras" class="form-select"></select>
+                                            <label asp-for="idCarrera"><i class="fa-solid fa-graduation-cap mx-2"></i>Carrera</label>
                                         </div>
-                                        <span asp-validation-for="IdCarrera"></span>
+                                        <span asp-validation-for="idCarrera"></span>
+                                    </div>
+                                    @* Fecha de inicio *@
+                                    <div class="col-12">
+                                        <div class="form-floating mb-3">
+                                            <input asp-for="FechaInicio" class="form-control display-3" placeholder="Fecha de egreso">
+                                            <label asp-for="FechaInicio"><i class="fa-solid fa-calendar-day mx-2"></i>Fecha de inicio de carrera</label>
+                                        </div>
+                                        <span asp-validation-for="FechaInicio"></span>
                                     </div>
                                     @* Fecha de egreso *@
                                     <div class="col-12">

@@ -17,14 +17,17 @@ const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 })
 
 const cEmail = document.getElementById("cEmail");
-cEmail.addEventListener('input', evt => verificarEmail(evt.target));
-cEmail.addEventListener('change', evt => verificarEmailCompleto(evt.target));
+let popoverEmail;
+if(cEmail !== null) {
+    cEmail.addEventListener('input', evt => verificarEmail(evt.target));
+    cEmail.addEventListener('change', evt => verificarEmailCompleto(evt.target));
 
-const popoverEmail = new bootstrap.Popover(cEmail, {
-    html: true,
-    content: '<p class="text-danger m-0 p-0"><i class="fa-solid fa-circle-exclamation me-2"></i>Email no disponile</p>',
-    trigger: 'manual'
-});
+    popoverEmail = new bootstrap.Popover(cEmail, {
+        html: true,
+        content: '<p class="text-danger m-0 p-0"><i class="fa-solid fa-circle-exclamation me-2"></i>Email no disponile</p>',
+        trigger: 'manual'
+    });
+}
 
 for (let i = 0; i < steps.length; i++) {
     const step = steps[i];
@@ -87,7 +90,7 @@ function verificarEmail(campo){
     const email = campo.value;
     const url = campo.dataset.url;
     
-    if(email === '' || email === null || email.length % 4 !== 0) {
+    if(email === '' || email === null || email.length % 2 !== 0) {
         popoverEmail.hide();
         return;
     }
@@ -96,7 +99,7 @@ function verificarEmail(campo){
         .then(response => response.json())
         .then(json => {
             const available = json.disponible;
-            console.log(available, json);
+            //console.log(available, json);
             notificarVerificacion(available, campo);
         });
 }
@@ -115,7 +118,7 @@ function verificarEmailCompleto(campo){
         .then(response => response.json())
         .then(json => {
             const available = json.disponible;
-            console.log(available, json);
+            //console.log(available, json);
             notificarVerificacion(available, campo);
 
         });
@@ -123,13 +126,11 @@ function verificarEmailCompleto(campo){
 
 function notificarVerificacion(available, campo){
     if(available) {
-        campo.classList.remove('is-invalid');
-        document.getElementById('emailError').innerText += '';
+        campo.classList.remove('is-invalid', 'input-validation-error');
         popoverEmail.hide();
     }
     else {
-        campo.classList.add('is-invalid');
-        document.getElementById('emailError').innerText += 'Email no disponible';
+        campo.classList.add('is-invalid', 'input-validation-error');
         popoverEmail.show();
     }
 }

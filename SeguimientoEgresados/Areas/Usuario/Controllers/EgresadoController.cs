@@ -67,21 +67,41 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             ViewData["EstadosCiviles"] = new SelectList(_context.EstadosCiviles, "Id", "Nombre");
             ViewData["Carreras"] = new SelectList(_context.Carreras, "Id", "Nombre");
             
-            Console.WriteLine($"User id: {user.Id}, empresa id: {egresado.NControl}");
             await _notificaciones.VerificarCuestionario(User, HttpContext, ViewData, true);
             
-            return View(egresado);
+            var editarEgresado = new RegistroEgresadoViewModel()
+            {
+                Colonia = egresado.Colonia,
+                CodigoPostal = egresado.Cp + "",
+                Domicilio = egresado.Domicilio,
+                Estado = egresado.Estado,
+                Municipio = egresado.Municipio,
+                Pais = egresado.Pais,
+                Telefono = egresado.Telefono,
+                EstadoNacimiento = egresado.EstadoNacimiento,
+                FechaEgreso = egresado.FechaEgreso ?? DateTime.Now,
+                FechaNacimiento = egresado.FechaNacimiento ?? DateTime.Now,
+                MunicipioNacimiento = egresado.MunicipioNacimiento,
+                NoControl = egresado.NControl,
+                PaisNacimiento = egresado.PaisNacimiento,
+                idCarrera = egresado.IdCarrera,
+                idGenero = egresado.IdGenero,
+                idEstadoCivil = egresado.IdEstadoCivil,
+                FechaInicio = egresado.FechaInicio ?? DateTime.Now
+            };
+            
+            return View(editarEgresado);
         }
         
         [HttpPost]
-        public async Task<IActionResult> MisDatos(Egresado model)
+        public async Task<IActionResult> MisDatos(RegistroEgresadoViewModel model)
         {
             //Models.Usuario? user = HttpContext.Session.Get<Models.Usuario>("User");
             var user = await GetUsuario();
             var egresado = await _context.Egresados.FirstOrDefaultAsync(e => e.IdUsuario.Equals(user!.Id));
 
             egresado.Colonia = model.Colonia;
-            egresado.Cp = model.Cp;
+            egresado.Cp = int.Parse(model.CodigoPostal);
             egresado.Domicilio = model.Domicilio;
             egresado.Estado = model.Estado;
             egresado.Municipio = model.Municipio;
@@ -94,11 +114,11 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             egresado.MunicipioNacimiento = model.MunicipioNacimiento;
             egresado.EstadoNacimiento = model.EstadoNacimiento;
 
-            egresado.IdGenero = model.IdGenero;
-            egresado.IdCarrera = model.IdCarrera;
-            egresado.IdEstadoCivil = model.IdEstadoCivil;
+            egresado.IdGenero = model.idGenero;
+            egresado.IdCarrera = model.idCarrera;
+            egresado.IdEstadoCivil = model.idEstadoCivil;
 
-            egresado.NControl = model.NControl;
+            egresado.NControl = model.NoControl;
             egresado.Telefono = model.Telefono;
             
             _context.Entry(egresado).State = EntityState.Modified;
