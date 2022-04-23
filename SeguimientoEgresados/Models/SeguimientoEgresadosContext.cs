@@ -134,6 +134,8 @@ namespace SeguimientoEgresados.Models
 
                 entity.Property(e => e.FechaEgreso).HasColumnName("fechaEgreso");
 
+                entity.Property(e => e.FechaInicio).HasColumnName("fechaInicio");
+
                 entity.Property(e => e.FechaNacimiento).HasColumnName("fechaNacimiento");
 
                 entity.Property(e => e.IdCarrera).HasColumnName("id_carrera");

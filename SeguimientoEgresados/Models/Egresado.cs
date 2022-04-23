@@ -23,6 +23,7 @@ namespace SeguimientoEgresados.Models
         public int IdEstadoCivil { get; set; }
         public int IdCarrera { get; set; }
         public int IdUsuario { get; set; }
+        public DateTime? FechaInicio { get; set; }
 
         public virtual Carrera IdCarreraNavigation { get; set; } = null!;
         public virtual EstadosCivile IdEstadoCivilNavigation { get; set; } = null!;
