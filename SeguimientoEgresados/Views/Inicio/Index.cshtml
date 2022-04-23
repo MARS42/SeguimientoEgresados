@@ -5,21 +5,33 @@
     //Layout = "_Layout";
     ViewData["Title"] = "Página de inicio";
 }
-<section class="container p-4 mt-4">
-    <article class="row">
-        <div class="col-md-8">
-            <h1>Seguimiento de egresados</h1>
-            <p>Instituto Tecnológico de México</p>
-            <p>Campus Cuautla</p>
-        </div>
-        <div class="col-md-5">
-            <button class="btn btn-primary">Unirse al programa</button>
-            <button class="btn btn-outline-secondary">Más información</button>
-        </div>
-    </article>
-    <article class="row justify-content-center">
-        <div class="col-md-3">
-            <div class="tarjeta-inicio container rounded p-4">
+<section class="container">
+    <div class="main-container d-flex justify-content-center align-items-center animate__animated animate__delay-1s animate__fadeIn">
+        <article class="row">
+            <div class="col-md-6">
+                <h1>Seguimiento de egresados</h1>
+                <p>Instituto Tecnológico de México</p>
+                <p>Campus Cuautla</p>
+            </div>
+            <div class="cont-img col-md-6 animate__animated animate__fast animate__fadeIn">
+                <img class="cont-img-c img-fluid" src="~/images/Mancha.png" alt="Imagen de inicio"/>
+                <img id="img-inicio" class="cont-img-c img-fluid" src="~/images/licenciatura2.png" alt="Imagen de inicio"/>
+            </div>
+            <div class="col-md-6 row mt-3">
+                <div class="col-12 col-sm-6 col-md-12 col-lg-6 mb-2">
+                    <button class="btn btn-primary w-100">Unirse al programa<i class="fa-solid fa-file-pen ms-2"></i></button>
+                </div>
+                <div class="col-12 col-sm-6 col-md-12 col-lg-6">
+                    <button href="#tarjetas" class="btn btn-outline-secondary w-100">Más información</button>
+                </div>
+            </div>
+        </article>
+    </div>
+    
+    @* <div class="separador-inicio"></div> *@
+    <article id="tarejtas" class="row justify-content-evenly animate__animated animate__delay-1s animate__fadeIn">
+        <div class="col-md-6 col-lg-4 col-xl-3 row mb-3 mt-3">
+            <div class="col-12 col-sm-6 col-md-10 col-lg-12 tarjeta-inicio container rounded p-4">
                 <div class="row justify-content-center">
                     <div class="icono-tarjeta col-12 mb-3 rounded-circle text-white d-flex justify-content-center align-items-center">
                         <i class="fa-solid fa-graduation-cap fa-xl"></i>
@@ -33,8 +45,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="tarjeta-inicio container rounded p-4">
+        <div class="col-md-6 col-lg-4 col-xl-3 row mb-3 mt-md-3">
+            <div class="col-12 col-sm-6 col-md-10 col-lg-12 tarjeta-inicio container rounded p-4">
                 <div class="row justify-content-center">
                     <div class="icono-tarjeta col-12 mb-3 rounded-circle text-white d-flex justify-content-center align-items-center">
                         <i class="fa-solid fa-briefcase fa-xl"></i>
@@ -48,8 +60,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="tarjeta-inicio container rounded p-4">
+        <div class="col-md-6 col-lg-4 col-xl-3 row mb-3 mt-md-3">
+            <div class="col-12 col-sm-6 col-md-10 col-lg-12 tarjeta-inicio container rounded p-4">
                 <div class="row justify-content-center">
                     <div class="icono-tarjeta col-12 mb-3 rounded-circle text-white d-flex justify-content-center align-items-center">
                         <i class="fa-solid fa-sack-dollar fa-xl"></i>
@@ -63,4 +75,28 @@
             </div>
         </div>
     </article>
+    
+    <div class="main-container d-flex justify-content-center align-items-center">
+        <article class="row">
+            <div class="col-md-8">
+                <h1>¿Qué es el seguimiento de egresados?</h1>
+                <p>El seguimiento de egresados es un procedimiento que permite a la 
+                    institución educativa conocer las actividades profesionales de sus 
+                    egresadis en el mercado de trabajo, así como la calidad de la 
+                    formación académica que éstos recibieron.</p>
+                <a href="#" class="text-decoration-none">Más<i class="fa-solid fa-angle-right ms-2"></i></a>
+            </div>
+            <div class="col-10 col-md-4 m-auto animate__animated animate__fast animate__fadeIn">
+                <img class="img-fluid" src="~/images/licenciatura2.png" alt="Imagen de inicio"/>
+            </div>
+            @* <div class="col-md-6 row mt-3"> *@
+            @*     $1$ <div class="col-12 col-sm-6 col-md-12 col-lg-6 mb-2"> #1# *@
+            @*     $1$     <button class="btn btn-primary w-100">Unirse al programa</button> #1# *@
+            @*     $1$ </div> #1# *@
+            @*     $1$ <div class="col-12 col-sm-6 col-md-12 col-lg-6"> #1# *@
+            @*     $1$     <button href="#tarjetas" class="btn btn-outline-secondary w-100">Más información</button> #1# *@
+            @*     $1$ </div> #1# *@
+            @* </div> *@
+        </article>
+    </div>
 </section>

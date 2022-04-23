@@ -5,8 +5,14 @@
 
 const timer = ms => new Promise(res => setTimeout(res, ms));
 
-document.addEventListener("DOMContentLoaded", function(){
+var x = window.matchMedia("(max-width: 765px)")
+x.addEventListener('change', ajustarImagenInicio());
 
+containersHeaderSize();
+ResizeMainContainers(headerHeight())
+
+document.addEventListener("DOMContentLoaded", function(){
+    
     window.addEventListener('scroll', function() {
 
         const bannerLogos = document.getElementById('bannerLogos');
@@ -59,7 +65,27 @@ async function clickActionBtn(btn) {
 function headerHeight(){
     return document.getElementById("header").offsetHeight;
 }
-//
-// document.addEventListener('scroll', (e) => {
-//     console.log(headerHeight())
-// })
+
+function containersHeaderSize(){
+    const fullHeaderHeight = headerHeight();
+    
+    window.addEventListener('resize', () => ResizeMainContainers(fullHeaderHeight));
+}
+
+function ResizeMainContainers(h){
+    const containers = document.getElementsByClassName("main-container");
+    for(let i = 0; i < containers.length; i++){
+        const c = containers[i];
+        console.log(window.innerHeight - h);
+        c.style.height = `${ window.innerHeight - h}px`;
+    }
+}
+
+function ajustarImagenInicio(){
+    return;
+    const imag = document.getElementById("img-inicio");
+    if(imag === null)
+        return;
+    console.log("imag",imag.clientHeight);
+    document.getElementsByClassName("cont-img")[0].style.height = `${imag.clientHeight}px`;
+}

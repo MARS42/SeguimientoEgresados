@@ -34,13 +34,12 @@ html {
 html {
   position: relative;
   min-height: 100%;
-  /*scrollbar-gutter: stable;*/
 }
 
 body {
   margin-bottom: 60px;
-  
-  /*overflow-y: scroll;*/
+  /*scrollbar-gutter: stable;*/
+  overflow-y: scroll;
   /*overflow-x: hidden;*/
   /*overflow: hidden;*/
 }
@@ -218,11 +217,50 @@ body {
 }
 
 .tarjeta-inicio{
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  height: 256px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    /*height: 256px;*/
+    /*aspect-ratio: 1 /1;*/
 }
 
 .icono-tarjeta{
   background-color: #2D4059; width: 64px; height: 64px
+}
+
+.separador-inicio {
+  height: 328px;
+}
+
+.bg-claro-primario{
+  background-color: rgba(26, 56, 106, 0.31);
+}
+
+.main-container
+{
+  transition: all 0.6s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+}
+
+.img-fluid{
+  transition: all 0.6s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+}
+
+.cont-img{
+  position: relative;
+}
+
+.cont-img-c{
+  position: absolute;
+}
+
+@media (max-width: 765px) {
+  .cont-img{
+    position: relative;
+  }
+
+  .cont-img-c{
+    position: absolute;
+    z-index: -100;
+    opacity: 0.1;
+    display: none;
+  }
 }
 
