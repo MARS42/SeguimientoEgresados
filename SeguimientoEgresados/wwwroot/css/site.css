@@ -264,3 +264,16 @@ body {
   }
 }
 
+.main-login{
+  /*background: url("../images/login.jpg") no-repeat center center fixed;*/
+  background: url("../images/inicioHD.jpg") no-repeat fixed center center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.sombra-1{
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
