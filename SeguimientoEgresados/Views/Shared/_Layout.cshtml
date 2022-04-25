@@ -21,9 +21,26 @@
     <link rel="stylesheet" href="~/SeguimientoEgresados.styles.css" asp-append-version="true"/>
 </head>
 <body>
+
 <header id="header">
     @await Html.PartialAsync("_Navbar")
 </header>
+
+<div class="area">
+    <ul class="circles">
+        <li><i class="fa-solid fa-graduation-cap fa-8x"></i></li>
+        <li><i class="fa-solid fa-briefcase fa-8x"></i></li>
+        <li><i class="fa-solid fa-briefcase fa5x"></i></li>
+        <li><i class="fa-solid fa-graduation-cap fa-5x"></i></li>
+        <li><i class="fa-solid fa-briefcase fa-3x"></i></li>
+        <li><i class="fa-solid fa-graduation-cap fa-6x"></i></li>
+        <li><i class="fa-solid fa-graduation-cap fa-5x"></i></li>
+        <li><i class="fa-solid fa-briefcase fa-4x"></i></li>
+        <li><i class="fa-solid fa-graduation-cap fa-3x"></i></li>
+        <li><i class="fa-solid fa-briefcase fa-6"></i></li>
+    </ul>
+</div >
+
 <div class="container-fluid p-0">
     <main role="main" class="">
         @RenderBody()

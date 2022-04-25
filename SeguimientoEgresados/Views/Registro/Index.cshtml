@@ -3,10 +3,10 @@
     //Layout = "_Layout";
 }
 
-<div class="container">
-    <div id="contenido-form" class="row justify-content-center p-4 animate__animated animate__fadeIn animate__faster">
+<div class="main-container container d-flex">
+    <div id="contenido-form" class="w-100 row justify-content-center p-4 animate__animated animate__fadeIn animate__faster">
         <div class="col-10 col-md-6 col-lg-4 card m-auto">
-            <div class="card-body">
+            <div id="main-view" class="card-body">
                 <form asp-action="Index" method="POST">
                     <div class="container">
                         <div class="row justify-content-end">
@@ -45,3 +45,11 @@
     // }
     
 </script>
+
+@section Scripts{
+    <script>
+            window.addEventListener('DOMContentLoaded', (event) => {
+            document.getElementById("main-view").scrollIntoView({block:"start"});
+            });
+    </script>
+}

@@ -6,8 +6,8 @@
 }
 
 @* <h3>Bienvenido al sistema @Html.DisplayFor(m => m.Nombre)</h3> *@
-<div class="container-fluid p-4" id="main-view">
-    <div class="row">
+<div class="main-container container-fluid p-4" style="overflow-y: scroll" id="main-view">
+    <div class="row h-100">
         <div class="col-12 col-md-6 col-lg-4 col-xl-2 mb-3">
             @* @await Html.PartialAsync("SidebarAdministrativo") *@
             <div class="list-group">
@@ -31,7 +31,7 @@
                 </a>
             </div>
         </div>
-        <div class="col-12 col-md-6 col-lg-8 col-xl-10 border rounded p-2 d-flex justify-content-center" id="vista">
+        <div class="bg-white col-12 col-md-6 col-lg-8 col-xl-10 border rounded p-2 d-flex justify-content-center" id="vista">
         </div>
     </div>
 </div>
