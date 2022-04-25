@@ -5,7 +5,7 @@ namespace SeguimientoEgresados.Services;
 
 public interface IGoogleSheetsService
 {
-    public UserCredential credential { get; }
+    //public UserCredential credential { get; }
     public SheetsService service { get; }
     
     public Task<string> VerificarCuestionario(bool egresado, string email);

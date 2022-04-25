@@ -5,18 +5,20 @@ using Google.Apis.Sheets.v4.Data;
 using Google.Apis.Util.Store;
 using Newtonsoft.Json;
 using System.Configuration;
+using System.Security.Cryptography.X509Certificates;
 using Microsoft.Extensions.Options;
 
 namespace SeguimientoEgresados.Services;
 
 public class GoogleSheetsService : IGoogleSheetsService
 {
-    public UserCredential credential { get; }
+    //public UserCredential credential { get; }
     public SheetsService service { get; }
 
     public GoogleSheetsService(IOptions<GoogleSheetsOptions> config)
     {
-        string[] Scopes = { SheetsService.Scope.Spreadsheets };
+        Console.WriteLine($"{config.Value.ClientId} - {config.Value.ClientSecret} - {config.Value.ServiceAccount} - {config.Value.ServiceAccountPass}");
+        string[] Scopes = { SheetsService.Scope.SpreadsheetsReadonly };
         string ApplicationName = "Google Sheets API .NET Quickstart";
 
         // using (var stream =
@@ -28,20 +30,25 @@ public class GoogleSheetsService : IGoogleSheetsService
         // The file token.json stores the user's access and refresh tokens, and is created
         // automatically when the authorization flow completes for the first time.
         
-        string credPath = "token.json";
-        ClientSecrets secrets = new ClientSecrets()
-        {
-                ClientId = config.Value.ClientId,
-                ClientSecret = config.Value.ClientSecret
-        };
-        credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
-            secrets,
-            Scopes,
-            "user",
-            CancellationToken.None, new FileDataStore(credPath, true)).Result;
+        // string credPath = "token.json";
+        // ClientSecrets secrets = new ClientSecrets()
+        // {
+        //         ClientId = config.Value.ClientId,
+        //         ClientSecret = config.Value.ClientSecret
+        // };
+        // credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
+        //     secrets,
+        //     Scopes,
+        //     "user",
+        //     CancellationToken.None, new FileDataStore(credPath, true)).Result;
+        
+        var certificate = new X509Certificate2("seguimiento-egresados-346121-bed230a7fafa.p12", config.Value.ServiceAccountPass, X509KeyStorageFlags.Exportable);
+        
+        ServiceAccountCredential credential = new ServiceAccountCredential(
+            new ServiceAccountCredential.Initializer(config.Value.ServiceAccount) {
+                Scopes = Scopes
+            }.FromCertificate(certificate));
             
-        Console.WriteLine("Credential file saved to: " + credPath);
-
         // Create Google Sheets API service.
         service = new SheetsService(new BaseClientService.Initializer()
         {
