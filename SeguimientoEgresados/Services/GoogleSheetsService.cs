@@ -42,7 +42,7 @@ public class GoogleSheetsService : IGoogleSheetsService
         //     "user",
         //     CancellationToken.None, new FileDataStore(credPath, true)).Result;
         
-        var certificate = new X509Certificate2("seguimiento-egresados-346121-bed230a7fafa.p12", config.Value.ServiceAccountPass, X509KeyStorageFlags.Exportable);
+        var certificate = new X509Certificate2(Path.Combine(Directory.GetCurrentDirectory(), "seguimiento-egresados-346121-bed230a7fafa.p12"), config.Value.ServiceAccountPass, X509KeyStorageFlags.Exportable);
         
         ServiceAccountCredential credential = new ServiceAccountCredential(
             new ServiceAccountCredential.Initializer(config.Value.ServiceAccount) {
