@@ -48,6 +48,7 @@ builder.Services.AddDbContext<SeguimientoEgresadosContext>(options =>
 });
 
 builder.Services.Configure<CloudinaryOptions>(builder.Configuration.GetSection("Cloudinary"));
+builder.Services.Configure<GoogleSheetsOptions>(builder.Configuration.GetSection("Google"));
 builder.Services.AddScoped<IGoogleSheetsService, GoogleSheetsService>();
 builder.Services.AddScoped<INotificacionesService, NotificacionesService>();
 builder.Services.AddScoped<ICloudinaryService, CloudinaryService>();

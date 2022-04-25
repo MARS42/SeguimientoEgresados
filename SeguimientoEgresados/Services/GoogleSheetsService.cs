@@ -5,6 +5,7 @@ using Google.Apis.Sheets.v4.Data;
 using Google.Apis.Util.Store;
 using Newtonsoft.Json;
 using System.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace SeguimientoEgresados.Services;
 
@@ -13,27 +14,34 @@ public class GoogleSheetsService : IGoogleSheetsService
     public UserCredential credential { get; }
     public SheetsService service { get; }
 
-    public GoogleSheetsService()
+    public GoogleSheetsService(IOptions<GoogleSheetsOptions> config)
     {
         string[] Scopes = { SheetsService.Scope.Spreadsheets };
         string ApplicationName = "Google Sheets API .NET Quickstart";
 
-        using (var stream =
-               new FileStream("credentials.json", FileMode.Open, FileAccess.Read))
+        // using (var stream =
+        //        new FileStream("credentials.json", FileMode.Open, FileAccess.Read))
+        // {
+        //
+        // }
+        
+        // The file token.json stores the user's access and refresh tokens, and is created
+        // automatically when the authorization flow completes for the first time.
+        
+        string credPath = "token.json";
+        ClientSecrets secrets = new ClientSecrets()
         {
-            // The file token.json stores the user's access and refresh tokens, and is created
-            // automatically when the authorization flow completes for the first time.
-            string credPath = "token.json";
+                ClientId = config.Value.ClientId,
+                ClientSecret = config.Value.ClientSecret
+        };
+        credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
+            secrets,
+            Scopes,
+            "user",
+            CancellationToken.None
+            /*, new FileDataStore(credPath, true)*/).Result;
             
-            credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
-                GoogleClientSecrets.Load(stream).Secrets,
-                Scopes,
-                "user",
-                CancellationToken.None,
-                new FileDataStore(credPath, true)).Result;
-            
-            Console.WriteLine("Credential file saved to: " + credPath);
-        }
+        Console.WriteLine("Credential file saved to: " + credPath);
 
         // Create Google Sheets API service.
         service = new SheetsService(new BaseClientService.Initializer()
