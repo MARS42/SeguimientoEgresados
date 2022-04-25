@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using SeguimientoEgresados.Models;
+using SeguimientoEgresados.Models.ViewModels;
 using SeguimientoEgresados.Services;
 using SeguimientoEgresados.Utils;
 
@@ -27,21 +29,33 @@ namespace SeguimientoEgresados.Areas.Egresados.Controllers
         [HttpGet, Route("~/Egresados/")]
         public async Task<IActionResult> Index()
         {
-            /*_usuario = HttpContext.Session.Get<Usuario>("User");
-
-            if (_usuario == null)
-                return RedirectToAction("Index", "Acceso",new {area = "Egresados" });
-            */
             ViewData["carreras"] = new SelectList(_context.Carreras, "Id", "Nombre");
             
             await _notificaciones.VerificarCuestionario(User, HttpContext, ViewData, false);
             return View();
         }
 
-        public IActionResult CerrarSesion()
+        [HttpGet]
+        public async Task<IActionResult> _GetEgresados()
         {
-            HttpContext.Session.Remove("User");
-            return RedirectToAction("Index", "Inicio", new { area = "" });
+            var egresadosCarrera = _context.Egresados.Include(c => c.IdCarreraNavigation).AsNoTracking();
+            
+            var egresados =
+                from egresado in egresadosCarrera
+                join usuario in _context.Usuarios on egresado.IdUsuario equals usuario.Id into matches
+                from match in matches
+                select new EgresadoPublicoViewModel()
+                {
+                    Carrera = egresado.IdCarreraNavigation.Nombre,
+                    Nombres = match.Nombre,
+                    ApeM = match.ApellidoMaterno,
+                    ApeP = match.ApellidoPaterno,
+                    NoControl = egresado.NControl,
+                    FechaInicio = egresado.FechaInicio,
+                    FechaFin = egresado.FechaEgreso
+                };
+
+            return PartialView(await ListaPaginada<EgresadoPublicoViewModel>.CreateAsync(egresados.AsNoTracking(), 1, 100));
         }
     }
 }

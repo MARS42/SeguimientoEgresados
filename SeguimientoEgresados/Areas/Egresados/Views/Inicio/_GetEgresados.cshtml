@@ -1,0 +1,42 @@
+﻿@model SeguimientoEgresados.Utils.ListaPaginada<SeguimientoEgresados.Models.ViewModels.EgresadoPublicoViewModel>
+
+<div class="col-12">
+    <table class="table table-hover animate__animated animate__fadeIn animate__faster">
+        <thead>
+        <tr>
+            <th scope="col">Generación</th>
+            <th scope="col"><a class="text-primary text-decoration-none manita" onclick='actualizarTabla(1, "@ViewData["NombreSort"]")'>No. control</a></th>
+            <th scope="col"><a class="text-primary text-decoration-none manita" onclick='actualizarTabla( 1, "@ViewData["RepSort"]")'>Nombre</a></th>
+            <th scope="col">Carrera</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var e in Model)
+        {
+            <tr class="manita">
+                <td>@e.Generación()</td>
+                <td>@e.NoControl</td>
+                <td>@e.NombreCompleto</td>
+                <td>@e.Carrera</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+</div>
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "btn-secondary disabled" : "btn-primary";
+    var nextDisabled = !Model.HasNextPage ? "btn-secondary disabled" : "btn-primary";
+}
+
+<div class="col-12 d-flex justify-content-end">
+    <a class="btn @prevDisabled mx-2"
+       onclick="actualizarTabla(@(Model.PageIndex - 1))">
+        Anterior
+    </a>
+    <a class="btn @nextDisabled"
+       onclick="actualizarTabla(@(Model.PageIndex + 1))">
+        Siguiente
+    </a>
+</div>
+
