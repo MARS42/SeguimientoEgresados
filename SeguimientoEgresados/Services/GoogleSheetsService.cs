@@ -41,8 +41,14 @@ public class GoogleSheetsService : IGoogleSheetsService
         //     Scopes,
         //     "user",
         //     CancellationToken.None, new FileDataStore(credPath, true)).Result;
-        
-        var certificate = new X509Certificate2(Path.Combine(Directory.GetCurrentDirectory(), "seguimiento-egresados-346121-bed230a7fafa.p12"), config.Value.ServiceAccountPass, X509KeyStorageFlags.Exportable);
+        // string[] files = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory);
+        // foreach (var file in files)
+        // {
+        //     
+        //     Console.WriteLine(file);   
+        // }
+        string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "seguimiento-egresados-346121-bed230a7fafa.p12");
+        var certificate = new X509Certificate2(path, config.Value.ServiceAccountPass, X509KeyStorageFlags.Exportable);
         
         ServiceAccountCredential credential = new ServiceAccountCredential(
             new ServiceAccountCredential.Initializer(config.Value.ServiceAccount) {
