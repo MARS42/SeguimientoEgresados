@@ -38,8 +38,7 @@ public class GoogleSheetsService : IGoogleSheetsService
             secrets,
             Scopes,
             "user",
-            CancellationToken.None
-            /*, new FileDataStore(credPath, true)*/).Result;
+            CancellationToken.None, new FileDataStore(credPath, true)).Result;
             
         Console.WriteLine("Credential file saved to: " + credPath);
 
