@@ -49,8 +49,36 @@
 </div>
 @await Html.PartialAsync("VerificarCuestionario")
 
-<footer class="border-top footer text-muted">
-    <div class="container">
+<footer class="border-top footer p-4" style="background-color: #1A386A">
+    <div class="container-fluid text-white">
+        <div class="row">
+            <div class="col12 col-md-6">
+                <h6><i class="fa-solid fa-link me-2"></i>Enlaces</h6>
+                <ul class="footer-list">
+                    <li><a class="link-light text-decoration-none" asp-area="Egresados" asp-controller="Inicio" asp-action="Index">Egresados</a></li>
+                    <li><a class="link-light text-decoration-none" asp-area="Empleadores" asp-controller="Inicio" asp-action="Index">Empleadores</a></li>
+                    <li><a class="link-light text-decoration-none" asp-area="BolsaDeTrabajo" asp-controller="Inicio" asp-action="Index">Bolsa de trabajo</a></li>
+                    <li><a class="link-light text-decoration-none" asp-area="Galeria" asp-controller="Inicio" asp-action="Index">Galería</a></li>
+                    <li><a class="link-light text-decoration-none" asp-area="About" asp-controller="Inicio" asp-action="Index">Acerca de</a></li>
+                </ul>
+            </div>
+            <div class="col-12 col-md-6">
+                <h6><i class="fa-solid fa-location-dot me-2"></i>Dirección</h6>
+                <ul class="footer-list">
+                    <li>Libramiento Cuautla-Oaxaca S/N</li>
+                    <li>Col. Juan Morales</li>
+                    <li>C.P. 62826</li>
+                    <li>Yecapixtla, Morelos</li>
+                </ul>
+                <h6><i class="fa-solid fa-phone me-2"></i>Telefonos</h6>
+                <ul class="footer-list">
+                    <li>7351222242</li>
+                    <li>7353536496</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container text-center text-white-50">
         &copy; 2022 - SeguimientoEgresados - Institulo Tecnológico de Cuautla, Tecnológico Nacional de México
     </div>
 </footer>

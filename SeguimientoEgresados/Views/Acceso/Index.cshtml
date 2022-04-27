@@ -53,11 +53,13 @@
                             @*     <div class="input-group-text"><i class="fa-solid fa-lock"></i></div> *@
                             @*     <input class="form-control" type="password" name="Pass" id="Password"> *@
                             @* </div> *@
-                            <div class="form-floating">
-                                <input asp-for="Password" type="password" class="form-control display-3" placeholder="Contraseña">
-                                <label asp-for="Password"><i class="fa-solid fa-lock mx-2"></i>Contraseña</label>
+                            <div class="mb-3">
+                                <div class="form-floating">
+                                    <input asp-for="Password" type="password" class="form-control display-3" placeholder="Contraseña">
+                                    <label asp-for="Password"><i class="fa-solid fa-lock mx-2"></i>Contraseña</label>
+                                </div>
+                                <small><span class="text-danger" asp-validation-for="Password"></span></small>
                             </div>
-                            <small class="mb-3"><span class="text-danger" asp-validation-for="Password"></span></small>
                             <div class="form-check mb-3">
                                 <input class="form-check-input" type="checkbox" value="" name="recordar" id="flexCheckDefault">
                                 <label class="form-check-label" for="flexCheckDefault">Recordar</label>
@@ -94,9 +96,9 @@
 @section Scripts
 {
     <script>
-        window.addEventListener('DOMContentLoaded', (event) => {
-        document.getElementById("main-view").scrollIntoView({block:"start"});
-        });
+        // window.addEventListener('DOMContentLoaded', (event) => {
+        // document.getElementById("main-view").scrollIntoView({block:"start"});
+        // });
     </script>
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
