@@ -83,9 +83,15 @@
     </div>
 </footer>
 
-<div class="manita position-absolute bottom-0 end-0 m-4 border-primary position-fixed bg-light rounded rounded-circle sombra-1 d-flex justify-content-center align-items-center animate__animated animate__zoomIn animate__delay-2s" style="height: 48px; width: 48px;">
+@{
+  string seccion = $"{ViewContext.RouteData.Values["area"]}/{ViewContext.RouteData.Values["controller"]}/{ViewContext.RouteData.Values["action"]}";
+}
+
+<div class="manita position-absolute bottom-0 end-0 m-4 border-primary position-fixed bg-light rounded rounded-circle sombra-1 d-flex justify-content-center align-items-center animate__animated animate__zoomIn animate__delay-2s" style="height: 48px; width: 48px;" data-area="@seccion" data-surl="@Url.Action("_EnviarReporte", "Inicio", new { area = "" })" data-url="@Url.Action("_RealizarReporte", "Inicio", new { area = "" })" onclick="realizarReporte(this)">
     <i class="fa-solid fa-bug fa-xl" style="color: #1A386A"></i>
 </div>
+
+<div id="contModalReporte"></div>
 
 @* <footer class="footer mt-auto py-3 my-4"> *@
 @*   <div class="container"> *@
@@ -102,6 +108,7 @@
 
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
+<script src="~/js/realizarReporte.js"></script>
 @await RenderSectionAsync("Scripts", required: false)
 @await RenderSectionAsync("ViewComponentsScripts", required: false)
 </body>

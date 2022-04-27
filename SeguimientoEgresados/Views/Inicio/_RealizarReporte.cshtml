@@ -1,0 +1,31 @@
+﻿
+<!-- Modal -->
+<div class="modal fade" id="modalReporte" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <form id="reportForm" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Reporte de fallo, sugerencia o queja</h5>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 mb-3">
+              <div class="form-floating">
+                <input type="text" name="titulo" class="form-control" id="tituloReporte" placeholder="Título de fallo, sugerencia o queja" required>
+                <label for="tituloReporte"><i class="fa-solid fa-heading me-2"></i>Título del fallo, sugerencia o queja</label>
+              </div>
+            </div>
+            <div class="col-12">
+              <label for="descripcionReporte" class="form-label"><i class="fa-solid fa-circle-info me-2"></i>Detalles del fallo, sugerencia o queja</label>
+              <textarea name="descripcion" class="form-control" id="descripcionReporte" rows="5" required></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal"><i class="fa-solid fa-xmark me-2"></i>Cancelar</button>
+        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane me-2"></i>Realizar reporte</button>
+      </div>
+    </form>
+  </div>
+</div>

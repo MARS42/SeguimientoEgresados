@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SeguimientoEgresados.Filters;
 using SeguimientoEgresados.Models;
 using SeguimientoEgresados.Services;
+using SeguimientoEgresados.Utils;
 
 namespace SeguimientoEgresados.Controllers;
 
@@ -35,5 +36,31 @@ public class InicioController : Controller
     public IActionResult Error()
     {
         return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
+    }
+
+    [HttpGet]
+    public IActionResult _RealizarReporte(string area)
+    {
+        if (User.Identity != null && User.Identity.IsAuthenticated)
+            return PartialView();
+        
+        bool hasReport = HttpContext.Session.Get<bool>($"reporte:{area}");
+        
+        return hasReport ? PartialView("_EsperaReporte") : PartialView();
+    }
+
+    public IActionResult _EnviarReporte(string titulo, string descripcion, string area)
+    {
+        if (string.IsNullOrEmpty(titulo) || string.IsNullOrEmpty(descripcion) || string.IsNullOrEmpty(area) || HttpContext.Session.Get<bool>($"reporte:{area}"))
+            return Ok();
+        
+        Console.WriteLine(titulo);
+        Console.WriteLine(descripcion);
+        Console.WriteLine(area);
+        
+        if (User.Identity == null || !User.Identity.IsAuthenticated)
+            HttpContext.Session.Set($"reporte:{area}", true);
+        
+        return Ok();
     }
 }
