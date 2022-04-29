@@ -21,6 +21,12 @@ function realizarReporte(element){
 }
 
 function enviarReporte(formulario, area, url){
+
+    const btns = document.querySelectorAll("#reportForm > div > button");
+
+    for(let i = 0; i < btns.length; i++)
+        btns[i].disabled = true;
+    
     const datos = Object.fromEntries(new FormData(formulario));
 
     fetch(`${url}?titulo=${datos.titulo}&descripcion=${datos.descripcion}&area=${area}`, { method: 'post' })

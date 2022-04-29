@@ -56,6 +56,7 @@ async function clickActionBtn(btn) {
     
     //console.log("click " + btn)
     //btn.disabled = true;
+    
     btn.style.pointerEvents = "none";
     btn.style.cursor = "default";
     btn.style.opacity = "0.7";
