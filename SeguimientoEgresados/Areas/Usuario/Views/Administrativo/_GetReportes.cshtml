@@ -4,6 +4,7 @@
     <table class="table table-hover animate__animated animate__fadeIn animate__faster">
         <thead>
         <tr>
+            <th></th>
             <th scope="col">Título</th>
             <th scope="col">Área de envío</th>
             <th scope="col">Tipo</th>
@@ -13,7 +14,15 @@
         <tbody>
         @foreach (var r in Model)
         {
-            <tr class="manita">
+            bool revisado = bool.Parse(r.Revisado);
+            
+            <tr class="manita @(!revisado ? "fw-bold" : "")" data-id="@r.Id" onclick="verReporte(this)">
+                <td>
+                    @if (!revisado)
+                    {
+                        <span class="badge rounded-pill bg-primary">Nuevo</span>
+                    }
+                </td>
                 <td class="text-start">@r.Titulo</td>
                 <td class="text-start">@r.Area</td>
                 <td>Tipo</td>

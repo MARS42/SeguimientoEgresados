@@ -400,5 +400,12 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             
             return PartialView("_GetReportes", await ListaPaginada<Reporte>.CreateAsync(query.AsNoTracking(), pagina ?? 1, 20));
         }
+
+        public async Task<IActionResult> VerReporte(int id)
+        {
+            var reporte = await _context.Reportes.FirstOrDefaultAsync(r => r.Id.Equals(id));
+
+            return PartialView("_VerReporte", reporte);
+        }
     }
 }

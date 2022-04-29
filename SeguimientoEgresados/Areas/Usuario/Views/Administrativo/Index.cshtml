@@ -209,5 +209,25 @@
                actualizarTabla("tablaEmpleadores", 1); 
             });
         }
+        
+        let modal;
+        
+        function verReporte(row){
+            const id = row.dataset.id;
+            const url = `@Url.Action("VerReporte")?id=${id}`;
+            
+            fetch(url)
+            .then(res => res.text())
+            .then(html => {
+                const cont = document.getElementById("contModalVerReporte");
+                cont.innerHTML = html;
+                modal = new bootstrap.Modal(document.getElementById('modalVerReporte'));
+                modal.show();
+            });
+        }
+        
+        function revisarReporte(){
+            
+        }
     </script>
 }
