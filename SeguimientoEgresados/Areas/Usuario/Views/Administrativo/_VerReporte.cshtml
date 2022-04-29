@@ -9,11 +9,19 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        @Model.Descripcion
+        <h6><i class="fa-solid fa-circle-info me-2"></i>Descrición</h6>
+        <textarea class="form-control mb-3" rows="6" readonly>@Model.Descripcion</textarea>
+        <h6><i class="fa-solid fa-location-crosshairs me-2"></i>Área de envío</h6>
+        <input class="form-control mb-3" type="text" value="@Model.Area" readonly>
+        <h6><i class="fa-solid fa-user me-2"></i>Usuario</h6>
+        <input class="form-control mb-3" type="text" value="@Model.Usuario" readonly>
+        <p class="text-muted text-end"><small>@Model.Fecha</small></p>
       </div>
+      @if(!bool.Parse(Model.Revisado)){
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Revisado<i class="fa-solid fa-clipboard-check ms-2"></i></button>
+        <button type="button" class="btn btn-primary" onclick="revisarReporte(this, @Model.Id)">Revisado<i class="fa-solid fa-clipboard-check ms-2"></i></button>
       </div>
+      }
     </div>
   </div>
 </div>

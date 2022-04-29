@@ -113,7 +113,8 @@
     
             const orden = ordenTabla === null ? order : ordenTabla;
             order = orden;
-            const busqueda = document.getElementById("busqueda").value;
+            const busquedaInput = document.getElementById("busqueda");
+            const busqueda = busquedaInput ? document.getElementById("busqueda").value : "";
             const filtroActual = "@ViewData["Busqueda"]";
             const checkVerificados = document.getElementById("verificados");
             const verificados = checkVerificados != null ? checkVerificados.checked : false;
@@ -226,8 +227,17 @@
             });
         }
         
-        function revisarReporte(){
+        function revisarReporte(btn, id){
+            btn.disabled = true;
+            const url = `@Url.Action("RevisarReporte")?id=${id}`;
             
+            fetch(url, { method: 'post' })
+            .then(res => res.ok)
+            .then(ok => {
+                modal.toggle();
+                
+                actualizarTabla("tablaReportes");
+            });
         }
     </script>
 }

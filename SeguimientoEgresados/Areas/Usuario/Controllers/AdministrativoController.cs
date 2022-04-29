@@ -401,11 +401,24 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             return PartialView("_GetReportes", await ListaPaginada<Reporte>.CreateAsync(query.AsNoTracking(), pagina ?? 1, 20));
         }
 
+        [HttpGet]
         public async Task<IActionResult> VerReporte(int id)
         {
             var reporte = await _context.Reportes.FirstOrDefaultAsync(r => r.Id.Equals(id));
 
             return PartialView("_VerReporte", reporte);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RevisarReporte(int id)
+        {
+            var reporte = await _context.Reportes.FirstOrDefaultAsync(r => r.Id.Equals(id));
+            reporte!.Revisado = true.ToString();
+
+            _context.Entry(reporte).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            
+            return Ok();
         }
     }
 }
