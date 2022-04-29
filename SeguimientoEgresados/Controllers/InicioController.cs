@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using SeguimientoEgresados.Filters;
 using SeguimientoEgresados.Models;
@@ -9,12 +10,12 @@ namespace SeguimientoEgresados.Controllers;
 
 public class InicioController : Controller
 {
-    private readonly ILogger<InicioController> _logger;
+    private readonly SeguimientoEgresadosContext _db;
     private INotificacionesService _notificaciones;
 
-    public InicioController(ILogger<InicioController> logger, INotificacionesService notificaciones)
+    public InicioController(SeguimientoEgresadosContext _db, INotificacionesService notificaciones)
     {
-        _logger = logger;
+        this._db = _db;
         _notificaciones = notificaciones;
     }
 
@@ -49,17 +50,30 @@ public class InicioController : Controller
         return hasReport ? PartialView("_EsperaReporte") : PartialView();
     }
 
-    public IActionResult _EnviarReporte(string titulo, string descripcion, string area)
+    public async Task<IActionResult> _EnviarReporte(string titulo, string descripcion, string area)
     {
         if (string.IsNullOrEmpty(titulo) || string.IsNullOrEmpty(descripcion) || string.IsNullOrEmpty(area) || HttpContext.Session.Get<bool>($"reporte:{area}"))
             return Ok();
         
-        Console.WriteLine(titulo);
-        Console.WriteLine(descripcion);
-        Console.WriteLine(area);
+        string? usuario = "Anónimo";
         
         if (User.Identity == null || !User.Identity.IsAuthenticated)
             HttpContext.Session.Set($"reporte:{area}", true);
+        else
+            usuario = User.Claims.FirstOrDefault(c => c.Type.Equals(ClaimTypes.Email))?.Value;
+
+        Reporte reporte = new ()
+        {
+            Titulo = titulo,
+            Descripcion = descripcion,
+            Area = area,
+            Usuario = usuario,
+            Fecha = DateTime.Now,
+            Revisado = false.ToString()
+        };
+
+        await _db.Reportes.AddAsync(reporte);
+        await _db.SaveChangesAsync();
         
         return Ok();
     }

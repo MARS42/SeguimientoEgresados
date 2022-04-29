@@ -433,7 +433,7 @@ namespace SeguimientoEgresados.Models
 
             modelBuilder.Entity<Reporte>(entity =>
             {
-                entity.HasNoKey();
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Area)
                     .HasMaxLength(1024)
@@ -442,10 +442,6 @@ namespace SeguimientoEgresados.Models
                 entity.Property(e => e.Descripcion).HasColumnName("descripcion");
 
                 entity.Property(e => e.Fecha).HasColumnName("fecha");
-
-                entity.Property(e => e.Id)
-                    .ValueGeneratedOnAdd()
-                    .HasColumnName("id");
 
                 entity.Property(e => e.Revisado)
                     .HasMaxLength(5)
