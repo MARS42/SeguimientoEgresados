@@ -28,6 +28,7 @@ namespace SeguimientoEgresados.Models
         public virtual DbSet<IntervalosCuestionario> IntervalosCuestionarios { get; set; } = null!;
         public virtual DbSet<Modulo> Modulos { get; set; } = null!;
         public virtual DbSet<Operacione> Operaciones { get; set; } = null!;
+        public virtual DbSet<Reporte> Reportes { get; set; } = null!;
         public virtual DbSet<RolOperacion> RolOperacions { get; set; } = null!;
         public virtual DbSet<Role> Roles { get; set; } = null!;
         public virtual DbSet<TagImagen> TagImagens { get; set; } = null!;
@@ -100,6 +101,7 @@ namespace SeguimientoEgresados.Models
                 entity.HasOne(d => d.IdUsuarioNavigation)
                     .WithMany(p => p.Cuestionarios)
                     .HasForeignKey(d => d.IdUsuario)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("Cuestionarios_Usuarios_id_fk");
             });
 
@@ -280,6 +282,7 @@ namespace SeguimientoEgresados.Models
                 entity.HasOne(d => d.IdConvenioNavigation)
                     .WithMany(p => p.Empresas)
                     .HasForeignKey(d => d.IdConvenio)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("Empresas_Convenios_id_fk");
 
                 entity.HasOne(d => d.IdUsuarioNavigation)
@@ -426,6 +429,36 @@ namespace SeguimientoEgresados.Models
                     .HasForeignKey(d => d.IdModulo)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("Operaciones_Modulos_id_fk");
+            });
+
+            modelBuilder.Entity<Reporte>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.Property(e => e.Area)
+                    .HasMaxLength(1024)
+                    .HasColumnName("area");
+
+                entity.Property(e => e.Descripcion).HasColumnName("descripcion");
+
+                entity.Property(e => e.Fecha).HasColumnName("fecha");
+
+                entity.Property(e => e.Id)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("id");
+
+                entity.Property(e => e.Revisado)
+                    .HasMaxLength(5)
+                    .IsUnicode(false)
+                    .HasColumnName("revisado");
+
+                entity.Property(e => e.Titulo)
+                    .HasMaxLength(128)
+                    .HasColumnName("titulo");
+
+                entity.Property(e => e.Usuario)
+                    .HasMaxLength(100)
+                    .HasColumnName("usuario");
             });
 
             modelBuilder.Entity<RolOperacion>(entity =>
@@ -602,7 +635,6 @@ namespace SeguimientoEgresados.Models
                 entity.HasOne(d => d.IdEmpresaNavigation)
                     .WithMany(p => p.Vacantes)
                     .HasForeignKey(d => d.IdEmpresa)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("Vacantes_Empresas_id_fk");
             });
 
