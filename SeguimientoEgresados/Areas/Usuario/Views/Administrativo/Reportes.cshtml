@@ -4,5 +4,12 @@
     ViewBag.Title = "Reportes";
 }
 <div class="container-fluid animate__animated animate__fadeIn">
-<h1>Reportes</h1>
+    <div class="row justify-content-center text-center">
+        <h3>Fallos, quejas y sugerencias</h3>
+        <hr class="invisible"/>
+        <div class="col-12 mb-3 d-flex justify-content-center align-items-center">
+            <p>controles</p>
+        </div>
+        <div id="tablaReportes" class="to-load table-responsive row col-12 justify-content-center" data-url="@Url.Action("GetReportes")"></div>
+    </div>
 </div>

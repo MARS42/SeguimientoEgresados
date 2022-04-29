@@ -392,5 +392,13 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             var query = from galeria in _context.Galeria where galeria.Nombre.Contains(term) select galeria.Nombre;
             return Json(await query.ToListAsync());
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetReportes(int? pagina)
+        {
+            var query = _context.Reportes.OrderBy(r => r.Fecha);
+            
+            return PartialView("_GetReportes", await ListaPaginada<Reporte>.CreateAsync(query.AsNoTracking(), pagina ?? 1, 20));
+        }
     }
 }

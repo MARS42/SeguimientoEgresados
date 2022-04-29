@@ -1,0 +1,42 @@
+﻿@model SeguimientoEgresados.Utils.ListaPaginada<Reporte>
+
+<div class="col-12">
+    <table class="table table-hover animate__animated animate__fadeIn animate__faster">
+        <thead>
+        <tr>
+            <th scope="col">Título</th>
+            <th scope="col">Área de envío</th>
+            <th scope="col">Tipo</th>
+            <th scope="col">Fecha</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var r in Model)
+        {
+            <tr class="manita">
+                <td class="text-start">@r.Titulo</td>
+                <td class="text-start">@r.Area</td>
+                <td>Tipo</td>
+                <td>@r.Fecha</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+</div>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "btn-secondary disabled" : "btn-primary";
+    var nextDisabled = !Model.HasNextPage ? "btn-secondary disabled" : "btn-primary";
+}
+
+<div class="col-12 d-flex justify-content-end">
+    <a class="btn @prevDisabled mx-2"
+       onclick="actualizarTabla('tablaReportes', @(Model.PageIndex - 1))">
+        Anterior
+    </a>
+    <a class="btn @nextDisabled"
+       onclick="actualizarTabla('tablaReportes', @(Model.PageIndex + 1))">
+        Siguiente
+    </a>
+</div>
