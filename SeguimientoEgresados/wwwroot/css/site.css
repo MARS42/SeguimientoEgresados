@@ -321,7 +321,7 @@ body {
   list-style: none;
   width: 20px;
   height: 20px;
-  color: rgba(26, 56, 106, 0.2);
+  color: rgba(26, 56, 106, 0.35);
   /*background: rgba(26, 56, 106, 0.2);*/
   animation: animate 25s linear infinite;
   bottom: -700px;
