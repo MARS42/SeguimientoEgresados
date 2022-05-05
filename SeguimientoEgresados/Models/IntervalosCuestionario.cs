@@ -8,6 +8,7 @@ namespace SeguimientoEgresados.Models
         public string Nombre { get; set; } = null!;
         public int Meses { get; set; }
         public int? IdRol { get; set; }
+        public int Id { get; set; }
 
         public virtual Role? IdRolNavigation { get; set; }
     }

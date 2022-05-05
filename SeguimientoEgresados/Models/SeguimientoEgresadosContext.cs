@@ -375,12 +375,15 @@ namespace SeguimientoEgresados.Models
 
             modelBuilder.Entity<IntervalosCuestionario>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.ToTable("IntervalosCuestionario");
+
+                entity.HasIndex(e => e.Id, "IntervalosCuestionario_id_uindex")
+                    .IsUnique();
 
                 entity.HasIndex(e => e.Nombre, "IntervalosCuestionario_nombre_uindex")
                     .IsUnique();
+
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.IdRol).HasColumnName("id_rol");
 
@@ -392,7 +395,7 @@ namespace SeguimientoEgresados.Models
                     .HasColumnName("nombre");
 
                 entity.HasOne(d => d.IdRolNavigation)
-                    .WithMany()
+                    .WithMany(p => p.IntervalosCuestionarios)
                     .HasForeignKey(d => d.IdRol)
                     .HasConstraintName("IntervalosCuestionario_Roles_id_fk");
             });
