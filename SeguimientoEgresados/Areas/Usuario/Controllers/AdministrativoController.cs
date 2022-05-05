@@ -42,7 +42,30 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
 
         public async Task<IActionResult> General()
         {
-            return PartialView();
+            IntervalosCuestionario egresados = await _context.IntervalosCuestionarios.FirstAsync(i => i.IdRol.Equals(4));
+            IntervalosCuestionario empleadores = await _context.IntervalosCuestionarios.FirstAsync(i => i.IdRol.Equals(5));
+            return PartialView(new IntervalosCuestionariosViewModel()
+            {
+                MesesEgresado = egresados.Meses,
+                MesesEmpleador = empleadores.Meses
+            });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GuardarIntervalos(IntervalosCuestionariosViewModel model)
+        {
+            IntervalosCuestionario egresados = await _context.IntervalosCuestionarios.FirstAsync(i => i.IdRol.Equals(4));
+            IntervalosCuestionario empleadores = await _context.IntervalosCuestionarios.FirstAsync(i => i.IdRol.Equals(5));
+
+            egresados.Meses = model.MesesEgresado;
+            empleadores.Meses = model.MesesEmpleador;
+
+            _context.Entry(egresados).State = EntityState.Modified;
+            _context.Entry(empleadores).State = EntityState.Modified;
+
+            await _context.SaveChangesAsync();
+            
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
