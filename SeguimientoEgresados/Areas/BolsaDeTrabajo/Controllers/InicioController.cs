@@ -18,11 +18,13 @@ namespace SeguimientoEgresados.Areas.BolsaDeTrabajo.Controllers
     {
         private readonly SeguimientoEgresadosContext _context;
         private readonly INotificacionesService _notificaciones;
+        private readonly ICloudinaryService _cloudinary;
         
-        public InicioController(SeguimientoEgresadosContext context, INotificacionesService notificaciones)
+        public InicioController(SeguimientoEgresadosContext context, INotificacionesService notificaciones, ICloudinaryService cloudinary)
         {
             _context = context;
             _notificaciones = notificaciones;
+            _cloudinary = cloudinary;
         }
         
         public async Task<IActionResult> Index()
@@ -176,6 +178,7 @@ namespace SeguimientoEgresados.Areas.BolsaDeTrabajo.Controllers
                     Horario = vacante.Horario,
                     Fecha = vacante.Fecha,
                     Id = vacante.Id,
+                    IdEmpresa = vacante.IdEmpresa,
                     //LogoEmpresa = usuarioVacanteEmpresa.UrlImg,
                     Convenio = vacanteEmpresa.IdConvenio != null
                 };
@@ -183,13 +186,34 @@ namespace SeguimientoEgresados.Areas.BolsaDeTrabajo.Controllers
         }
 
         [Authorize(Roles = "Egresado")]
-        public async Task<IActionResult> Postularse(IFormFile cvInput)
+        public async Task<IActionResult> Postularse(string idVacante, string idEmpresa, IFormFile? cvInput)
         {
             var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
             Models.Usuario? user = await _context.Usuarios.FirstOrDefaultAsync(u => u.Email.Equals(email));
+            Egresado egresado = await _context.Egresados.FirstOrDefaultAsync(e => e.IdUsuario.Equals(user.Id));
 
+            int idE = int.Parse(idEmpresa);
+            Empresa? empresa = await _context.Empresas.FirstOrDefaultAsync(e => e.Id.Equals(idE));
+            
             if (user == null)
                 return NotFound();
+
+            string cv_url = "No URL";
+            if (cvInput != null)
+            {
+                cv_url = await _cloudinary.SubirCv(cvInput, empresa.Nombre, egresado.NControl);
+            }
+
+            Postulante postulante = new Postulante()
+            {
+                Fecha = DateTime.Now,
+                CvUrl = cv_url,
+                IdEgresado = egresado.Id,
+                IdVacante = int.Parse(idVacante)
+            };
+
+            _context.Postulantes.Add(postulante);
+            await _context.SaveChangesAsync();
             
             Console.WriteLine($"File: {cvInput.Name}");
             

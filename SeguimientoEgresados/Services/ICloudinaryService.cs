@@ -9,4 +9,7 @@ public interface ICloudinaryService
 
     [Authorize(Roles = "Egresado,Empleador,Administrador,Moderador,Capturista")]
     public Task<string> SubirImagenUsuario(IFormFile img, string usuario);
+
+    [Authorize(Roles = "Egresado")]
+    public Task<string> SubirCv(IFormFile cv, string empresa, string egresado);
 }

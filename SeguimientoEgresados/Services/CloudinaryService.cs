@@ -106,4 +106,37 @@ public class CloudinaryService : ICloudinaryService
             return null;
         }
     }
+
+    [Authorize(Roles = "Egresado")]
+    public async Task<string> SubirCv(IFormFile cv, string empresa, string egresado)
+    {
+        try
+        {
+            byte[] bytes;
+            using (var memoryStream = new MemoryStream())
+            {
+                await cv.CopyToAsync(memoryStream);
+                bytes = memoryStream.ToArray();
+            }
+            
+            string base64 = Convert.ToBase64String(bytes);
+            var prefix = @"data:application/pdf;base64,";
+            var imagePath = prefix + base64;
+            var uploadParams = new ImageUploadParams()
+     
+            {
+                File = new FileDescription(imagePath),
+                Folder = $"_Cvs/{empresa}/{egresado}"
+            };
+            
+            var uploadResult = await _cloudinary.UploadAsync(@uploadParams);
+
+            return uploadResult.SecureUrl.AbsoluteUri;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            return null;
+        }
+    }
 }

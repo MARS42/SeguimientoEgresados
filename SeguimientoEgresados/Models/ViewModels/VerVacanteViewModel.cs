@@ -3,6 +3,9 @@
 public class VerVacanteViewModel
 {
     public int Id { get; set; }
+    
+    public int IdEmpresa { get; set; }
+    
     public string Titulo { get; set; } = null!;
     public string Descripcion { get; set; } = null!;
     public string Funciones { get; set; } = null!;

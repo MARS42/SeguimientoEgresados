@@ -45,6 +45,8 @@
               <div class="d-flex justify-content-evenly align-items-center">
                 <button type="button" class="btn btn-outline-secondary" onclick="document.getElementById('cvInput').click()"><i class="fa-solid fa-folder me-2"></i>Seleccionar CV</button>
                 <input name="cvInput" id="cvInput" type="file" accept="application/pdf" class="form-control d-none" onchange="preview(this)">
+                <input name="idVacante" id="idVacante" type="text" readonly class="form-control d-none" value="@Model.Id">
+                <input name="idEmpresa" id="idEmpresa" type="text" readonly class="form-control d-none" value="@Model.IdEmpresa">
               </div>
               <div class="input-group mt-3">
                 <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-file-pdf"></i></span>
