@@ -160,6 +160,11 @@ namespace SeguimientoEgresados.Areas.BolsaDeTrabajo.Controllers
         }
         
         public async Task<IActionResult> Postula(int id){
+            
+            var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+            Models.Usuario? user = await _context.Usuarios.FirstOrDefaultAsync(u => u.Email.Equals(email));
+            Egresado egresado = await _context.Egresados.FirstOrDefaultAsync(e => e.IdUsuario.Equals(user.Id));
+            
             var query =
                 from vacante in _context.Vacantes
                 join empresa in _context.Empresas on vacante.IdEmpresa equals empresa.Id into vacantesEmpresa
@@ -182,7 +187,24 @@ namespace SeguimientoEgresados.Areas.BolsaDeTrabajo.Controllers
                     //LogoEmpresa = usuarioVacanteEmpresa.UrlImg,
                     Convenio = vacanteEmpresa.IdConvenio != null
                 };
-            return View(await query.FirstOrDefaultAsync());
+            
+            VerVacanteViewModel vacanteO = await query.AsNoTracking().FirstOrDefaultAsync();
+
+            if (vacanteO == null)
+                return NotFound();
+            
+            //Postulante postulante = 
+            //    from postulante in _context.Postulantes
+                // join vacantee in _context.Vacantes on postulante.IdVacante equals vacantee.Id into matches
+                // from match in matches.DefaultIfEmpty()
+                //     join 
+
+            Postulante postulante = await _context.Postulantes.FirstOrDefaultAsync(p =>
+                    p.IdVacante.Equals(vacanteO.Id) && p.IdEgresado.Equals(egresado.Id));
+
+            ViewData["postulado"] = postulante != null;
+             
+            return View(vacanteO);
         }
 
         [Authorize(Roles = "Egresado")]
@@ -214,10 +236,8 @@ namespace SeguimientoEgresados.Areas.BolsaDeTrabajo.Controllers
 
             _context.Postulantes.Add(postulante);
             await _context.SaveChangesAsync();
-            
-            Console.WriteLine($"File: {cvInput.Name}");
-            
-            return Ok();
+
+            return RedirectToAction("Postula", new { id= postulante.IdVacante });
         }
     }
 }

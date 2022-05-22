@@ -40,6 +40,7 @@
               <ul id="detallesOfertas" data-datos="@Model.Ofertas"></ul>
             </div>
             <hr/>
+            @if(((bool)ViewData["postulado"]) == false){
             <form class="col-12" method="POST" asp-action="Postularse" enctype="multipart/form-data">
               <p><i class="fa-solid fa-circle-info me-2"></i>Postulate y adjunta tu curriculum vitae, debe ser un archivo en formato PDF</p>
               <div class="d-flex justify-content-evenly align-items-center">
@@ -48,12 +49,19 @@
                 <input name="idVacante" id="idVacante" type="text" readonly class="form-control d-none" value="@Model.Id">
                 <input name="idEmpresa" id="idEmpresa" type="text" readonly class="form-control d-none" value="@Model.IdEmpresa">
               </div>
-              <div class="input-group mt-3">
+              <div class="input-group my-3">
                 <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-file-pdf"></i></span>
                 <input type="text" class="form-control" id="archivoSeleccionado" readonly>
               </div>
               <button type="submit" class="btn btn-success">Postularme<i class="fa-solid fa-check ms-2"></i></button>
             </form>
+            }
+            else
+            {
+              <div class="d-flex justify-content-evenly align-items-center">
+                <p class="text-success fw-bold"><i class="fa-solid fa-circle-check fa-xl me-2"></i>¡Ya te has postulado en esta vacante!</p>
+              </div>
+            }
           </div>
         </div>
       </div>
@@ -68,7 +76,7 @@
     verDetalles();
   });
   
-    function verDetalles(vacante){
+    function verDetalles(){
         const funcs = document.getElementById("detallesFunciones");
         const funcsAr = JSON.parse(funcs.dataset.datos);
         funcs.innerHTML += "<li>" + funcsAr.join('</li><li>') + "</li>";
