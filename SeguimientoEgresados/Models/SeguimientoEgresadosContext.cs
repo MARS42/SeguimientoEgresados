@@ -28,6 +28,7 @@ namespace SeguimientoEgresados.Models
         public virtual DbSet<IntervalosCuestionario> IntervalosCuestionarios { get; set; } = null!;
         public virtual DbSet<Modulo> Modulos { get; set; } = null!;
         public virtual DbSet<Operacione> Operaciones { get; set; } = null!;
+        public virtual DbSet<Postulante> Postulantes { get; set; } = null!;
         public virtual DbSet<Reporte> Reportes { get; set; } = null!;
         public virtual DbSet<RolOperacion> RolOperacions { get; set; } = null!;
         public virtual DbSet<Role> Roles { get; set; } = null!;
@@ -432,6 +433,35 @@ namespace SeguimientoEgresados.Models
                     .HasForeignKey(d => d.IdModulo)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("Operaciones_Modulos_id_fk");
+            });
+
+            modelBuilder.Entity<Postulante>(entity =>
+            {
+                entity.HasIndex(e => e.Id, "Postulantes_id_uindex")
+                    .IsUnique();
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.CvUrl)
+                    .IsUnicode(false)
+                    .HasColumnName("cv_url");
+
+                entity.Property(e => e.Fecha).HasColumnName("fecha");
+
+                entity.Property(e => e.IdEgresado).HasColumnName("id_egresado");
+
+                entity.Property(e => e.IdVacante).HasColumnName("id_vacante");
+
+                entity.HasOne(d => d.IdEgresadoNavigation)
+                    .WithMany(p => p.Postulantes)
+                    .HasForeignKey(d => d.IdEgresado)
+                    .HasConstraintName("Postulantes_Egresados_id_fk");
+
+                entity.HasOne(d => d.IdVacanteNavigation)
+                    .WithMany(p => p.Postulantes)
+                    .HasForeignKey(d => d.IdVacante)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("Postulantes_Vacantes_id_fk");
             });
 
             modelBuilder.Entity<Reporte>(entity =>

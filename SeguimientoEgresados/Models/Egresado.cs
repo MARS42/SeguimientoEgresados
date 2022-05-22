@@ -5,6 +5,11 @@ namespace SeguimientoEgresados.Models
 {
     public partial class Egresado
     {
+        public Egresado()
+        {
+            Postulantes = new HashSet<Postulante>();
+        }
+
         public int Id { get; set; }
         public string Telefono { get; set; } = null!;
         public DateTime? FechaNacimiento { get; set; }
@@ -29,5 +34,6 @@ namespace SeguimientoEgresados.Models
         public virtual EstadosCivile IdEstadoCivilNavigation { get; set; } = null!;
         public virtual Genero IdGeneroNavigation { get; set; } = null!;
         public virtual Usuario IdUsuarioNavigation { get; set; } = null!;
+        public virtual ICollection<Postulante> Postulantes { get; set; }
     }
 }
