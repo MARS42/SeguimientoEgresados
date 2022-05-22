@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SeguimientoEgresados.Models;
@@ -153,6 +155,45 @@ namespace SeguimientoEgresados.Areas.BolsaDeTrabajo.Controllers
                     Convenio = vacanteEmpresa.IdConvenio != null
                 };
             return PartialView("_DetallesVacante", await query.FirstOrDefaultAsync());
+        }
+        
+        public async Task<IActionResult> Postula(int id){
+            var query =
+                from vacante in _context.Vacantes
+                join empresa in _context.Empresas on vacante.IdEmpresa equals empresa.Id into vacantesEmpresa
+                from vacanteEmpresa in vacantesEmpresa.DefaultIfEmpty()
+                where  vacante.Id.Equals(id)
+                select new VerVacanteViewModel()
+                {
+                    NombreEmpresa = vacanteEmpresa.Nombre,
+                    Titulo = vacante.Titulo,
+                    Descripcion = vacante.Descripcion,
+                    Funciones = vacante.Funciones,
+                    Requisitos = vacante.Requisitos,
+                    Ofertas = vacante.Ofertas,
+                    TipoContrato = vacante.TipoContrato,
+                    Modalidad = vacante.Modalidad,
+                    Horario = vacante.Horario,
+                    Fecha = vacante.Fecha,
+                    Id = vacante.Id,
+                    //LogoEmpresa = usuarioVacanteEmpresa.UrlImg,
+                    Convenio = vacanteEmpresa.IdConvenio != null
+                };
+            return View(await query.FirstOrDefaultAsync());
+        }
+
+        [Authorize(Roles = "Egresado")]
+        public async Task<IActionResult> Postularse(IFormFile cvInput)
+        {
+            var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+            Models.Usuario? user = await _context.Usuarios.FirstOrDefaultAsync(u => u.Email.Equals(email));
+
+            if (user == null)
+                return NotFound();
+            
+            Console.WriteLine($"File: {cvInput.Name}");
+            
+            return Ok();
         }
     }
 }

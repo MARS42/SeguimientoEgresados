@@ -1,0 +1,92 @@
+@model SeguimientoEgresados.Models.ViewModels.VerVacanteViewModel
+
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-8">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title fw-bold">@Html.DisplayFor(m => m.Titulo) por @Html.DisplayFor(m => m.NombreEmpresa)</h5>
+          <hr/>
+          <div class="row">
+            <div class="col-12">
+              <h6 class="text-primary"><i class="fa-solid fa-circle-question me-2"></i>Descripción</h6>
+              @Html.DisplayFor(m => m.Descripcion)
+            </div>
+            <hr class="invisible"/>
+            <div class="col-12 col-lg-6">
+              <h6 class="text-primary"><i class="fa-solid fa-briefcase me-2"></i>Funciones y actividades</h6>
+              <ul id="detallesFunciones" data-datos="@Model.Funciones"></ul>
+            </div>
+            <div class="col-12 col-lg-6">
+              <h6 class="text-primary"><i class="fa-solid fa-brain me-2"></i>Requerimientos</h6>
+              <ul id="detallesRequisitos" data-datos="@Model.Requisitos"></ul>
+            </div>
+            <hr class="invisible"/>
+            <div class="col-12 col-lg-4">
+              <h6 class="text-primary"><i class="fa-solid fa-handshake-simple me-2"></i>Tipo de contrato</h6>
+              <p>@Html.DisplayFor(m => m.TipoContrato)</p>
+            </div>
+            <div class="col-12 col-lg-4">
+              <h6 class="text-primary"><i class="fa-solid fa-person me-2"></i>Modalidad</h6>
+              <p>@Html.DisplayFor(m => m.Modalidad)</p>
+            </div>
+            <div class="col-12 col-lg-4">
+              <h6 class="text-primary"><i class="fa-solid fa-clock me-2"></i>Horario</h6>
+              <p>@Html.DisplayFor(m => m.Horario)</p>
+            </div>
+            <hr class="invisible"/>
+            <div class="col-12">
+              <h6 class="text-success"><i class="fa-solid fa-hand-holding-dollar me-2"></i>Oferta</h6>
+              <ul id="detallesOfertas" data-datos="@Model.Ofertas"></ul>
+            </div>
+            <hr/>
+            <form class="col-12" method="POST" asp-action="Postularse" enctype="multipart/form-data">
+              <p><i class="fa-solid fa-circle-info me-2"></i>Postulate y adjunta tu curriculum vitae, debe ser un archivo en formato PDF</p>
+              <div class="d-flex justify-content-evenly align-items-center">
+                <button type="button" class="btn btn-outline-secondary" onclick="document.getElementById('cvInput').click()"><i class="fa-solid fa-folder me-2"></i>Seleccionar CV</button>
+                <input name="cvInput" id="cvInput" type="file" accept="application/pdf" class="form-control d-none" onchange="preview(this)">
+              </div>
+              <div class="input-group mt-3">
+                <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-file-pdf"></i></span>
+                <input type="text" class="form-control" id="archivoSeleccionado" readonly>
+              </div>
+              <button type="submit" class="btn btn-success">Postularme<i class="fa-solid fa-check ms-2"></i></button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section Scripts
+{
+  <script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    verDetalles();
+  });
+  
+    function verDetalles(vacante){
+        const funcs = document.getElementById("detallesFunciones");
+        const funcsAr = JSON.parse(funcs.dataset.datos);
+        funcs.innerHTML += "<li>" + funcsAr.join('</li><li>') + "</li>";
+        
+        const reqs = document.getElementById("detallesRequisitos");
+        const reqssAr = JSON.parse(reqs.dataset.datos);
+        const ar = []
+        reqssAr.forEach(req => ar.push(req.join(": ")));
+        reqs.innerHTML += "<li>" + ar.join('</li><li>') + "</li>";
+        
+        const offers = document.getElementById("detallesOfertas");
+        const offersAr = JSON.parse(offers.dataset.datos);
+        offers.innerHTML += "<li>" + offersAr.join('</li><li>') + "</li>";
+    }
+    
+    async function preview(files){
+        const cvs = files.files;
+        const cv = cvs[0];
+        const field = document.getElementById("archivoSeleccionado");
+        field.value = cv.name;
+    }
+  </script>
+}

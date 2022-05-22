@@ -3,7 +3,7 @@
 <div class="container-fluid animate__animated animate__fadeIn">
     <h3>General</h3>
     <form class="row justify-content-center" asp-action="GuardarIntervalos" method="POST">
-        <div class="col-12 col-md-6 col-lg-4">
+        <div class="col-12 col-md-6 col-lg-5">
             <label asp-for="MesesEgresado" class="form-label">Periodo del cuestionario de egresados</label>
             <div class="input-group mb-3">
                 <span class="input-group-text">Cada</span>
@@ -13,8 +13,8 @@
             <small><span asp-validation-for="MesesEgresado" class="text-danger"></span></small>
             <button class="btn btn-primary"><i class="fa-solid fa-floppy-disk me-2"></i>Guardar</button>
         </div>
-        <div class="col-12 col-md-6 col-lg-4">
-            <label asp-for="MesesEmpleador" class="form-label">Periodo del cuestionario de empeladores</label>
+        <div class="col-12 col-md-6 col-lg-5">
+            <label asp-for="MesesEmpleador" class="form-label">Periodo del cuestionario de empleadores</label>
             <div class="input-group mb-3">
                 <span class="input-group-text">Cada</span>
                 <input asp-for="MesesEmpleador"class="form-control" placeholder="6">
