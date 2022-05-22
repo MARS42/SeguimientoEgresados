@@ -206,5 +206,16 @@
            actualizarTabla(); 
         });
     }
+    
+    function verVacante(id){
+        const url = "@Url.Action("VerVacante")?id=" + id;
+        
+        fetch(url).then(res => res.text())
+        .then(html => {
+            document.getElementById("modelVerVacante").innerHTML = html;
+            const modalVerVacante = new bootstrap.Modal(document.getElementById('modalVerVacante'));
+            modalVerVacante.show();
+        });
+    }
     </script>
 }

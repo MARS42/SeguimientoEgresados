@@ -1,0 +1,41 @@
+@model SeguimientoEgresados.Models.Vacante?
+
+<!-- Modal nueva vacante -->
+<div class="modal fade" id="modalVerVacante" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable">
+        <form class="modal-content" data-url="@Url.Action("NuevaVacante")">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel"><i class="fa-solid fa-briefcase mx-2"></i>Postulantes</h5>
+                <h6>@Model.Titulo</h6>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Telefono</th>
+                            <th scope="col">CV</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (Postulante p in Model.Postulantes)
+                        {
+                            <tr class="manita">
+                                <td>@($"{p.IdEgresadoNavigation.IdUsuarioNavigation.Nombre} {p.IdEgresadoNavigation.IdUsuarioNavigation.ApellidoPaterno} {p.IdEgresadoNavigation.IdUsuarioNavigation.ApellidoMaterno}")</td>
+                                <td>@(p.IdEgresadoNavigation.IdUsuarioNavigation.Email)</td>
+                                <td>@(p.IdEgresadoNavigation.Telefono)</td>
+                                <td><a href="@p.CvUrl" target="_blank" class="link-primary">Ir a CV</a></td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </form>
+    </div>
+</div>

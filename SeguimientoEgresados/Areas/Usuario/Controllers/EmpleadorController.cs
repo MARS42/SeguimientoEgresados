@@ -233,8 +233,28 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
         {
             var usuario = await GetUsuario();
             var empresa = await _context.Empresas.FirstOrDefaultAsync(e => e.IdUsuario.Equals(usuario.Id));
-            var query = from vacante in _context.Vacantes where vacante.IdEmpresa.Equals(empresa.Id) select vacante;
-            return PartialView("_TablaVacantes", await query.ToListAsync());
+            var query = 
+                from vacante in _context.Vacantes 
+                where vacante.IdEmpresa.Equals(empresa.Id) select vacante;
+
+            var lista = new List<VacanteEmpleadorViewModel>();
+            foreach (var vacante in await query.AsNoTracking().ToListAsync())
+            {
+                var postulantes = from postulante in _context.Postulantes
+                    where postulante.IdVacante.Equals(vacante.Id)
+                    select postulante;
+                
+                var p = await postulantes.AsNoTracking().ToListAsync();
+                lista.Add(new VacanteEmpleadorViewModel()
+                {
+                    Id = vacante.Id,
+                    Titulo = vacante.Titulo,
+                    Fecha = vacante.Fecha,
+                    Postulantes = p.Count
+                });
+            }
+            
+            return PartialView("_TablaVacantes", lista);
         }
 
         [HttpPost]
@@ -243,15 +263,29 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
             var usuario = await GetUsuario();
             var empresa = await _context.Empresas.FirstOrDefaultAsync(e => e.IdUsuario.Equals(usuario.Id));
 
-            var vacante = await _context.Vacantes.FirstOrDefaultAsync(v => v.Id.Equals(id));
+            var vacante = await _context.Vacantes.Include(v => v.Postulantes).FirstOrDefaultAsync(v => v.Id.Equals(id));
 
             if (empresa.Id != vacante.IdEmpresa)
                 return Json("Error");
             
+            _context.Postulantes.RemoveRange(vacante.Postulantes);
+            await _context.SaveChangesAsync();
             _context.Vacantes.Remove(vacante);
             await _context.SaveChangesAsync();
 
             return Ok();
+        }
+
+        public async Task<IActionResult> VerVacante(int id)
+        {
+            var usuario = await GetUsuario();
+            
+            var empresa = await _context.Empresas.FirstOrDefaultAsync(e => e.IdUsuario.Equals(usuario.Id));
+            var vacante = await _context.Vacantes.Include(v => v.Postulantes)
+                .ThenInclude(p => p.IdEgresadoNavigation).ThenInclude(e => e.IdUsuarioNavigation)
+                .FirstOrDefaultAsync(v => v.Id.Equals(id));
+
+            return PartialView(vacante);
         }
         
         private async Task<Models.Usuario?> GetUsuario()

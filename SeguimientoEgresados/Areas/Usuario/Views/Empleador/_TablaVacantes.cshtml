@@ -1,25 +1,27 @@
-﻿@model IEnumerable<Vacante>
+﻿@model IEnumerable<VacanteEmpleadorViewModel>
 
 <div class="col-12">
-<table class="table">
-    <thead>
-    <tr>
-        <th scope="col">Título</th>
-        <th scope="col">Descripción</th>
-        <th scope="col">Publicación</th>
-        <th scope="col">Acciones</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (Vacante v in Model)
-    {
+    <table class="table table-hover">
+        <thead>
         <tr>
-            <td>@(v.Titulo)</td>
-            <td>@(v.Descripcion)</td>
-            <td>@(v.Fecha)</td>
-            <td><button class="btn btn-outline-danger" onclick="clickActionBtn(this); eliminarVacante(this);" data-id="@v.Id"><i class="fa-solid fa-trash"></i></button></td>
+            <th scope="col">Título</th>
+            <th scope="col">Postulantes</th>
+            <th scope="col">Publicación</th>
+            <th scope="col">Acciones</th>
         </tr>
-    }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        @foreach (VacanteEmpleadorViewModel v in Model)
+        {
+            <tr class="manita" onclick="verVacante(@v.Id)">
+                <td>@(v.Titulo)</td>
+                <td class="text-center">@(v.Postulantes)</td>
+                <td>@(v.Fecha)</td>
+                <td><button class="btn btn-outline-danger" onclick="clickActionBtn(this); eliminarVacante(this);" data-id="@v.Id"><i class="fa-solid fa-trash"></i></button></td>
+            </tr>
+        }
+        </tbody>
+    </table>
 </div>
+
+<div id="modelVerVacante"></div>
