@@ -12,6 +12,13 @@
 
 <div class="main-container container p-4">
     <div class="row">
+        @if (TempData["info"] != null)
+        {
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>@TempData["info"]</strong> <a asp-action="CerrarSesion" class="link-primary">¿Cerrar sesión?</a>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
         <div class="col-12">
             <form asp-action="Index" method="POST" class="card">
                 <div class="card-body">
@@ -56,8 +63,8 @@
                                     @*     </div> *@
                                     @*     <span asp-validation-for="Password"></span> *@
                                     @* </div> *@
-                                    <div class="col-12 col-md-7 col-lg-7 col-xl-6">
-                                        <button type="button" class="btn btn-warning m-auto mb-3">Cambio de contraseña<i class="fa-solid fa-lock mx-2"></i></button>
+                                    <div class="col-12 col-md-7 col-lg-7 col-xl-8">
+                                        <a asp-action="ChangePassword" class="btn btn-warning m-auto mb-3">Cambio de contraseña<i class="fa-solid fa-lock mx-2"></i></a>
                                     </div>
                                     <div class="col-12 col-md-5 col-lg-5 col-xl-4">
                                         <button type="submit" class="btn btn-primary w-100" onclick="clickActionBtn(this);">Guardar<i class="fa-solid fa-floppy-disk mx-2"></i></button>
