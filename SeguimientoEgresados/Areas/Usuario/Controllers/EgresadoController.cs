@@ -1,3 +1,4 @@
+using System.Data;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -182,6 +183,43 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
                 await _context.Database.ExecuteSqlRawAsync("exec ActualizarCuestionario @id_usuario", id_usuario);
             }
             return RedirectToAction("Cuestionario");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ChangePassword()
+        {
+            ViewData["Email"] = (await GetUsuario())!.Email;
+            return View();
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(CambioPasswordViewModel model)
+        {
+            ViewData["Email"] = (await GetUsuario())!.Email;
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var email = new SqlParameter("@email", model.Email);
+            var oldPass = new SqlParameter("@oldPassword", model.OldPassword);
+            var newPass = new SqlParameter("@newPassword", model.NewPassword);
+
+            var status = new SqlParameter("@status", SqlDbType.Int)
+            {
+                Direction = ParameterDirection.Output
+            };
+
+            var newUser = await _context.Database.ExecuteSqlRawAsync("exec CambiarPassword @email, @oldPassword, @newPassword, @status out", email, oldPass, newPass, status);
+
+            if ((int)status.Value < 0)
+            {
+                ViewData["Error"] = $"Contraseña actual incorrecta ({status.Value})";
+                return View(model);
+            }
+
+            TempData["info"] = "Contraseña actualizada";
+            return RedirectToAction("Index");
         }
 
         private async Task<Models.Usuario?> GetUsuario()
