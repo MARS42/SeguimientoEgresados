@@ -44,7 +44,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <a asp-action="Postula" asp-route-id="@Model.Id" target="_blank" class="btn btn-primary">Postularse<i class="fa-solid fa-hand-point-up mx-2"></i></a>
+        <a asp-action="Postula" asp-route-id="@Model.Id" target="_blank" class="btn btn-primary @(User.Identity.IsAuthenticated ? "" : "disabled")">Postularse<i class="fa-solid fa-hand-point-up mx-2"></i></a>
       </div>
     </div>
   </div>

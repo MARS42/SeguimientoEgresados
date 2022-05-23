@@ -162,6 +162,10 @@ namespace SeguimientoEgresados.Areas.BolsaDeTrabajo.Controllers
         public async Task<IActionResult> Postula(int id){
             
             var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+
+            if (email == null)
+                return Ok();
+            
             Models.Usuario? user = await _context.Usuarios.FirstOrDefaultAsync(u => u.Email.Equals(email));
             Egresado egresado = await _context.Egresados.FirstOrDefaultAsync(e => e.IdUsuario.Equals(user.Id));
             
