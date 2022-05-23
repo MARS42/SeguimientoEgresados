@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SeguimientoEgresados.Models;
 using SeguimientoEgresados.Models.ViewModels;
@@ -29,6 +30,7 @@ namespace SeguimientoEgresados.Areas.BolsaDeTrabajo.Controllers
         
         public async Task<IActionResult> Index()
         {
+            ViewData["carreras"] = new SelectList(_context.Carreras, "Id", "Nombre");
             await _notificaciones.VerificarCuestionario(User, HttpContext, ViewData, false);
             return View();
         }

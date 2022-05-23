@@ -11,12 +11,37 @@
         </p>
     </div>
     <div class="row">
-        <div class="col-12 mb-3 d-flex justify-content-center align-items-center">
-            <div class="form-floating w-50">
-                <input type="text" class="form-control" id="busqueda" name="busqueda" placeholder="Buscar" data-tabla="tablaEmpleadores">
-                <label for="busqueda"><i class="fa-solid fa-magnifying-glass mx-2"></i>Buscar vacantes</label>
+        <div class="col-12 col-md-6 col-lg-7 row mb-2">
+            <label for="filtroBusqueda" class="col-1 col-form-label text-end">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </label>
+            <div class="col-11">
+                <input type="text" class="form-control" id="busqueda" name="busqueda" placeholder="Buscar vacantes" data-tabla="tablaEmpleadores">
             </div>
-            <a class="text-primary text-decoration-none manita" onclick='borrarFiltros()'><i class="fa-solid fa-trash mx-2"></i>Borrar filtros</a>
+        </div>
+        <div class="col-12 col-md-6 col-lg-5">
+            <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button p-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                            <i class="fa-solid fa-filter me-2"></i>Filtros
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                        <form class="accordion-body row justify-content-center">
+                            <div class="col-12 row mb-2">
+                                <label for="filtroCarrera" class="col-2 col-form-label">Carrera</label>
+                                <div class="col-10">
+                                    <select class="form-select form-select-sm" name="filtroCarrera" asp-items="ViewBag.carreras"></select>
+                                </div>
+                            </div>
+                            <div class="col-2 p-0">
+                                <button type="reset" onclick='borrarFiltros()' class="btn btn-outline-danger w-100 p-1 text-center"><i class="fa-solid fa-filter-circle-xmark"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
         <div id="vacantes" data-url="@Url.Action("GetVacantes")"></div>
     </div>
