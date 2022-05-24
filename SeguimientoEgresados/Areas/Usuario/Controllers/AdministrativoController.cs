@@ -148,7 +148,7 @@ namespace SeguimientoEgresados.Areas.Usuario.Controllers
                                          || e.Carrera.Contains(busqueda));
             }
             
-            int pageSize = 1;
+            int pageSize = 20;
             return PartialView("_GetEgresados",  await ListaPaginada<EgresadoViewModel>.CreateAsync(query.AsNoTracking(), pagina ?? 1, pageSize));
         }
 
