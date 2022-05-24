@@ -18,12 +18,20 @@
                 <img id="img-inicio" class="cont-img-c img-fluid" src="~/images/licenciatura2.png" alt="Imagen de inicio"/>
             </div>
             <div class="col-md-6 row mt-3">
+                @if(!User.Identity.IsAuthenticated){
                 <div class="col-12 col-sm-6 col-md-12 col-lg-6 mb-2">
-                    <button class="btn btn-primary w-100">Unirse al programa<i class="fa-solid fa-file-pen ms-2"></i></button>
+                    <a asp-area="" asp-controller="Registro" asp-action="Index" class="btn btn-primary w-100">Unirse al programa<i class="fa-solid fa-file-pen ms-2"></i></a>
                 </div>
                 <div class="col-12 col-sm-6 col-md-12 col-lg-6">
-                    <button href="#tarjetas" class="btn btn-outline-secondary w-100">Más información</button>
+                    <a asp-area="About" asp-controller="Inicio" asp-action="Index" class="btn btn-outline-secondary w-100">Más información</a>
                 </div>
+                }
+                else
+                {
+                    <div class="col-12 col-sm-8 col-md-12 col-lg-8">
+                        <a asp-area="About" asp-controller="Inicio" asp-action="Index" class="btn btn-outline-secondary w-100">Más información</a>
+                    </div>
+                }
             </div>
         </article>
     </div>
@@ -84,7 +92,7 @@
                     institución educativa conocer las actividades profesionales de sus 
                     egresadis en el mercado de trabajo, así como la calidad de la 
                     formación académica que éstos recibieron.</p>
-                <a href="#" class="text-decoration-none">Más<i class="fa-solid fa-angle-right ms-2"></i></a>
+                <a asp-area="About" asp-controller="Inicio" asp-action="Index" class="text-decoration-none">Más<i class="fa-solid fa-angle-right ms-2"></i></a>
             </div>
             <div class="col-10 col-md-4 m-auto animate__animated animate__fast animate__fadeIn">
                 <img class="img-fluid" src="~/images/licenciatura2.png" alt="Imagen de inicio"/>
